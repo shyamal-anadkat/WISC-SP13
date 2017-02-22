@@ -1,0 +1,136 @@
+m255
+K4
+z2
+13
+!s112 1.1
+!i10d 8192
+!i10e 25
+!i10f 100
+cModel Technology
+Z0 d/u/s/h/shyamal/private/project552/demo1/verilog
+vclkrst
+Z1 !s110 1486072298
+!i10b 1
+!s100 d1=HFa9@5T7JH2L8mb3gE1
+I76^B^z0K=`bfSS`caA`Ik3
+Z2 VDg1SIo80bB@j0V0VzS_@n1
+R0
+w1455742711
+8clkrst.v
+Fclkrst.v
+L0 12
+Z3 OE;L;10.4c;61
+r1
+!s85 0
+31
+Z4 !s108 1486072296.000000
+Z5 !s107 proc.v|proc_hier.v|proc_hier_bench.v|memory2c.v|dff.v|clkrst.v|
+Z6 !s90 +define+RANDSEED=3|-work|__work|clkrst.v|dff.v|memory2c.v|proc_hier_bench.v|proc_hier.v|proc.v|
+!i113 0
+Z7 o-work __work -L mtiAvm -L mtiRnm -L mtiOvm -L mtiUvm -L mtiUPF -L infact
+Z8 !s92 +define+RANDSEED=3 -work __work -L mtiAvm -L mtiRnm -L mtiOvm -L mtiUvm -L mtiUPF -L infact
+vdff
+R1
+!i10b 1
+!s100 ocZMMJaQcW@V^7b`LBG;g2
+I_HM6UhFP^>?OXhKMOR9@J3
+R2
+R0
+w1455742704
+8dff.v
+Fdff.v
+L0 6
+R3
+r1
+!s85 0
+31
+R4
+R5
+R6
+!i113 0
+R7
+R8
+vmemory2c
+R1
+!i10b 1
+!s100 WTd=;7@^ER:WM8oX2<F2d1
+Ij_eoCc6S_9QeiTT:7RH4M3
+R2
+R0
+w1455742820
+8memory2c.v
+Fmemory2c.v
+L0 35
+R3
+r1
+!s85 0
+31
+R4
+R5
+R6
+!i113 0
+R7
+R8
+vproc
+R1
+!i10b 1
+!s100 7d23QFdL:[`m;OAI^@R743
+IiMX`]PkSE[FQl7R`MVJQl3
+R2
+R0
+w1455742737
+8proc.v
+Fproc.v
+L0 4
+R3
+r1
+!s85 0
+31
+R4
+R5
+R6
+!i113 0
+R7
+R8
+vproc_hier
+R1
+!i10b 1
+!s100 =I`13V[kAYPY]19f0imSo2
+IzTJZXaDZ]aD>WShLX_3f42
+R2
+R0
+w1455742731
+8proc_hier.v
+Fproc_hier.v
+L0 6
+R3
+r1
+!s85 0
+31
+R4
+R5
+R6
+!i113 0
+R7
+R8
+vproc_hier_bench
+R1
+!i10b 1
+!s100 bl6fod`[Dd8G<1jE]VeNU3
+Ii7U7ELYB<a6dSM6FaWA;n0
+R2
+R0
+w1455745214
+8proc_hier_bench.v
+Fproc_hier_bench.v
+L0 4
+R3
+r1
+!s85 0
+31
+R4
+R5
+R6
+!i113 0
+R7
+R8

@@ -1,5 +1,6 @@
 module mux4_1(
-	input InA, InB, InC, InD, [1:0] S,
+	input InA, InB, InC, InD, 
+	input [1:0] S,
 	output Out);
 	
 	wire w1,w2; 

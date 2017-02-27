@@ -1,5 +1,6 @@
 module mux8_1(
-        input InA, InB, InC, InD, InE, InF, InG, InH, [2:0] S,
+        input InA, InB, InC, InD, InE, InF, InG, InH, 
+        input [2:0] S,
         output Out);
 
         wire w1, w2;

@@ -1,8 +1,18 @@
 # vsim -c proc_hier_bench -lib __work -voptargs="+acc" -wlf dump.wlf -do "log -howmany -rec /* ; run -all" 
-# Start time: 17:08:02 on Mar 04,2017
+# Start time: 13:10:45 on Mar 05,2017
 # ** Note: (vsim-3812) Design is being optimized...
-# ** Error: (vopt-13130) Failed to find design unit __work.proc_hier_bench.
+# ** Error (suppressible): (vopt-7063) proc_hier_bench.v(127): Failed to find 'fetch0' in hierarchical name '/DUT/p0/fetch0/pcCurrent'.
+# ** Error (suppressible): (vopt-7063) proc_hier_bench.v(128): Failed to find 'fetch0' in hierarchical name '/DUT/p0/fetch0/instr'.
+# ** Error (suppressible): (vopt-7063) proc_hier_bench.v(130): Failed to find 'decode0' in hierarchical name '/DUT/p0/decode0/regFile0/write'.
+# ** Error (suppressible): (vopt-7063) proc_hier_bench.v(133): Failed to find 'decode0' in hierarchical name '/DUT/p0/decode0/regFile0/writeregsel'.
+# ** Error (suppressible): (vopt-7063) proc_hier_bench.v(136): Failed to find 'decode0' in hierarchical name '/DUT/p0/decode0/regFile0/writedata'.
+# ** Error (suppressible): (vopt-7063) proc_hier_bench.v(139): Failed to find 'memory0' in hierarchical name '/DUT/p0/memory0/memRead'.
+# ** Error (suppressible): (vopt-7063) proc_hier_bench.v(142): Failed to find 'memory0' in hierarchical name '/DUT/p0/memory0/memReadorWrite'.
+# ** Error (suppressible): (vopt-7063) proc_hier_bench.v(142): Failed to find 'memory0' in hierarchical name '/DUT/p0/memory0/memWrite'.
+# ** Error (suppressible): (vopt-7063) proc_hier_bench.v(145): Failed to find 'memory0' in hierarchical name '/DUT/p0/memory0/aluResult'.
+# ** Error (suppressible): (vopt-7063) proc_hier_bench.v(148): Failed to find 'memory0' in hierarchical name '/DUT/p0/memory0/writeData'.
+# ** Error (suppressible): (vopt-7063) proc_hier_bench.v(151): Failed to find 'memory0' in hierarchical name '/DUT/p0/memory0/halt'.
 # Optimization failed
 # Error loading design
-# End time: 17:08:03 on Mar 04,2017, Elapsed time: 0:00:01
-# Errors: 1, Warnings: 0
+# End time: 13:10:45 on Mar 05,2017, Elapsed time: 0:00:00
+# Errors: 11, Warnings: 0

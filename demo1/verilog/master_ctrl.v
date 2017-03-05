@@ -29,4 +29,6 @@ module master_ctrl (opcode, lower_two, alu_op, alu_src_1, alu_src_2,
                 mem_to_reg = 1'b0;
                 reg_dst = 2'b00;
             end
+    endcase
+    end
 endmodule

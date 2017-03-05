@@ -112,7 +112,6 @@ module alu(Out, Ofl, Z, P, N, A, B, Op, invA, invB, Cin, lower_two);
 		5'b10010: begin // SLBI
 		  Out = ((A << 8) | B);
 		end
-
     		default: begin
     		end
     	endcase

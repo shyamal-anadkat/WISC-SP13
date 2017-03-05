@@ -1,7 +1,6 @@
-module alu(Out, Ofl, Z, P, N, A, B, Op, invA, invB, Cin, lower_two);
+module alu(Out, Z, P, N, A, B, Op, invA, invB, Cin, lower_two);
    
     output [15:0] Out;
-    output Ofl;
     output Z, P, N;
     input [15:0] A;
     input [15:0] B;
@@ -10,7 +9,6 @@ module alu(Out, Ofl, Z, P, N, A, B, Op, invA, invB, Cin, lower_two);
     input [1:0] lower_two;
 
     reg [15:0] Out;
-    reg Ofl;
 
     wire[15:0] A_mod, B_mod, out_left_shift, out_right_shift, out_xor, out_and, out_or, S_cla, out_left_rotate, out_right_rotate, out_bit_rotate, alu_arith, alu_shift; 
     wire PG_cla, GG_cla, Cout_cla, ofl_out, leq;
@@ -42,6 +40,8 @@ module alu(Out, Ofl, Z, P, N, A, B, Op, invA, invB, Cin, lower_two);
 
     // Choose b/n ADD, SUB, XOR and ANDN
     mux4_1_16 mux1(.InA(S_cla), .InB(S_cla), .InC(out_xor), .InD(out_and), .S(lower_two), .Out(alu_arith));
+
+    // Choose b/n ROL, SLL, ROR and SRL
     mux4_1_16 mux2(.InA(out_left_rotate), .InB(out_left_shift), .InC(out_right_rotate), .InD(out_right_shift), .S(lower_two), .Out(alu_shift));
 
     always @(*) begin
@@ -76,6 +76,18 @@ module alu(Out, Ofl, Z, P, N, A, B, Op, invA, invB, Cin, lower_two);
     		5'b10111: begin // SRLI
                   Out = out_right_shift;
     		end
+
+		5'b10000: begin // ST
+		  Out = S_cla;
+		end
+
+		5'b10001: begin // LD
+		  Out = S_cla;
+		end
+
+		5'b10011: begin // STU
+		  Out = S_cla;
+		end
 
 		5'b11001: begin // BTR
 		  Out = out_bit_rotate;
@@ -118,6 +130,9 @@ module alu(Out, Ofl, Z, P, N, A, B, Op, invA, invB, Cin, lower_two);
     	endcase
     end
 
+    // Set the flags
     zero_out zout (.A(Out), .Out(Z));
+    assign N = (S_cla[15] & ~Z);
+    assign P = ~(S_cla[15] | Z);
 
 endmodule

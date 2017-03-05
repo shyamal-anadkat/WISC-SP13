@@ -1,6 +1,6 @@
 module jr_ctrl (opcode, jr_en);
     input[4:0] opcode;
-    output jr_en;
+    output reg jr_en;
 
     always @(*) begin
         case(opcode)

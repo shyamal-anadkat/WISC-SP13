@@ -1,8 +1,0 @@
-# vsim -c proc_hier_bench -lib __work -voptargs="+acc" -wlf dump.wlf -do "log -howmany -rec /* ; run -all" 
-# Start time: 17:08:02 on Mar 04,2017
-# ** Note: (vsim-3812) Design is being optimized...
-# ** Error: (vopt-13130) Failed to find design unit __work.proc_hier_bench.
-# Optimization failed
-# Error loading design
-# End time: 17:08:03 on Mar 04,2017, Elapsed time: 0:00:01
-# Errors: 1, Warnings: 0

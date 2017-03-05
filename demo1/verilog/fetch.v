@@ -18,7 +18,7 @@ reg16 pcreg(.out(currPC), .in(inPC), .en(1'b1), .rst(rst), .clk(clk));
 
 //Instruction Memory to fetch instruction from PC
 
-memory2c (.data_out(instr), .data_in(16'b0), .addr(currPC), .enable(1'b1), .wr(1'b0), .createdump(1'b0), .clk(clk), .rst(rst));
+memory2c fetchmem(.data_out(instr), .data_in(16'b0), .addr(currPC), .enable(1'b1), .wr(1'b0), .createdump(1'b0), .clk(clk), .rst(rst));
 
 
 //Adder for PC+2

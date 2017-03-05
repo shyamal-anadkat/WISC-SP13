@@ -59,15 +59,6 @@ module master_ctrl (opcode, alu_src, mem_write, reg_write, mem_to_reg, reg_dst);
                 mem_to_reg = 1'b0;
                 reg_dst = 2'b01;
             end
-
-            5'b01010: begin
-                alu_src = 3'b010;
-                mem_write = 1'b0;
-                reg_write = 1'b1;
-                mem_to_reg = 1'b0;
-                reg_dst = 2'b01;
-            end
-
 	endcase
     end
 endmodule

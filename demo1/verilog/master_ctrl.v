@@ -3,7 +3,7 @@ module master_ctrl (opcode, lower_two, alu_src, mem_write, reg_write,
     input[4:0] opcode;
     input[1:0] lower_two;
     output mem_write, reg_write, mem_to_reg, invA, invB, Cin;
-    output[2:0] reg_dst;
+    output[1:0] reg_dst;
     output[2:0] alu_src;
 
     reg mem_write, reg_write, mem_to_reg, invA, invB, Cin;
@@ -13,7 +13,6 @@ module master_ctrl (opcode, lower_two, alu_src, mem_write, reg_write,
 	1 - Ins[7:5]
 	2 - Ins[10:8]
 	3 - R7 (111)
-	4 to 7 - X
     */
 
     /* ALU_SRC:
@@ -26,7 +25,8 @@ module master_ctrl (opcode, lower_two, alu_src, mem_write, reg_write,
 	6 - 
 	7 - X
     */
-    reg[2:0] alu_src, reg_dst;
+    reg[2:0] alu_src;
+    reg[1:0] reg_dst;
     wire[2:0] out_alu_arith;
 
     // ADD, SUB, XOR, ANDN invA select
@@ -45,7 +45,7 @@ module master_ctrl (opcode, lower_two, alu_src, mem_write, reg_write,
 		mem_write = 1'b0;
 		reg_write = 1'b1;
 		mem_to_reg = 1'b0;
-		reg_dst = 3'b001;
+		reg_dst = 2'b01;
 		invA = 1'b0;
 		invB = 1'b0;
 		Cin = 1'b0;
@@ -56,7 +56,7 @@ module master_ctrl (opcode, lower_two, alu_src, mem_write, reg_write,
                 mem_write = 1'b0;
                 reg_write = 1'b1;
                 mem_to_reg = 1'b0;
-                reg_dst = 3'b001;
+                reg_dst = 2'b01;
 		invA = 1'b1;
 		invB = 1'b0;
 		Cin = 1'b1;
@@ -67,7 +67,7 @@ module master_ctrl (opcode, lower_two, alu_src, mem_write, reg_write,
                 mem_write = 1'b0;
                 reg_write = 1'b1;
                 mem_to_reg = 1'b0;
-                reg_dst = 3'b001;
+                reg_dst = 2'b01;
 		invA = 1'b0;
 		invB = 1'b0;
 		Cin = 1'b0;
@@ -78,7 +78,7 @@ module master_ctrl (opcode, lower_two, alu_src, mem_write, reg_write,
                 mem_write = 1'b0;
                 reg_write = 1'b1;
                 mem_to_reg = 1'b0;
-                reg_dst = 3'b001;
+                reg_dst = 2'b01;
 		invA = 1'b0;
 		invB = 1'b1;
 		Cin = 1'b0;
@@ -89,7 +89,7 @@ module master_ctrl (opcode, lower_two, alu_src, mem_write, reg_write,
                 mem_write = 1'b0;
                 reg_write = 1'b1;
                 mem_to_reg = 1'b0;
-                reg_dst = 3'b001;
+                reg_dst = 2'b01;
                 invA = 1'b0;
                 invB = 1'b0;
                 Cin = 1'b0;
@@ -100,7 +100,7 @@ module master_ctrl (opcode, lower_two, alu_src, mem_write, reg_write,
                 mem_write = 1'b0;
                 reg_write = 1'b1;
                 mem_to_reg = 1'b0;
-                reg_dst = 3'b001;
+                reg_dst = 2'b01;
                 invA = 1'b0;
                 invB = 1'b0;
                 Cin = 1'b0;
@@ -111,7 +111,7 @@ module master_ctrl (opcode, lower_two, alu_src, mem_write, reg_write,
                 mem_write = 1'b0;
                 reg_write = 1'b1;
                 mem_to_reg = 1'b0;
-                reg_dst = 3'b001;
+                reg_dst = 2'b01;
                 invA = 1'b0;
                 invB = 1'b0;
                 Cin = 1'b0;
@@ -122,7 +122,7 @@ module master_ctrl (opcode, lower_two, alu_src, mem_write, reg_write,
                 mem_write = 1'b0;
                 reg_write = 1'b1;
                 mem_to_reg = 1'b0;
-                reg_dst = 3'b001;
+                reg_dst = 2'b01;
                 invA = 1'b0;
                 invB = 1'b0;
                 Cin = 1'b0;
@@ -135,7 +135,7 @@ module master_ctrl (opcode, lower_two, alu_src, mem_write, reg_write,
                 mem_write = 1'b1;
                 reg_write = 1'b0;
                 mem_to_reg = 1'b0;
-                reg_dst = 3'b100; // Don't care
+                reg_dst = 2'b10; // Don't care
                 invA = 1'b0;
                 invB = 1'b0;
                 Cin = 1'b0;
@@ -146,7 +146,7 @@ module master_ctrl (opcode, lower_two, alu_src, mem_write, reg_write,
                 mem_write = 1'b0;
                 reg_write = 1'b1;
                 mem_to_reg = 1'b1;
-                reg_dst = 3'b001;
+                reg_dst = 2'b01;
                 invA = 1'b0;
                 invB = 1'b0;
                 Cin = 1'b0;
@@ -158,7 +158,7 @@ module master_ctrl (opcode, lower_two, alu_src, mem_write, reg_write,
                 mem_write = 1'b1;
                 reg_write = 1'b1;
                 mem_to_reg = 1'b0;
-                reg_dst = 3'b010;
+                reg_dst = 2'b10;
                 invA = 1'b0;
                 invB = 1'b0;
                 Cin = 1'b0;
@@ -169,7 +169,7 @@ module master_ctrl (opcode, lower_two, alu_src, mem_write, reg_write,
                 mem_write = 1'b0;
                 reg_write = 1'b1;
                 mem_to_reg = 1'b0;
-                reg_dst = 3'b000;
+                reg_dst = 2'b00;
                 invA = 1'b0;
                 invB = 1'b0;
                 Cin = 1'b0;
@@ -180,7 +180,7 @@ module master_ctrl (opcode, lower_two, alu_src, mem_write, reg_write,
                 mem_write = 1'b0;
                 reg_write = 1'b1;
                 mem_to_reg = 1'b0;
-                reg_dst = 3'b000;
+                reg_dst = 2'b00;
                 invA = out_alu_arith[2];
                 invB = out_alu_arith[1];
                 Cin = out_alu_arith[0];
@@ -191,7 +191,7 @@ module master_ctrl (opcode, lower_two, alu_src, mem_write, reg_write,
                 mem_write = 1'b0;
                 reg_write = 1'b1;
                 mem_to_reg = 1'b0;
-                reg_dst = 3'b000;
+                reg_dst = 2'b00;
                 invA = 1'b0;
                 invB = 1'b0;
                 Cin = 1'b0;
@@ -202,7 +202,7 @@ module master_ctrl (opcode, lower_two, alu_src, mem_write, reg_write,
                 mem_write = 1'b0;
                 reg_write = 1'b1;
                 mem_to_reg = 1'b0;
-                reg_dst = 3'b000;
+                reg_dst = 2'b00;
                 invA = 1'b0;
                 invB = 1'b1;
                 Cin = 1'b1;
@@ -213,7 +213,7 @@ module master_ctrl (opcode, lower_two, alu_src, mem_write, reg_write,
                 mem_write = 1'b0;
                 reg_write = 1'b1;
                 mem_to_reg = 1'b0;
-                reg_dst = 3'b000;
+                reg_dst = 2'b00;
                 invA = 1'b0;
                 invB = 1'b1;
                 Cin = 1'b1;
@@ -224,7 +224,7 @@ module master_ctrl (opcode, lower_two, alu_src, mem_write, reg_write,
                 mem_write = 1'b0;
                 reg_write = 1'b1;
                 mem_to_reg = 1'b0;
-                reg_dst = 3'b000;
+                reg_dst = 2'b00;
                 invA = 1'b0;
                 invB = 1'b1;
                 Cin = 1'b1;
@@ -235,7 +235,7 @@ module master_ctrl (opcode, lower_two, alu_src, mem_write, reg_write,
                 mem_write = 1'b0;
                 reg_write = 1'b1;
                 mem_to_reg = 1'b0;
-                reg_dst = 3'b000;
+                reg_dst = 2'b00;
                 invA = 1'b0;
                 invB = 1'b0;
                 Cin = 1'b0;
@@ -246,7 +246,7 @@ module master_ctrl (opcode, lower_two, alu_src, mem_write, reg_write,
                 mem_write = 1'b0;
                 reg_write = 1'b0;
                 mem_to_reg = 1'b0;
-                reg_dst = 3'b100; // Don't care
+                reg_dst = 2'b10; // Don't care
                 invA = 1'b0;
                 invB = 1'b1;
                 Cin = 1'b1;
@@ -257,7 +257,7 @@ module master_ctrl (opcode, lower_two, alu_src, mem_write, reg_write,
                 mem_write = 1'b0;
                 reg_write = 1'b0;
                 mem_to_reg = 1'b0;
-                reg_dst = 3'b100; // Don't care
+                reg_dst = 2'b10; // Don't care
                 invA = 1'b0;
                 invB = 1'b1;
                 Cin = 1'b1;
@@ -268,7 +268,7 @@ module master_ctrl (opcode, lower_two, alu_src, mem_write, reg_write,
                 mem_write = 1'b0;
                 reg_write = 1'b0;
                 mem_to_reg = 1'b0;
-                reg_dst = 3'b100; // Don't care
+                reg_dst = 2'b10; // Don't care
                 invA = 1'b0;
                 invB = 1'b1;
                 Cin = 1'b1;
@@ -279,7 +279,7 @@ module master_ctrl (opcode, lower_two, alu_src, mem_write, reg_write,
                 mem_write = 1'b0;
                 reg_write = 1'b0;
                 mem_to_reg = 1'b0;
-                reg_dst = 3'b100; // Don't care
+                reg_dst = 2'b10; // Don't care
                 invA = 1'b0;
                 invB = 1'b1;
                 Cin = 1'b1;
@@ -290,7 +290,7 @@ module master_ctrl (opcode, lower_two, alu_src, mem_write, reg_write,
                 mem_write = 1'b0;
                 reg_write = 1'b1;
                 mem_to_reg = 1'b0;
-                reg_dst = 3'b010;
+                reg_dst = 2'b10;
                 invA = 1'b0;
                 invB = 1'b0;
                 Cin = 1'b0;
@@ -301,7 +301,7 @@ module master_ctrl (opcode, lower_two, alu_src, mem_write, reg_write,
                 mem_write = 1'b0;
                 reg_write = 1'b1;
                 mem_to_reg = 1'b0;
-                reg_dst = 3'b010;
+                reg_dst = 2'b10;
                 invA = 1'b0;
                 invB = 1'b0;
                 Cin = 1'b0;
@@ -312,7 +312,7 @@ module master_ctrl (opcode, lower_two, alu_src, mem_write, reg_write,
                 mem_write = 1'b0;
                 reg_write = 1'b1;
                 mem_to_reg = 1'b0;
-                reg_dst = 3'b011; // R7
+                reg_dst = 2'b11; // R7
                 invA = 1'b0;
                 invB = 1'b0;
                 Cin = 1'b0;
@@ -323,7 +323,7 @@ module master_ctrl (opcode, lower_two, alu_src, mem_write, reg_write,
                 mem_write = 1'b0;
                 reg_write = 1'b1;
                 mem_to_reg = 1'b0;
-                reg_dst = 3'b011; // R7
+                reg_dst = 2'b11; // R7
                 invA = 1'b0;
                 invB = 1'b0;
                 Cin = 1'b0;

@@ -9,6 +9,6 @@ module writeback(write_data, read_data, alu_out, next_PC, JALen, memToReg);
   output [15:0] write_data;
   
 
-  mux4_1_16 wbmux(.InA(read_data), .InB(alu_out), .InC(next_PC), .InD(16'bxxxx_xxxx_xxxx_xxxx), .S({JALen,memToReg} ), .Out(write_data));
+  mux4_1_16 wbmux(.InA(alu_out), .InB(read_data), .InC(next_PC), .InD(16'bxxxx_xxxx_xxxx_xxxx), .S({JALen, memToReg}), .Out(write_data));
 
 endmodule

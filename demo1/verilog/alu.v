@@ -1,7 +1,7 @@
-module alu(Out, Z, P, N, A, B, Op, invA, invB, Cin, lower_two);
+module alu(Out, Z, P, N, A, B, Op, invA, invB, Cin, lower_two, err);
    
     output [15:0] Out;
-    output Z, P, N;
+    output Z, P, N, err;
     input [15:0] A;
     input [15:0] B;
     input Cin, invA, invB;
@@ -9,6 +9,7 @@ module alu(Out, Z, P, N, A, B, Op, invA, invB, Cin, lower_two);
     input [1:0] lower_two;
 
     reg [15:0] Out;
+    reg err;
 
     wire[15:0] A_mod, B_mod, out_left_shift, out_right_shift, out_xor, out_and, out_or, S_cla, out_left_rotate, out_right_rotate, out_bit_rotate, alu_arith, alu_shift; 
     wire PG_cla, GG_cla, Cout_cla, ofl_out, leq;
@@ -48,83 +49,166 @@ module alu(Out, Z, P, N, A, B, Op, invA, invB, Cin, lower_two);
         case(Op)
                 5'b01000: begin // ADDI
                   Out = S_cla;
+		  err = 1'b0;
                 end
 
                 5'b01001: begin // SUBI
                   Out = S_cla;
+		  err = 1'b0;
                 end
 
                 5'b01010: begin // XORI
                   Out = out_xor;
+		  err = 1'b0;
     		end
 
     		5'b01011: begin // ANDNI
                   Out = out_and;
+		  err = 1'b0;
     		end
 
     		5'b10100: begin // ROLI
                   Out = out_left_rotate;
+		  err = 1'b0;
     		end
 
     		5'b10101: begin // SLLI
                   Out = out_left_shift;
+		  err = 1'b0;
     		end
 
     		5'b10110: begin // RORI
                   Out = out_right_rotate;
+		  err = 1'b0;
     		end
     		5'b10111: begin // SRLI
                   Out = out_right_shift;
+		  err = 1'b0;
     		end
 
 		5'b10000: begin // ST
 		  Out = S_cla;
+		  err = 1'b0;
 		end
 
 		5'b10001: begin // LD
 		  Out = S_cla;
+		  err = 1'b0;
 		end
 
 		5'b10011: begin // STU
 		  Out = S_cla;
+		  err = 1'b0;
 		end
 
 		5'b11001: begin // BTR
 		  Out = out_bit_rotate;
+		  err = 1'b0;
 		end
 
 		5'b11011: begin // ADD, SUB, XOR and ANDN
 		  Out = alu_arith;
+		  err = 1'b0;
 		end
 
 		5'b11010: begin // ROL, SLL, ROR and SRL
 		  Out = alu_shift;
+		  err = 1'b0;
 		end
 
 		5'b11100: begin // SEQ
 		  Out = (Z) ? 16'h0001 : 16'h0000;
+		  err = 1'b0;
 		end
 
 		5'b11101: begin // SLT
 		  Out = (N) ? 16'h0001 : 16'h0000;
+		  err = 1'b0;
 		end
 
 		5'b11110: begin // SLE
 		  Out = (N | Z) ? 16'h0001 : 16'h0000;
+		  err = 1'b0;
 		end
 
 		5'b11111: begin // SCO
 		  Out = (GG_cla) ? 16'h0001 : 16'h0000;
+		  err = 1'b0;
 		end
 
 		5'b11000: begin // LBI
 		  Out = B;
+		  err = 1'b0;
 		end
 
 		5'b10010: begin // SLBI
 		  Out = ((A << 8) | B);
+		  err = 1'b0;
 		end
+
+                5'b01100: begin // BEQZ
+                  Out = 16'hXXXX;
+                  err = 1'b0;
+                end
+
+                5'b01101: begin // BNEZ
+                  Out = 16'hXXXX;
+                  err = 1'b0;
+                end
+
+                5'b01110: begin // BLTZ
+                  Out = 16'hXXXX;
+                  err = 1'b0;
+                end
+
+                5'b01111: begin // BGEZ
+                  Out = 16'hXXXX;
+                  err = 1'b0;
+                end
+
+                5'b00100: begin // J disp
+                  Out = 16'hXXXX;
+                  err = 1'b0;
+                end
+
+                5'b00101: begin // JR
+                  Out = 16'hXXXX;
+                  err = 1'b0;
+                end
+
+                5'b00110: begin // JAL
+                  Out = 16'hXXXX;
+                  err = 1'b0;
+                end
+
+                5'b00111: begin // JALR
+                  Out = 16'hXXXX;
+                  err = 1'b0;
+                end
+
+                5'b00010: begin // siic
+                  Out = 16'hXXXX;
+                  err = 1'b0;
+                end
+
+                5'b00011: begin // NOP/RTI
+                  Out = 16'hXXXX;
+                  err = 1'b0;
+                end
+
+                5'b00000: begin // HALT
+                  Out = 16'hXXXX;
+                  err = 1'b0;
+                end
+
+                5'b00001: begin // NOP
+                  Out = 16'hXXXX;
+                  err = 1'b0;
+                end
+
     		default: begin
+		  Out = 16'hXXXX;
+		  err = 1'b1;
     		end
     	endcase
     end

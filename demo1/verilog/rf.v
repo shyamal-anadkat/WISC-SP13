@@ -56,4 +56,5 @@ module rf (
    mux8_1 m2[15:0](.InA(reg_out1), .InB(reg_out2), .InC(reg_out3), 
    .InD(reg_out4), .InE(reg_out5), .InF(reg_out6), .InG(reg_out7), .InH(reg_out8), .S(read2regsel), .Out(read2data));
 
+   assign err = 1'b0;
 endmodule

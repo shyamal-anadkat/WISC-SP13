@@ -1,12 +1,12 @@
 module master_ctrl (opcode, lower_two, alu_src, mem_write, reg_write,
-                    mem_to_reg, reg_dst, invA, invB, Cin);
+                    mem_to_reg, reg_dst, invA, invB, Cin, dump);
     input[4:0] opcode;
     input[1:0] lower_two;
-    output mem_write, reg_write, mem_to_reg, invA, invB, Cin;
+    output mem_write, reg_write, mem_to_reg, invA, invB, Cin, dump;
     output[1:0] reg_dst;
     output[2:0] alu_src;
 
-    reg mem_write, reg_write, mem_to_reg, invA, invB, Cin;
+    reg mem_write, reg_write, mem_to_reg, invA, invB, Cin, dump;
 
     /* Reg_dst:
 	0 - Ins[4:2]
@@ -40,6 +40,30 @@ module master_ctrl (opcode, lower_two, alu_src, mem_write, reg_write,
 
     always @(*) begin
 	case(opcode)
+            5'b00000: begin // HALT
+                alu_src = 3'b111; // Don't care
+                mem_write = 1'b0;
+                reg_write = 1'b0;
+                mem_to_reg = 1'b0;
+                reg_dst = 2'b01;
+                invA = 1'b0;
+                invB = 1'b0;
+                Cin = 1'b0;
+		dump = 1'b1;
+            end
+
+            5'b01000: begin // NOP
+                alu_src = 3'b111; // Don't care
+                mem_write = 1'b0;
+                reg_write = 1'b0;
+                mem_to_reg = 1'b0;
+                reg_dst = 2'b01;
+                invA = 1'b0;
+                invB = 1'b0;
+                Cin = 1'b0;
+		dump = 1'b0;
+            end
+
 	    5'b01000: begin // ADDI
 		alu_src = 3'b001;
 		mem_write = 1'b0;
@@ -49,6 +73,7 @@ module master_ctrl (opcode, lower_two, alu_src, mem_write, reg_write,
 		invA = 1'b0;
 		invB = 1'b0;
 		Cin = 1'b0;
+		dump = 1'b0;
 	    end
 
             5'b01001: begin // SUBI
@@ -60,6 +85,7 @@ module master_ctrl (opcode, lower_two, alu_src, mem_write, reg_write,
 		invA = 1'b1;
 		invB = 1'b0;
 		Cin = 1'b1;
+		dump = 1'b0;
             end
 
             5'b01010: begin // XORI
@@ -71,6 +97,7 @@ module master_ctrl (opcode, lower_two, alu_src, mem_write, reg_write,
 		invA = 1'b0;
 		invB = 1'b0;
 		Cin = 1'b0;
+		dump = 1'b0;
             end
 
             5'b01011: begin // ANDNI
@@ -82,6 +109,7 @@ module master_ctrl (opcode, lower_two, alu_src, mem_write, reg_write,
 		invA = 1'b0;
 		invB = 1'b1;
 		Cin = 1'b0;
+		dump = 1'b0;
             end
 
             5'b10100: begin // ROLI
@@ -93,6 +121,7 @@ module master_ctrl (opcode, lower_two, alu_src, mem_write, reg_write,
                 invA = 1'b0;
                 invB = 1'b0;
                 Cin = 1'b0;
+		dump = 1'b0;
             end
 
             5'b10101: begin // SLLI
@@ -104,6 +133,7 @@ module master_ctrl (opcode, lower_two, alu_src, mem_write, reg_write,
                 invA = 1'b0;
                 invB = 1'b0;
                 Cin = 1'b0;
+		dump = 1'b0;
             end
 
             5'b10110: begin // RORI
@@ -115,6 +145,7 @@ module master_ctrl (opcode, lower_two, alu_src, mem_write, reg_write,
                 invA = 1'b0;
                 invB = 1'b0;
                 Cin = 1'b0;
+		dump = 1'b0;
             end
 
             5'b10111: begin // SRLI
@@ -126,6 +157,7 @@ module master_ctrl (opcode, lower_two, alu_src, mem_write, reg_write,
                 invA = 1'b0;
                 invB = 1'b0;
                 Cin = 1'b0;
+		dump = 1'b0;
             end
 
 	    // Make sure to have a mux at data_in of memory.
@@ -139,6 +171,7 @@ module master_ctrl (opcode, lower_two, alu_src, mem_write, reg_write,
                 invA = 1'b0;
                 invB = 1'b0;
                 Cin = 1'b0;
+		dump = 1'b0;
             end
 
             5'b10001: begin // LD
@@ -150,6 +183,7 @@ module master_ctrl (opcode, lower_two, alu_src, mem_write, reg_write,
                 invA = 1'b0;
                 invB = 1'b0;
                 Cin = 1'b0;
+		dump = 1'b0;
             end
 
 	    // Similar to ST
@@ -162,6 +196,7 @@ module master_ctrl (opcode, lower_two, alu_src, mem_write, reg_write,
                 invA = 1'b0;
                 invB = 1'b0;
                 Cin = 1'b0;
+		dump = 1'b0;
             end
 
             5'b11001: begin // BTR
@@ -173,6 +208,7 @@ module master_ctrl (opcode, lower_two, alu_src, mem_write, reg_write,
                 invA = 1'b0;
                 invB = 1'b0;
                 Cin = 1'b0;
+		dump = 1'b0;
             end
 
             5'b11011: begin // ADD, SUB, XOR, ANDN
@@ -184,6 +220,7 @@ module master_ctrl (opcode, lower_two, alu_src, mem_write, reg_write,
                 invA = out_alu_arith[2];
                 invB = out_alu_arith[1];
                 Cin = out_alu_arith[0];
+		dump = 1'b0;
             end
 
             5'b11010: begin // ROL, SLL, ROR, SRL
@@ -195,6 +232,7 @@ module master_ctrl (opcode, lower_two, alu_src, mem_write, reg_write,
                 invA = 1'b0;
                 invB = 1'b0;
                 Cin = 1'b0;
+		dump = 1'b0;
             end
 
             5'b11100: begin // SEQ
@@ -206,6 +244,7 @@ module master_ctrl (opcode, lower_two, alu_src, mem_write, reg_write,
                 invA = 1'b0;
                 invB = 1'b1;
                 Cin = 1'b1;
+		dump = 1'b0;
             end
 
             5'b11101: begin // SLT
@@ -217,6 +256,7 @@ module master_ctrl (opcode, lower_two, alu_src, mem_write, reg_write,
                 invA = 1'b0;
                 invB = 1'b1;
                 Cin = 1'b1;
+		dump = 1'b0;
             end
 
             5'b11110: begin // SLE
@@ -228,6 +268,7 @@ module master_ctrl (opcode, lower_two, alu_src, mem_write, reg_write,
                 invA = 1'b0;
                 invB = 1'b1;
                 Cin = 1'b1;
+		dump = 1'b0;
             end
 
             5'b11111: begin // SCO
@@ -239,6 +280,7 @@ module master_ctrl (opcode, lower_two, alu_src, mem_write, reg_write,
                 invA = 1'b0;
                 invB = 1'b0;
                 Cin = 1'b0;
+		dump = 1'b0;
             end
 
             5'b01100: begin // BEQZ
@@ -250,6 +292,7 @@ module master_ctrl (opcode, lower_two, alu_src, mem_write, reg_write,
                 invA = 1'b0;
                 invB = 1'b1;
                 Cin = 1'b1;
+		dump = 1'b0;
             end
 
             5'b01101: begin // BNEZ
@@ -261,6 +304,7 @@ module master_ctrl (opcode, lower_two, alu_src, mem_write, reg_write,
                 invA = 1'b0;
                 invB = 1'b1;
                 Cin = 1'b1;
+		dump = 1'b0;
             end
 
             5'b01110: begin // BLTZ
@@ -272,6 +316,7 @@ module master_ctrl (opcode, lower_two, alu_src, mem_write, reg_write,
                 invA = 1'b0;
                 invB = 1'b1;
                 Cin = 1'b1;
+		dump = 1'b0;
             end
 
             5'b01111: begin // BGEZ
@@ -283,6 +328,7 @@ module master_ctrl (opcode, lower_two, alu_src, mem_write, reg_write,
                 invA = 1'b0;
                 invB = 1'b1;
                 Cin = 1'b1;
+		dump = 1'b0;
             end
 
             5'b11000: begin // LBI
@@ -294,6 +340,7 @@ module master_ctrl (opcode, lower_two, alu_src, mem_write, reg_write,
                 invA = 1'b0;
                 invB = 1'b0;
                 Cin = 1'b0;
+		dump = 1'b0;
             end
 
             5'b10010: begin // SLBI
@@ -305,6 +352,7 @@ module master_ctrl (opcode, lower_two, alu_src, mem_write, reg_write,
                 invA = 1'b0;
                 invB = 1'b0;
                 Cin = 1'b0;
+		dump = 1'b0;
             end
 
             5'b00110: begin // JAL
@@ -316,6 +364,7 @@ module master_ctrl (opcode, lower_two, alu_src, mem_write, reg_write,
                 invA = 1'b0;
                 invB = 1'b0;
                 Cin = 1'b0;
+		dump = 1'b0;
             end
 
             5'b00111: begin // JALR
@@ -327,6 +376,7 @@ module master_ctrl (opcode, lower_two, alu_src, mem_write, reg_write,
                 invA = 1'b0;
                 invB = 1'b0;
                 Cin = 1'b0;
+		dump = 1'b0;
             end
 
 	    default: begin

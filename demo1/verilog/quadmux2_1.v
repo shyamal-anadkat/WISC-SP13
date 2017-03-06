@@ -1,5 +1,5 @@
 module quadmux2_1 (
-    input[3:0] InA, InB, InC, InD,
+    input[3:0] InA, InB,
     input S,
     output[3:0] Out );
 

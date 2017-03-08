@@ -23,6 +23,6 @@ assign stop = ~dump;
 
 //Adder for PC+2
 
-    cla16 cla_mod(.A(pcCurrent), .B(16'b0000_0000_0000_0010), .Cin(1'b0), .Cout(Cout_cla), .PG(PG_cla), .GG(GG_cla), .S(nextPC));
+    cla16 cla_mod(.A(pcCurrent), .B(16'h0002), .Cin(1'b0), .Cout(Cout_cla), .PG(PG_cla), .GG(GG_cla), .S(nextPC));
 
 endmodule

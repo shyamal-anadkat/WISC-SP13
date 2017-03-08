@@ -47,6 +47,16 @@ module alu(Out, Z, P, N, A, B, Op, invA, invB, Cin, lower_two, err);
 
     always @(*) begin
         case(Op)
+                5'b00000: begin // HALT
+                  Out = 16'hXXXX;
+                  err = 1'b0;
+                end
+
+                5'b00001: begin // NOP
+                  Out = 16'hXXXX;
+                  err = 1'b0;
+                end
+
                 5'b01000: begin // ADDI
                   Out = S_cla;
 		  err = 1'b0;
@@ -192,16 +202,6 @@ module alu(Out, Z, P, N, A, B, Op, invA, invB, Cin, lower_two, err);
                 end
 
                 5'b00011: begin // NOP/RTI
-                  Out = 16'hXXXX;
-                  err = 1'b0;
-                end
-
-                5'b00000: begin // HALT
-                  Out = 16'hXXXX;
-                  err = 1'b0;
-                end
-
-                5'b00001: begin // NOP
                   Out = 16'hXXXX;
                   err = 1'b0;
                 end

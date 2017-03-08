@@ -153,7 +153,6 @@ module proc_hier_bench();
    
    /* Add anything else you want here */
 
-   
 endmodule
 
 // DUMMY LINE FOR REV CONTROL :0:

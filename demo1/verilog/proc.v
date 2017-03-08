@@ -37,7 +37,7 @@ module proc (/*AUTOARG*/
 
    writeback wb1(.write_data(write_data), .read_data(data_out), .alu_out(alu_out), .next_PC(pc_plus_2), .JALen(JALen), .memToReg(mem_to_reg));
 
-   //assign err = (err1 | err2);
+   //assign err = (err2);
    assign err = 1'b0;
 
 endmodule // proc

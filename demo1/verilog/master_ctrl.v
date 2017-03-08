@@ -52,7 +52,7 @@ module master_ctrl (opcode, lower_two, alu_src, mem_write, reg_write,
 		dump = 1'b1;
             end
 
-            5'b01000: begin // NOP
+            5'b00001: begin // NOP
                 alu_src = 3'b111; // Don't care
                 mem_write = 1'b0;
                 reg_write = 1'b0;

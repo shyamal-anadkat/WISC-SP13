@@ -5,7 +5,15 @@ Type "help" for more information
 
 Loading program...
 Executing...
+lbi r1, 64
+INUM:        0 PC: 0x0000 REG: 1 VALUE: 0x0040
+lbi r2, 82
+INUM:        1 PC: 0x0002 REG: 2 VALUE: 0x0052
+stu r2, r1, -14
+INUM:        2 PC: 0x0004 REG: 1 VALUE: 0x0032 ADDR: 0x0032 VALUE: 0x0052
+ld r2, r1, 0
+INUM:        3 PC: 0x0006 REG: 2 VALUE: 0x0052 ADDR: 0x0032
 halt
 program halted
-INUM:        0 PC: 0x0000
+INUM:        4 PC: 0x0008
 Program Finished

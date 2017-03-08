@@ -1,7 +1,11 @@
-0000 9100 slbi	r1, 0
-0002 9155 slbi	r1, 0x55
-0004 a948 slli	r2, r1, 8
-0006 6a02 bnez	r2, .LAB3
-0008 4a41 subi    r2, r2, 1
-000a      .LAB3:
-000a 0000 halt
+          // Original test: ./freiberg/hw4/problem6/stu_2.asm
+          // Author: freiberg
+          // Test source code follows
+          
+          
+          //in between case
+0000 c140 lbi r1, 64
+0002 c252 lbi r2, 82
+0004 9952 stu r2, r1, 18
+0006 8940 ld r2, r1, 0
+0008 0000 halt

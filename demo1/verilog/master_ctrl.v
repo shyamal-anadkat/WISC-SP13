@@ -355,6 +355,30 @@ module master_ctrl (opcode, lower_two, alu_src, mem_write, reg_write,
 		dump = 1'b0;
             end
 
+            5'b00100: begin // J disp
+                alu_src = 3'b110; // Don't care
+                mem_write = 1'b0;
+                reg_write = 1'b0;
+                mem_to_reg = 1'b0;
+                reg_dst = 2'b11; // Don't care
+                invA = 1'b0;
+                invB = 1'b0;
+                Cin = 1'b0;
+                dump = 1'b0;
+            end
+
+            5'b00101: begin // JR
+                alu_src = 3'b110; // Don't care
+                mem_write = 1'b0;
+                reg_write = 1'b0;
+                mem_to_reg = 1'b0;
+                reg_dst = 2'b11; // Don't care
+                invA = 1'b0;
+                invB = 1'b0;
+                Cin = 1'b0;
+                dump = 1'b0;
+            end
+
             5'b00110: begin // JAL
                 alu_src = 3'b110; // Don't care
                 mem_write = 1'b0;

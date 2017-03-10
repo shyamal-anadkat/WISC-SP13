@@ -31,14 +31,14 @@ module proc (/*AUTOARG*/
 
    decode decode0(.instr(instr), .write_data(write_data), .clk(clk), .rst(rst), .err(err1), .alu_src(alu_src), .mem_write(mem_write), .mem_to_reg(mem_to_reg), .invA(invA), .invB(invB), .Cin(Cin), .A(A), .B(B), .dump(dump));
 
-   execute exe1(.instr(instr), .invA(invA), .invB(invB), .Cin(Cin), .alu_src(alu_src), .A(A), .B(B), .pc_plus_2(pc_plus_2), .result(alu_out), .pc_updated(next_pc), .jr(JALen), .err(err2));
+   execute exe1(.instr(instr), .invA(invA), .invB(invB), .Cin(Cin), .alu_src(alu_src), .A(A), .B(B), .pc_plus_2(pc_plus_2), .result(alu_out), .pc_updated(next_pc), .reg_7_en(JALen), .err(err2));
 
    memory memory0(.aluResult(alu_out), .readData(data_out), .writeData(B), .memRead(mem_to_reg), .memWrite(mem_write), .clk(clk), .rst(rst), .dump(dump));
 
    writeback wb1(.write_data(write_data), .read_data(data_out), .alu_out(alu_out), .next_PC(pc_plus_2), .JALen(JALen), .memToReg(mem_to_reg));
 
-   //assign err = (err2);
-   assign err = 1'b0;
+   assign err = (err2);
+   //assign err = 1'b0;
 
 endmodule // proc
 // DUMMY LINE FOR REV CONTROL :0:

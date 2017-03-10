@@ -157,42 +157,42 @@ module alu(Out, Z, P, N, A, B, Op, invA, invB, Cin, lower_two, err);
 		end
 
                 5'b01100: begin // BEQZ
-                  Out = 16'hXXXX;
+                  Out = S_cla;
                   err = 1'b0;
                 end
 
                 5'b01101: begin // BNEZ
-                  Out = 16'hXXXX;
+                  Out = S_cla;
                   err = 1'b0;
                 end
 
                 5'b01110: begin // BLTZ
-                  Out = 16'hXXXX;
+                  Out = S_cla;
                   err = 1'b0;
                 end
 
                 5'b01111: begin // BGEZ
-                  Out = 16'hXXXX;
+                  Out = S_cla;
                   err = 1'b0;
                 end
 
                 5'b00100: begin // J disp
-                  Out = 16'hXXXX;
+                  Out = S_cla;
                   err = 1'b0;
                 end
 
                 5'b00101: begin // JR
-                  Out = 16'hXXXX;
+                  Out = S_cla;
                   err = 1'b0;
                 end
 
                 5'b00110: begin // JAL
-                  Out = 16'hXXXX;
+                  Out = S_cla;
                   err = 1'b0;
                 end
 
                 5'b00111: begin // JALR
-                  Out = 16'hXXXX;
+                  Out = S_cla;
                   err = 1'b0;
                 end
 

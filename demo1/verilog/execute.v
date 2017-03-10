@@ -1,14 +1,14 @@
-module execute (instr, invA, invB, Cin, alu_src, A, B, pc_plus_2, result, pc_updated, jr, err);
+module execute (instr, invA, invB, Cin, alu_src, A, B, pc_plus_2, result, pc_updated, reg_7_en, err);
     // A - Rs, B - Rt, instr - Instruction
     input[15:0] A, B, instr, pc_plus_2;
     input[2:0] alu_src;
     input invA, invB, Cin;
 
     output[15:0] result, pc_updated;
-    output jr, err;
+    output err, reg_7_en;
 
     wire[15:0] se4_0, ze4_0, se7_0, ze7_0, se10_0, alu_in_2, branch_out, pc_inc, sum1, sum2;
-    wire P, N, Z, branch, jump_disp, cout1, cout2, pg1, pg2, gg1, gg2;
+    wire P, N, Z, branch, jump_disp, cout1, cout2, pg1, pg2, gg1, gg2, jr;
 
     // Extend to 16 bits
     SignExtend8_16 se8(.in(instr[7:0]), .out(se7_0));
@@ -26,7 +26,7 @@ module execute (instr, invA, invB, Cin, alu_src, A, B, pc_plus_2, result, pc_upd
     branch_ctrl bctl(.positive_flag(P), .negative_flag(N), .zero_flag(Z), .opcode(instr[15:11]), .branch_en(branch));
 
     jump_disp_ctrl jdctl(.opcode(instr[15:11]), .jump_disp_en(jump_disp));
-    jr_ctrl jrctl(.opcode(instr[15:11]), .jr_en(jr));
+    jr_ctrl jrctl(.opcode(instr[15:11]), .jr_en(jr), .reg_7_en(reg_7_en));
 
     mux2_1_16 mux2(.InA(16'h0000), .InB(se7_0), .S(branch), .Out(branch_out));
     mux2_1_16 mux3(.InA(branch_out), .InB(se10_0), .S(jump_disp), .Out(pc_inc));

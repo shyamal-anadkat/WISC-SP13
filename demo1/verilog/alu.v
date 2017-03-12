@@ -132,12 +132,13 @@ module alu(Out, Z, P, N, A, B, Op, invA, invB, Cin, lower_two, err);
 		end
 
 		5'b11101: begin // SLT
-		  Out =  (P) ? 16'h1: 16'h0;
+		  Out =  ((N & ~(A[15] ^ B[15])) | (A[15] & ~B[15])) ? 16'h1: 16'h0;
+		  //Out = S_cla;
 		  err = 1'b0;
 		end
 
 		5'b11110: begin // SLE
-		  Out = (N | Z) ? 16'h1 : 16'h0;
+		  Out = ((N & ~(A[15] ^ B[15])) | (A[15] & ~B[15]) | Z) ? 16'h1 : 16'h0;
 		  err = 1'b0;
 		end
 

@@ -1,0 +1,364 @@
+
+                           Design Compiler Graphical 
+                                 DC Ultra (TM)
+                                  DFTMAX (TM)
+                              Power Compiler (TM)
+                                 DesignWare (R)
+                                 DC Expert (TM)
+                               Design Vision (TM)
+                               HDL Compiler (TM)
+                               VHDL Compiler (TM)
+                                  DFT Compiler
+                               Design Compiler(R)
+
+              Version L-2016.03-SP4-1 for linux64 - Sep 10, 2016 
+
+                    Copyright (c) 1988 - 2016 Synopsys, Inc.
+   This software and the associated documentation are proprietary to Synopsys,
+ Inc. This software may only be used in accordance with the terms and conditions
+ of a written license agreement with Synopsys, Inc. All other use, reproduction,
+            or distribution of this software is strictly prohibited.
+Initializing...
+echo "********** CS552 Reading files begin ********************"
+********** CS552 Reading files begin ********************
+set my_verilog_files [list alu.v and16.v and2.v and3.v and4.v and5.v bit_rotate.v branch_ctrl.v cla16.v cla4.v dec3_8.v decode.v dff.v execute.v fetch.v inv16.v jr_ctrl.v jump_disp_ctrl.v left_rotate.v left_shift.v master_ctrl.v memory2c.syn.v memory.v mux2_1_16.v mux2_1_3.v mux2_1.v mux4_1_16.v mux4_1_3.v mux4_1.v mux8_1_16.v mux8_1.v nand2.v not1.v or16.v or2.v or3.v or4.v or5.v proc.v quadmux2_1.v quadmux4_1.v quadmux8_1.v reg16.v rf.v right_rotate.v right_shift.v shifter1.v shifter2.v shifter4.v shifter8.v shifter.v SignExtend11_16.v SignExtend5_16.v SignExtend8_16.v writeback.v xor16.v xor2.v xor3.v ZeroExtend11_16.v ZeroExtend5_16.v ZeroExtend8_16.v zero_out.v  ]
+alu.v and16.v and2.v and3.v and4.v and5.v bit_rotate.v branch_ctrl.v cla16.v cla4.v dec3_8.v decode.v dff.v execute.v fetch.v inv16.v jr_ctrl.v jump_disp_ctrl.v left_rotate.v left_shift.v master_ctrl.v memory2c.syn.v memory.v mux2_1_16.v mux2_1_3.v mux2_1.v mux4_1_16.v mux4_1_3.v mux4_1.v mux8_1_16.v mux8_1.v nand2.v not1.v or16.v or2.v or3.v or4.v or5.v proc.v quadmux2_1.v quadmux4_1.v quadmux8_1.v reg16.v rf.v right_rotate.v right_shift.v shifter1.v shifter2.v shifter4.v shifter8.v shifter.v SignExtend11_16.v SignExtend5_16.v SignExtend8_16.v writeback.v xor16.v xor2.v xor3.v ZeroExtend11_16.v ZeroExtend5_16.v ZeroExtend8_16.v zero_out.v
+set my_toplevel proc
+proc
+define_design_lib WORK -path ./WORK
+1
+analyze -f verilog $my_verilog_files
+Running PRESTO HDLC
+Compiling source file ./alu.v
+Compiling source file ./and16.v
+Compiling source file ./and2.v
+Compiling source file ./and3.v
+Compiling source file ./and4.v
+Compiling source file ./and5.v
+Compiling source file ./bit_rotate.v
+Compiling source file ./branch_ctrl.v
+Compiling source file ./cla16.v
+Compiling source file ./cla4.v
+Compiling source file ./dec3_8.v
+Compiling source file ./decode.v
+Compiling source file ./dff.v
+Warning:  ./dff.v:15: delays for continuous assignment are ignored. (VER-173)
+Compiling source file ./execute.v
+Compiling source file ./fetch.v
+Compiling source file ./inv16.v
+Compiling source file ./jr_ctrl.v
+Compiling source file ./jump_disp_ctrl.v
+Compiling source file ./left_rotate.v
+Compiling source file ./left_shift.v
+Compiling source file ./master_ctrl.v
+Compiling source file ./memory2c.syn.v
+Compiling source file ./memory.v
+Warning:  ./memory2c.syn.v:71: The statements in initial blocks are ignored. (VER-281)
+Warning:  ./memory.v:9: the undeclared symbol 'memReadorWrite' assumed to have the default net type, which is 'wire'. (VER-936)
+Compiling source file ./mux2_1_16.v
+Compiling source file ./mux2_1_3.v
+Compiling source file ./mux2_1.v
+Compiling source file ./mux4_1_16.v
+Compiling source file ./mux4_1_3.v
+Compiling source file ./mux4_1.v
+Compiling source file ./mux8_1_16.v
+Compiling source file ./mux8_1.v
+Compiling source file ./nand2.v
+Compiling source file ./not1.v
+Compiling source file ./or16.v
+Compiling source file ./or2.v
+Compiling source file ./or3.v
+Compiling source file ./or4.v
+Compiling source file ./or5.v
+Compiling source file ./proc.v
+Compiling source file ./quadmux2_1.v
+Compiling source file ./quadmux4_1.v
+Compiling source file ./quadmux8_1.v
+Compiling source file ./reg16.v
+Compiling source file ./rf.v
+Compiling source file ./right_rotate.v
+Compiling source file ./right_shift.v
+Compiling source file ./shifter1.v
+Compiling source file ./shifter2.v
+Compiling source file ./shifter4.v
+Compiling source file ./shifter8.v
+Compiling source file ./shifter.v
+Compiling source file ./SignExtend11_16.v
+Compiling source file ./SignExtend5_16.v
+Compiling source file ./SignExtend8_16.v
+Compiling source file ./writeback.v
+Compiling source file ./xor16.v
+Compiling source file ./xor2.v
+Compiling source file ./xor3.v
+Compiling source file ./ZeroExtend11_16.v
+Compiling source file ./ZeroExtend5_16.v
+Compiling source file ./ZeroExtend8_16.v
+Compiling source file ./zero_out.v
+Presto compilation completed successfully.
+Loading db file '/u/k/a/karu/courses/cs552/cad/Synopsys_Libraries/libs/gscl45nm.db'
+1
+elaborate $my_toplevel -architecture verilog
+Loading db file '/s/synopsys-2016_09_23/@sys/L-2016.03-SP4-1/libraries/syn/gtech.db'
+Loading db file '/s/synopsys-2016_09_23/@sys/L-2016.03-SP4-1/libraries/syn/standard.sldb'
+  Loading link library 'gscl45nm'
+  Loading link library 'gtech'
+Running PRESTO HDLC
+Presto compilation completed successfully.
+Elaborated 1 design.
+Current design is now 'proc'.
+Information: Building the design 'fetch'. (HDL-193)
+Presto compilation completed successfully.
+Information: Building the design 'decode'. (HDL-193)
+Presto compilation completed successfully.
+Information: Building the design 'execute'. (HDL-193)
+Presto compilation completed successfully.
+Information: Building the design 'memory'. (HDL-193)
+Presto compilation completed successfully.
+Information: Building the design 'writeback'. (HDL-193)
+Presto compilation completed successfully.
+Information: Building the design 'reg16'. (HDL-193)
+Presto compilation completed successfully.
+Information: Building the design 'memory2c'. (HDL-193)
+
+Inferred memory devices in process
+	in routine memory2c line 71 in file
+		'./memory2c.syn.v'.
+===============================================================================
+|    Register Name    |   Type    | Width | Bus | MB | AR | AS | SR | SS | ST |
+===============================================================================
+|       mem_reg       | Flip-flop |  512  |  Y  | N  | N  | N  | N  | N  | N  |
+===============================================================================
+Statistics for MUX_OPs
+======================================================
+| block name/line  | Inputs | Outputs | # sel inputs |
+======================================================
+|   memory2c/60    |   64   |    8    |      6       |
+|   memory2c/60    |   64   |    8    |      6       |
+======================================================
+Presto compilation completed successfully.
+Information: Building the design 'cla16'. (HDL-193)
+Presto compilation completed successfully.
+Information: Building the design 'master_ctrl'. (HDL-193)
+
+Statistics for case statements in always block at line 41 in file
+	'./master_ctrl.v'
+===============================================
+|           Line           |  full/ parallel  |
+===============================================
+|            42            |    auto/auto     |
+===============================================
+
+Inferred memory devices in process
+	in routine master_ctrl line 41 in file
+		'./master_ctrl.v'.
+===========================================================================
+|    Register Name    | Type  | Width | Bus | MB | AR | AS | SR | SS | ST |
+===========================================================================
+|      invB_reg       | Latch |   1   |  N  | N  | N  | N  | -  | -  | -  |
+|       Cin_reg       | Latch |   1   |  N  | N  | N  | N  | -  | -  | -  |
+|      dump_reg       | Latch |   1   |  N  | N  | N  | N  | -  | -  | -  |
+|     alu_src_reg     | Latch |   3   |  Y  | N  | N  | N  | -  | -  | -  |
+|    mem_write_reg    | Latch |   1   |  N  | N  | N  | N  | -  | -  | -  |
+|    reg_write_reg    | Latch |   1   |  N  | N  | N  | N  | -  | -  | -  |
+|   mem_to_reg_reg    | Latch |   1   |  N  | N  | N  | N  | -  | -  | -  |
+|     reg_dst_reg     | Latch |   2   |  Y  | N  | N  | N  | -  | -  | -  |
+|      invA_reg       | Latch |   1   |  N  | N  | N  | N  | -  | -  | -  |
+===========================================================================
+Presto compilation completed successfully.
+Information: Building the design 'mux4_1_3'. (HDL-193)
+Presto compilation completed successfully.
+Information: Building the design 'rf'. (HDL-193)
+Presto compilation completed successfully.
+Information: Building the design 'SignExtend8_16'. (HDL-193)
+Presto compilation completed successfully.
+Information: Building the design 'SignExtend11_16'. (HDL-193)
+Presto compilation completed successfully.
+Information: Building the design 'ZeroExtend8_16'. (HDL-193)
+Presto compilation completed successfully.
+Information: Building the design 'ZeroExtend5_16'. (HDL-193)
+Presto compilation completed successfully.
+Information: Building the design 'SignExtend5_16'. (HDL-193)
+Presto compilation completed successfully.
+Information: Building the design 'mux8_1_16'. (HDL-193)
+Presto compilation completed successfully.
+Information: Building the design 'alu'. (HDL-193)
+Warning:  ./alu.v:49: DEFAULT branch of CASE statement cannot be reached. (ELAB-311)
+
+Statistics for case statements in always block at line 48 in file
+	'./alu.v'
+===============================================
+|           Line           |  full/ parallel  |
+===============================================
+|            49            |    auto/auto     |
+===============================================
+Presto compilation completed successfully.
+Information: Building the design 'branch_ctrl'. (HDL-193)
+
+Statistics for case statements in always block at line 11 in file
+	'./branch_ctrl.v'
+===============================================
+|           Line           |  full/ parallel  |
+===============================================
+|            12            |    auto/auto     |
+===============================================
+Presto compilation completed successfully.
+Information: Building the design 'jump_disp_ctrl'. (HDL-193)
+
+Statistics for case statements in always block at line 6 in file
+	'./jump_disp_ctrl.v'
+===============================================
+|           Line           |  full/ parallel  |
+===============================================
+|            7             |    auto/auto     |
+===============================================
+Presto compilation completed successfully.
+Information: Building the design 'jr_ctrl'. (HDL-193)
+
+Statistics for case statements in always block at line 5 in file
+	'./jr_ctrl.v'
+===============================================
+|           Line           |  full/ parallel  |
+===============================================
+|            6             |    auto/auto     |
+===============================================
+Presto compilation completed successfully.
+Information: Building the design 'mux2_1_16'. (HDL-193)
+Presto compilation completed successfully.
+Information: Building the design 'mux4_1_16'. (HDL-193)
+Presto compilation completed successfully.
+Information: Building the design 'dff'. (HDL-193)
+
+Inferred memory devices in process
+	in routine dff line 17 in file
+		'./dff.v'.
+===============================================================================
+|    Register Name    |   Type    | Width | Bus | MB | AR | AS | SR | SS | ST |
+===============================================================================
+|      state_reg      | Flip-flop |   1   |  N  | N  | N  | N  | N  | N  | N  |
+===============================================================================
+Presto compilation completed successfully.
+Information: Building the design 'mux2_1'. (HDL-193)
+Presto compilation completed successfully.
+Information: Building the design 'cla4'. (HDL-193)
+Presto compilation completed successfully.
+Information: Building the design 'and4'. (HDL-193)
+Presto compilation completed successfully.
+Information: Building the design 'and2'. (HDL-193)
+Presto compilation completed successfully.
+Information: Building the design 'or2'. (HDL-193)
+Presto compilation completed successfully.
+Information: Building the design 'and3'. (HDL-193)
+Presto compilation completed successfully.
+Information: Building the design 'mux4_1'. (HDL-193)
+Presto compilation completed successfully.
+Information: Building the design 'dec3_8'. (HDL-193)
+Presto compilation completed successfully.
+Information: Building the design 'mux8_1'. (HDL-193)
+Presto compilation completed successfully.
+Information: Building the design 'quadmux8_1'. (HDL-193)
+Presto compilation completed successfully.
+Information: Building the design 'inv16'. (HDL-193)
+Presto compilation completed successfully.
+Information: Building the design 'left_shift'. (HDL-193)
+Presto compilation completed successfully.
+Information: Building the design 'right_shift'. (HDL-193)
+Presto compilation completed successfully.
+Information: Building the design 'left_rotate'. (HDL-193)
+Presto compilation completed successfully.
+Information: Building the design 'right_rotate'. (HDL-193)
+Presto compilation completed successfully.
+Information: Building the design 'bit_rotate'. (HDL-193)
+Presto compilation completed successfully.
+Information: Building the design 'or16'. (HDL-193)
+Presto compilation completed successfully.
+Information: Building the design 'xor16'. (HDL-193)
+Presto compilation completed successfully.
+Information: Building the design 'and16'. (HDL-193)
+Presto compilation completed successfully.
+Information: Building the design 'zero_out'. (HDL-193)
+Presto compilation completed successfully.
+Information: Building the design 'quadmux2_1'. (HDL-193)
+Presto compilation completed successfully.
+Information: Building the design 'quadmux4_1'. (HDL-193)
+Presto compilation completed successfully.
+Information: Building the design 'or3'. (HDL-193)
+Presto compilation completed successfully.
+Information: Building the design 'or4'. (HDL-193)
+Presto compilation completed successfully.
+Information: Building the design 'and5'. (HDL-193)
+Presto compilation completed successfully.
+Information: Building the design 'or5'. (HDL-193)
+Presto compilation completed successfully.
+Information: Building the design 'xor3'. (HDL-193)
+Presto compilation completed successfully.
+Information: Building the design 'nand2'. (HDL-193)
+Presto compilation completed successfully.
+Information: Building the design 'not1'. (HDL-193)
+Presto compilation completed successfully.
+Information: Building the design 'xor2'. (HDL-193)
+Presto compilation completed successfully.
+1
+echo "********** CS552 Reading files end ********************"
+********** CS552 Reading files end ********************
+echo "********** CS552 Linking all modules begin ********************"
+********** CS552 Linking all modules begin ********************
+link
+
+  Linking design 'proc'
+  Using the following designs and libraries:
+  --------------------------------------------------------------------------
+  gscl45nm (library)          /u/k/a/karu/courses/cs552/cad/Synopsys_Libraries/libs/gscl45nm.db
+
+1
+echo "********** CS552 Linking all modules end **********************"
+********** CS552 Linking all modules end **********************
+echo "********** CS552 Checking design of all modules begin**********"
+********** CS552 Checking design of all modules begin**********
+check_design -summary
+ 
+****************************************
+check_design summary:
+Version:     L-2016.03-SP4-1
+Date:        Sun Mar 12 16:11:28 2017
+****************************************
+
+                   Name                                            Total
+--------------------------------------------------------------------------------
+Inputs/Outputs                                                    141
+    Unconnected ports (LINT-28)                                     2
+    Feedthrough (LINT-29)                                          77
+    Shorted outputs (LINT-31)                                      41
+    Constant outputs (LINT-52)                                     21
+
+Cells                                                             405
+    Cells do not drive (LINT-1)                                     1
+    Connected to power or ground (LINT-32)                        146
+    Nets connected to multiple pins on same cell (LINT-33)        258
+
+Nets                                                               29
+    Unloaded nets (LINT-2)                                         29
+--------------------------------------------------------------------------------
+
+Information: Use the 'check_design' command for 
+	 more information about warnings. (LINT-98)
+
+1
+echo "********** CS552 Checking design of all modules end************"
+********** CS552 Checking design of all modules end************
+report_hierarchy > synth/hierarchy.txt
+set filename [format "%s%s"  $my_toplevel ".syn.v"]
+proc.syn.v
+write -f verilog $my_toplevel -output synth/$filename -hierarchy
+Writing verilog file '/afs/cs.wisc.edu/u/s/h/shyamal/private/project552/demo1/verilog/synth/proc.syn.v'.
+Warning: Bus naming style currently specified as %s<%d>, verilog syntax requires bus naming style to be "[]".  (VO-13)
+Warning: Module dff contains unmapped components.  The output netlist might not be read back into the system. (VO-12)
+Warning: Module memory2c contains unmapped components.  The output netlist might not be read back into the system. (VO-12)
+Warning: Module master_ctrl contains unmapped components.  The output netlist might not be read back into the system. (VO-12)
+Warning: Verilog 'assign' or 'tran' statements are written out. (VO-4)
+Warning: Module alu contains unmapped components.  The output netlist might not be read back into the system. (VO-12)
+Warning: Module branch_ctrl contains unmapped components.  The output netlist might not be read back into the system. (VO-12)
+Warning: Module jr_ctrl contains unmapped components.  The output netlist might not be read back into the system. (VO-12)
+1
+quit
+
+Thank you...

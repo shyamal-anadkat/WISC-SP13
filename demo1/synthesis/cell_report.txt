@@ -1,0 +1,60 @@
+ 
+****************************************
+Report : cell
+Design : proc
+Version: L-2016.03-SP4-1
+Date   : Sun Mar 12 13:46:22 2017
+****************************************
+
+Attributes:
+    b - black box (unknown)
+    h - hierarchical
+    n - noncombinational
+    r - removable
+    u - contains unmapped logic
+
+Cell                      Reference       Library             Area  Attributes
+--------------------------------------------------------------------------------
+U1                        INVX2           gscl45nm        1.877200  
+U2                        INVX1           gscl45nm        1.407900  
+U3                        INVX2           gscl45nm        1.877200  
+U4                        INVX4           gscl45nm        3.285100  
+U5                        BUFX2           gscl45nm        2.346500  
+U6                        BUFX2           gscl45nm        2.346500  
+U7                        INVX1           gscl45nm        1.407900  
+U8                        INVX2           gscl45nm        1.877200  
+U9                        INVX1           gscl45nm        1.407900  
+U10                       INVX1           gscl45nm        1.407900  
+U11                       INVX8           gscl45nm        3.285100  
+U12                       INVX1           gscl45nm        1.407900  
+U13                       INVX1           gscl45nm        1.407900  
+U14                       INVX1           gscl45nm        1.407900  
+U15                       BUFX2           gscl45nm        2.346500  
+U16                       INVX1           gscl45nm        1.407900  
+U17                       INVX2           gscl45nm        1.877200  
+U18                       BUFX2           gscl45nm        2.346500  
+U19                       INVX1           gscl45nm        1.407900  
+U20                       INVX1           gscl45nm        1.407900  
+U21                       INVX1           gscl45nm        1.407900  
+U22                       INVX1           gscl45nm        1.407900  
+U23                       INVX1           gscl45nm        1.407900  
+U24                       INVX1           gscl45nm        1.407900  
+U25                       INVX1           gscl45nm        1.407900  
+U26                       INVX8           gscl45nm        3.285100  
+U27                       INVX8           gscl45nm        3.285100  
+U28                       INVX1           gscl45nm        1.407900  
+U29                       INVX1           gscl45nm        1.407900  
+U31                       INVX8           gscl45nm        3.285100  
+decode0                   decode                          8531.873827
+                                                                    h, n
+exe1                      execute                         18125.773547
+                                                                    h
+fetch0                    fetch                           18288.620661
+                                                                    h, n
+memory0                   memory                          15424.013508
+                                                                    h, n
+wb1                       writeback                       810.481085
+                                                                    h
+--------------------------------------------------------------------------------
+Total 35 cells                                            61238.017228
+1

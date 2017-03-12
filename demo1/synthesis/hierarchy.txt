@@ -1,0 +1,184 @@
+ 
+****************************************
+Report : hierarchy
+Design : proc
+Version: L-2016.03-SP4-1
+Date   : Sun Mar 12 13:53:15 2017
+****************************************
+
+Information: This design contains unmapped logic. (RPT-7)
+
+proc
+    decode
+        master_ctrl
+            GTECH_AND2                                     gtech
+            GTECH_BUF                                      gtech
+            GTECH_NOT                                      gtech
+            GTECH_OR2                                      gtech
+            mux4_1
+                mux2_1
+                    nand2
+                        GTECH_AND2                         gtech
+                        GTECH_NOT                          gtech
+                    not1
+                        GTECH_NOT                          gtech
+        mux4_1_3
+            mux4_1
+                ...
+        rf
+            and2
+                nand2
+                    ...
+            dec3_8
+                and3
+                    and2
+                        ...
+                not1
+                    ...
+            mux8_1
+                mux2_1
+                    ...
+                mux4_1
+                    ...
+            reg16
+                dff
+                    GTECH_BUF                              gtech
+                    GTECH_NOT                              gtech
+                mux2_1
+                    ...
+    execute
+        SignExtend5_16
+        SignExtend8_16
+        SignExtend11_16
+        ZeroExtend5_16
+        ZeroExtend8_16
+        alu
+            GTECH_AND2                                     gtech
+            GTECH_AND4                                     gtech
+            GTECH_AND5                                     gtech
+            GTECH_BUF                                      gtech
+            GTECH_NOT                                      gtech
+            GTECH_OR2                                      gtech
+            GTECH_XOR2                                     gtech
+            and16
+                and2
+                    ...
+            bit_rotate
+            cla16
+                and2
+                    ...
+                and3
+                    ...
+                and4
+                    and2
+                        ...
+                    and3
+                        ...
+                cla4
+                    and2
+                        ...
+                    and3
+                        ...
+                    and4
+                        ...
+                    and5
+                        and2
+                            ...
+                        and4
+                            ...
+                    or2
+                        GTECH_OR2                          gtech
+                    or3
+                        or2
+                            ...
+                    or4
+                        or2
+                            ...
+                        or3
+                            ...
+                    or5
+                        or2
+                            ...
+                        or4
+                            ...
+                    xor3
+                        GTECH_XOR2                         gtech
+                or2
+                    ...
+            inv16
+                mux2_1
+                    ...
+                not1
+                    ...
+            left_rotate
+                mux2_1_16
+                    quadmux2_1
+                        mux2_1
+                            ...
+            left_shift
+                mux2_1_16
+                    ...
+            mux4_1_16
+                quadmux4_1
+                    mux4_1
+                        ...
+            or16
+                or2
+                    ...
+            right_rotate
+                mux2_1_16
+                    ...
+            right_shift
+                mux2_1_16
+                    ...
+            xor16
+                xor2
+                    GTECH_XOR2                             gtech
+            zero_out
+                not1
+                    ...
+                or4
+                    ...
+        branch_ctrl
+            GTECH_AND2                                     gtech
+            GTECH_BUF                                      gtech
+            GTECH_NOT                                      gtech
+            GTECH_OR2                                      gtech
+            or2
+                ...
+        cla16
+            ...
+        jr_ctrl
+            GTECH_AND2                                     gtech
+            GTECH_BUF                                      gtech
+            GTECH_NOT                                      gtech
+            GTECH_OR2                                      gtech
+        jump_disp_ctrl
+            GTECH_AND2                                     gtech
+            GTECH_BUF                                      gtech
+            GTECH_NOT                                      gtech
+        mux2_1_16
+            ...
+        mux8_1_16
+            quadmux8_1
+                mux8_1
+                    ...
+    fetch
+        GTECH_NOT                                          gtech
+        cla16
+            ...
+        memory2c
+            GTECH_AND2                                     gtech
+            GTECH_BUF                                      gtech
+            GTECH_NOT                                      gtech
+            GTECH_OR2                                      gtech
+        reg16
+            ...
+    memory
+        GTECH_OR2                                          gtech
+        memory2c
+            ...
+    writeback
+        mux4_1_16
+            ...
+1

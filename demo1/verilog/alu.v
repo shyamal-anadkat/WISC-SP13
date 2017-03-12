@@ -127,22 +127,22 @@ module alu(Out, Z, P, N, A, B, Op, invA, invB, Cin, lower_two, err);
 		end
 
 		5'b11100: begin // SEQ
-		  Out = (Z) ? 16'h0001 : 16'h0000;
+		  Out = (Z) ? 16'h1 : 16'h0;
 		  err = 1'b0;
 		end
 
 		5'b11101: begin // SLT
-		  Out = (N) ? 16'h0001 : 16'h0000;
+		  Out =  (P) ? 16'h1: 16'h0;
 		  err = 1'b0;
 		end
 
 		5'b11110: begin // SLE
-		  Out = (N | Z) ? 16'h0001 : 16'h0000;
+		  Out = (N | Z) ? 16'h1 : 16'h0;
 		  err = 1'b0;
 		end
 
 		5'b11111: begin // SCO
-		  Out = (GG_cla) ? 16'h0001 : 16'h0000;
+		  Out = (GG_cla) ? 16'h1 : 16'h0;
 		  err = 1'b0;
 		end
 
@@ -214,7 +214,7 @@ module alu(Out, Z, P, N, A, B, Op, invA, invB, Cin, lower_two, err);
     end
 
     // Set the flags
-    zero_out zout (.A(Out), .Out(Z));
+    zero_out zout (.A(S_cla), .Out(Z));
     assign N = (S_cla[15] & ~Z);
     assign P = ~(S_cla[15] | Z);
 

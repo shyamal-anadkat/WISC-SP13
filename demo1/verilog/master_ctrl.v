@@ -253,8 +253,8 @@ module master_ctrl (opcode, lower_two, alu_src, mem_write, reg_write,
                 reg_write = 1'b1;
                 mem_to_reg = 1'b0;
                 reg_dst = 2'b00;
-                invA = 1'b0;
-                invB = 1'b1;
+                invA = 1'b1;
+                invB = 1'b0;
                 Cin = 1'b1;
 		dump = 1'b0;
             end

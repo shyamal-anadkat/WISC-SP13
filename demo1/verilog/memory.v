@@ -4,7 +4,7 @@ module memory(aluResult, readData, writeData, memRead, memWrite, clk, rst, dump)
     input [15:0] aluResult, writeData; 
     input memRead, memWrite, clk, rst, dump;
     output [15:0] readData;
-    wire memReadOrWrite, halt;
+    wire memReadorWrite, halt;
 
     assign memReadorWrite = (memWrite | memRead);
     assign halt = dump;

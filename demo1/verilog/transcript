@@ -1,6 +1,6 @@
 # vsim -c proc_hier_bench -lib __work -voptargs="+acc" -wlf dump.wlf -do "log -howmany -rec /* ; run -all" 
-# Start time: 16:08:09 on Mar 12,2017
-# ** Note: (vsim-3812) Design is being optimized...
+# Start time: 20:44:47 on Mar 13,2017
+# ** Note: (vsim-8009) Loading existing optimized design _opt
 # //  Questa Sim
 # //  Version 10.4c linux Jul 19 2015
 # //
@@ -67,8 +67,7 @@
 # Loading work.quadmux4_1(fast)
 # Loading work.zero_out(fast)
 # Loading work.branch_ctrl(fast)
-# Loading work.jump_disp_ctrl(fast)
-# Loading work.jr_ctrl(fast)
+# Loading work.jump_ctrl(fast)
 # Loading work.memory(fast)
 # Loading work.writeback(fast)
 # Loading work.dff(fast)
@@ -80,6 +79,6 @@
 # Hello world...simulation starting
 # See verilogsim.log and verilogsim.trace for output
 # ** Note: $finish    : proc_hier_bench.v(96)
-#    Time: 3500 ns  Iteration: 1  Instance: /proc_hier_bench
-# End time: 16:08:12 on Mar 12,2017, Elapsed time: 0:00:03
+#    Time: 215500 ns  Iteration: 1  Instance: /proc_hier_bench
+# End time: 20:44:49 on Mar 13,2017, Elapsed time: 0:00:02
 # Errors: 0, Warnings: 0

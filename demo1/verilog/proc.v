@@ -23,7 +23,7 @@ module proc (/*AUTOARG*/
    
    
    /* your code here */
-   wire[15:0] inPC, instr, pc_plus_2, next_pc, A, B, alu_out, write_data, data_out, pcCurrent;
+   wire[15:0] instr, pc_plus_2, next_pc, A, B, alu_out, write_data, data_out, pcCurrent;
    wire[2:0] alu_src;
    wire dump, mem_write, mem_to_reg, invA, invB, Cin, err1, err2, JALen;
 
@@ -37,7 +37,7 @@ module proc (/*AUTOARG*/
 
    writeback wb1(.write_data(write_data), .read_data(data_out), .alu_out(alu_out), .next_PC(pc_plus_2), .JALen(JALen), .memToReg(mem_to_reg));
 
-   assign err = (err2);
+   assign err =(err1 | err2);
    //assign err = 1'b0;
 
 endmodule // proc

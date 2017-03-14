@@ -3,7 +3,7 @@
 Report : cell
 Design : proc
 Version: L-2016.03-SP4-1
-Date   : Sun Mar 12 15:55:50 2017
+Date   : Mon Mar 13 21:03:29 2017
 ****************************************
 
 Attributes:
@@ -15,35 +15,48 @@ Attributes:
 
 Cell                      Reference       Library             Area  Attributes
 --------------------------------------------------------------------------------
-U1                        BUFX2           gscl45nm        2.346500  
 U2                        INVX1           gscl45nm        1.407900  
-U3                        INVX1           gscl45nm        1.407900  
-U4                        BUFX4           gscl45nm        2.815800  
-U5                        BUFX2           gscl45nm        2.346500  
+U3                        BUFX2           gscl45nm        2.346500  
+U4                        INVX1           gscl45nm        1.407900  
+U5                        INVX1           gscl45nm        1.407900  
 U6                        BUFX2           gscl45nm        2.346500  
 U7                        BUFX2           gscl45nm        2.346500  
 U8                        BUFX2           gscl45nm        2.346500  
-U9                        INVX1           gscl45nm        1.407900  
+U9                        BUFX2           gscl45nm        2.346500  
 U10                       INVX1           gscl45nm        1.407900  
 U11                       INVX1           gscl45nm        1.407900  
-U12                       INVX1           gscl45nm        1.407900  
-U13                       INVX1           gscl45nm        1.407900  
-U14                       INVX1           gscl45nm        1.407900  
+U12                       BUFX2           gscl45nm        2.346500  
+U13                       BUFX2           gscl45nm        2.346500  
+U14                       BUFX2           gscl45nm        2.346500  
 U15                       INVX1           gscl45nm        1.407900  
 U16                       INVX1           gscl45nm        1.407900  
 U17                       BUFX2           gscl45nm        2.346500  
 U18                       INVX1           gscl45nm        1.407900  
 U19                       INVX1           gscl45nm        1.407900  
-decode0                   decode                          8635.589123
+U20                       INVX1           gscl45nm        1.407900  
+U21                       INVX1           gscl45nm        1.407900  
+U22                       INVX1           gscl45nm        1.407900  
+U23                       INVX1           gscl45nm        1.407900  
+U24                       INVX4           gscl45nm        3.285100  
+U25                       INVX1           gscl45nm        1.407900  
+U26                       INVX1           gscl45nm        1.407900  
+U27                       INVX1           gscl45nm        1.407900  
+U28                       INVX1           gscl45nm        1.407900  
+U29                       INVX4           gscl45nm        3.285100  
+U30                       INVX1           gscl45nm        1.407900  
+U31                       INVX4           gscl45nm        3.285100  
+U32                       INVX1           gscl45nm        1.407900  
+U33                       INVX1           gscl45nm        1.407900  
+decode0                   decode                          8597.575827
                                                                     h, n
-exe1                      execute                         17382.871657
+exe1                      execute                         17654.127054
                                                                     h
-fetch0                    fetch                           18338.835751
+fetch0                    fetch                           18550.020750
                                                                     h, n
-memory0                   memory                          15088.464006
+memory0                   memory                          15413.219600
                                                                     h, n
-wb1                       writeback                       737.739586
+wb1                       writeback                       758.858087
                                                                     h
 --------------------------------------------------------------------------------
-Total 24 cells                                            60217.289722
+Total 37 cells                                            61032.933118
 1

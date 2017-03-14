@@ -14,15 +14,13 @@ dff.v
 execute.v
 fetch.v
 inv16.v
-jr_ctrl.v
-jump_disp_ctrl.v
+jump_ctrl.v
 left_rotate.v
 left_shift.v
 master_ctrl.v
 memory2c.syn.v
 memory.v
 mux2_1_16.v
-mux2_1_3.v
 mux2_1.v
 mux4_1_16.v
 mux4_1_3.v

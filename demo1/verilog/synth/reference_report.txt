@@ -1,0 +1,32 @@
+ 
+****************************************
+Report : reference
+Design : proc
+Version: L-2016.03-SP4-1
+Date   : Mon Mar 13 21:13:08 2017
+****************************************
+
+Attributes:
+    b - black box (unknown)
+   bo - allows boundary optimization
+    d - dont_touch
+   mo - map_only
+    h - hierarchical
+    n - noncombinational
+    r - removable
+    s - synthetic operator
+    u - contains unmapped logic
+
+Reference          Library       Unit Area   Count    Total Area   Attributes
+-----------------------------------------------------------------------------
+BUFX2              gscl45nm       2.346500       9     21.118499  
+INVX1              gscl45nm       1.407900      20     28.158000  
+INVX4              gscl45nm       3.285100       3      9.855300  
+decode                         8597.575827       1   8597.575827  h, n
+execute                       17654.127054       1  17654.127054  h
+fetch                         18550.020750       1  18550.020750  h, n
+memory                        15413.219600       1  15413.219600  h, n
+writeback                       758.858087       1    758.858087  h
+-----------------------------------------------------------------------------
+Total 8 references                                  61032.933118
+1

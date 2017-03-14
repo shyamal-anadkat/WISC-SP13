@@ -23,8 +23,10 @@ module execute (instr, invA, invB, Cin, alu_src, A, B, pc_plus_2, result, pc_upd
     // Do alu operation
     alu alu1(.Out(result), .Z(Z), .P(P), .N(N), .A(A), .B(alu_in_2), .Op(instr[15:11]), .invA(invA), .invB(invB), .Cin(Cin), .lower_two(instr[1:0]), .err(err));
 
-    //jump and branch control
-    branch_control bctl(.positive_flag(P), .negative_flag(N), .zero_flag(Z), .opcode(instr[15:11]), .branch_en(branch), .jump_disp_en(jump_disp), .jr_en(jr), .reg_7_en(reg_7_en));
+    branch_ctrl bctl(.positive_flag(P), .negative_flag(N), .zero_flag(Z), .opcode(instr[15:11]), .branch_en(branch));
+
+    jump_disp_ctrl jdctl(.opcode(instr[15:11]), .jump_disp_en(jump_disp));
+    jr_ctrl jrctl(.opcode(instr[15:11]), .jr_en(jr), .reg_7_en(reg_7_en));
 
     mux2_1_16 mux2(.InA(16'h0000), .InB(se7_0), .S(branch), .Out(branch_out));
     mux2_1_16 mux3(.InA(branch_out), .InB(se10_0), .S(jump_disp), .Out(pc_inc));

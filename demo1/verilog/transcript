@@ -1,0 +1,84 @@
+# vsim -c proc_hier_bench -lib __work -voptargs="+acc" -wlf dump.wlf -do "log -howmany -rec /* ; run -all" 
+# Start time: 21:37:08 on Mar 13,2017
+# ** Note: (vsim-3812) Design is being optimized...
+# //  Questa Sim
+# //  Version 10.4c linux Jul 19 2015
+# //
+# //  Copyright 1991-2015 Mentor Graphics Corporation
+# //  All Rights Reserved.
+# //
+# //  THIS WORK CONTAINS TRADE SECRET AND PROPRIETARY INFORMATION
+# //  WHICH IS THE PROPERTY OF MENTOR GRAPHICS CORPORATION OR ITS
+# //  LICENSORS AND IS SUBJECT TO LICENSE TERMS.
+# //  THIS DOCUMENT CONTAINS TRADE SECRETS AND COMMERCIAL OR FINANCIAL
+# //  INFORMATION THAT ARE PRIVILEGED, CONFIDENTIAL, AND EXEMPT FROM
+# //  DISCLOSURE UNDER THE FREEDOM OF INFORMATION ACT, 5 U.S.C. SECTION 552.
+# //  FURTHERMORE, THIS INFORMATION IS PROHIBITED FROM DISCLOSURE UNDER
+# //  THE TRADE SECRETS ACT, 18 U.S.C. SECTION 1905.
+# //
+# Loading work.proc_hier_bench(fast)
+# Loading work.proc_hier(fast)
+# Loading work.clkrst(fast)
+# Loading work.proc(fast)
+# Loading work.fetch(fast)
+# Loading work.reg16(fast)
+# Loading work.memory2c(fast)
+# Loading work.cla16(fast)
+# Loading work.cla4(fast)
+# Loading work.or2(fast)
+# Loading work.and2(fast)
+# Loading work.nand2(fast)
+# Loading work.and3(fast)
+# Loading work.or3(fast)
+# Loading work.and4(fast)
+# Loading work.or4(fast)
+# Loading work.and5(fast)
+# Loading work.or5(fast)
+# Loading work.xor3(fast)
+# Loading work.decode(fast)
+# Loading work.master_ctrl(fast)
+# Loading work.mux4_1(fast)
+# Loading work.mux2_1(fast)
+# Loading work.not1(fast)
+# Loading work.mux4_1_3(fast)
+# Loading work.rf(fast)
+# Loading work.dec3_8(fast)
+# Loading work.execute(fast)
+# Loading work.SignExtend8_16(fast)
+# Loading work.SignExtend11_16(fast)
+# Loading work.ZeroExtend8_16(fast)
+# Loading work.ZeroExtend5_16(fast)
+# Loading work.SignExtend5_16(fast)
+# Loading work.mux8_1_16(fast)
+# Loading work.quadmux8_1(fast)
+# Loading work.alu(fast)
+# Loading work.inv16(fast)
+# Loading work.left_shift(fast)
+# Loading work.mux2_1_16(fast)
+# Loading work.quadmux2_1(fast)
+# Loading work.right_shift(fast)
+# Loading work.left_rotate(fast)
+# Loading work.right_rotate(fast)
+# Loading work.bit_rotate(fast)
+# Loading work.or16(fast)
+# Loading work.xor16(fast)
+# Loading work.and16(fast)
+# Loading work.mux4_1_16(fast)
+# Loading work.quadmux4_1(fast)
+# Loading work.zero_out(fast)
+# Loading work.branch_ctrl(fast)
+# Loading work.jump_ctrl(fast)
+# Loading work.memory(fast)
+# Loading work.writeback(fast)
+# Loading work.dff(fast)
+# Loading work.mux8_1(fast)
+# Loading work.xor2(fast)
+# log -howmany -rec /* 
+# 30920
+#  run -all
+# Hello world...simulation starting
+# See verilogsim.log and verilogsim.trace for output
+# ** Note: $finish    : proc_hier_bench.v(96)
+#    Time: 3500 ns  Iteration: 1  Instance: /proc_hier_bench
+# End time: 21:37:11 on Mar 13,2017, Elapsed time: 0:00:03
+# Errors: 0, Warnings: 0

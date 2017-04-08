@@ -1,5 +1,5 @@
 # vsim -c proc_hier_pbench -lib __work -voptargs="+acc" -wlf dump.wlf -do "log -howmany -rec /* ; run -all" 
-# Start time: 17:09:19 on Apr 08,2017
+# Start time: 18:39:37 on Apr 08,2017
 # ** Note: (vsim-3812) Design is being optimized...
 # ** Error (suppressible): (vopt-7063) proc_hier_pbench.v(133): Failed to find 'regWrite' in hierarchical name '/DUT/p0/regWrite'.
 # ** Error (suppressible): (vopt-7063) proc_hier_pbench.v(136): Failed to find 'DstwithJmout' in hierarchical name '/DUT/p0/DstwithJmout'.
@@ -13,5 +13,5 @@
 # ** Error (suppressible): (vopt-7063) proc_hier_pbench.v(174): Failed to find 'haltxout' in hierarchical name '/DUT/p0/haltxout'.
 # Optimization failed
 # Error loading design
-# End time: 17:09:20 on Apr 08,2017, Elapsed time: 0:00:01
+# End time: 18:39:37 on Apr 08,2017, Elapsed time: 0:00:00
 # Errors: 10, Warnings: 0

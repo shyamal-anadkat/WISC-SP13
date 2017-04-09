@@ -15,7 +15,16 @@ module decode (instr, write_data, clk, rst, err, alu_src, mem_write, mem_to_reg,
 
     master_ctrl mctl(.opcode(instr[15:11]), .lower_two(instr[1:0]), .alu_src(alu_src), .mem_write(mem_write), .reg_write(reg_write), .mem_to_reg(mem_to_reg), .reg_dst(reg_dst), .invA(invA), .invB(invB), .Cin(Cin), .dump(dump), .err(err1));
 
-    rf regFile0( .read1data(A), .read2data(B), .err(err2), .clk(clk), .rst(rst), .read1regsel(instr[10:8]), .read2regsel(instr[7:5]), .writeregsel(reg_wr_sel), .writedata(write_data), .write(reg_write));
+    // OLD RF MODULE 
+    //rf regFile0( .read1data(A), .read2data(B), .err(err2), .clk(clk), .rst(rst), .read1regsel(instr[10:8]), .read2regsel(instr[7:5]), .writeregsel(reg_wr_sel), .writedata(write_data), .write(reg_write));
+
+    // RF BYPASS MODULE ADDED FOR DEMO 2
+    rf_bypass rfbypassmod (
+           // Outputs
+           .read1data(A), .read2data(B), .err(err2),
+           // Inputs
+           .clk(clk), .rst(rst), .read1regsel(instr[10:8]), .read2regsel(instr[7:5]), .writeregsel(reg_wr_sel), .writedata(write_data), .write(reg_write)
+           );
 
     // Extend to 16 bits
     SignExtend8_16 se8(.in(instr[7:0]), .out(se7_0));

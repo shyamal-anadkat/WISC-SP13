@@ -19,14 +19,13 @@ module IDEXmod (instr_in, A_in, B_in, se4_0_in, ze4_0_in, se7_0_in, ze7_0_in,
     output reg_write_out;
 
     wire[15:0] rstOrIns;
-    wire mem_write_sel, mem_to_reg_sel, dump_sel, reg_write_sel, isNop;
+    wire mem_write_sel, mem_to_reg_sel, dump_sel, reg_write_sel;
 
     assign rstOrIns = rst ? 16'b00001_00000000000 : instr_in;
-    assign isNop = (~(rstOrIns[15] | rstOrIns[14] | rstOrIns[13] | rstOrIns[12]) & rstOrIns[11]);
-    assign mem_write_sel = isNop ? 1'b0 : mem_write_in;
-    assign reg_write_sel = isNop ? 1'b0 : reg_write_in;
-    assign mem_to_reg_sel = isNop ? 1'b0 : mem_to_reg_in;
-    assign dump_sel = isNop ? 1'b0 : dump_in;
+    assign mem_write_sel = rst ? 1'b0 : mem_write_in;
+    assign reg_write_sel = rst ? 1'b0 : reg_write_in;
+    assign mem_to_reg_sel = rst ? 1'b0 : mem_to_reg_in;
+    assign dump_sel = rst ? 1'b0 : dump_in;
 
     dff16 mod1(.out(A_out), .in(A_in), .en(en), .rst(1'b0), .clk(clk));
     dff16 mod2(.out(B_out), .in(B_in), .en(en), .rst(1'b0), .clk(clk));

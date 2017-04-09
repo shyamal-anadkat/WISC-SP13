@@ -18,17 +18,16 @@ module IDEXmod (instr_in, A_in, B_in, se4_0_in, ze4_0_in, se7_0_in, ze7_0_in,
     output[2:0] alu_src_out;
     output[1:0] reg_dst_out;
     output mem_write_out, mem_to_reg_out, invA_out, invB_out, Cin_out, dump_out;
-    output reg_write_out, isNop_out;
+    output reg_write_out;
 
     wire[15:0] rstOrIns;
-    wire mem_write_sel, mem_to_reg_sel, dump_sel, reg_write_sel, isNop_in;
+    wire mem_write_sel, mem_to_reg_sel, dump_sel, reg_write_sel;
 
     assign rstOrIns = rst ? 16'b00001_00000000000 : instr_in;
     assign mem_write_sel = rst ? 1'b0 : mem_write_in;
     assign reg_write_sel = rst ? 1'b0 : reg_write_in;
     assign mem_to_reg_sel = rst ? 1'b0 : mem_to_reg_in;
     assign dump_sel = rst ? 1'b0 : dump_in;
-    assign isNop_in = rst;
 
     dff16 mod1(.out(A_out), .in(A_in), .en(en), .rst(1'b0), .clk(clk));
     dff16 mod2(.out(B_out), .in(B_in), .en(en), .rst(1'b0), .clk(clk));
@@ -47,9 +46,8 @@ module IDEXmod (instr_in, A_in, B_in, se4_0_in, ze4_0_in, se7_0_in, ze7_0_in,
     dff1 mod13(.out(Cin_out), .in(Cin_in), .en(en), .rst(1'b0), .clk(clk));
     dff1 mod14(.out(dump_out), .in(dump_sel), .en(en), .rst(1'b0), .clk(clk));
     dff1 mod15(.out(reg_write_out), .in(reg_write_sel), .en(en), .rst(1'b0), .clk(clk));
-    dff1 mod16(.out(isNop_out), .in(isNop_in), .en(en), .rst(1'b0), .clk(clk));
 
-    dff16 mod17(.out(instr_out), .in(rstOrIns), .en(en), .rst(1'b0), .clk(clk));
-    dff16 mod18(.out(nextPC_out), .in(nextPC_in), .en(en), .rst(1'b0), .clk(clk));
+    dff16 mod16(.out(instr_out), .in(rstOrIns), .en(en), .rst(1'b0), .clk(clk));
+    dff16 mod17(.out(nextPC_out), .in(nextPC_in), .en(en), .rst(1'b0), .clk(clk));
 
 endmodule

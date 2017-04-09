@@ -1,21 +1,16 @@
-module execute (instr, invA, invB, Cin, alu_src, A, B, pc_plus_2, result, pc_updated, reg_7_en, err);
+module execute (instr, invA, invB, Cin, alu_src, A, B, pc_plus_2, result, reg_7_en, err, sum1, sum2, jr, se4_0, ze4_0, se7_0, ze7_0, se10_0, reg_dst, reg_wr_sel);
     // A - Rs, B - Rt, instr - Instruction
-    input[15:0] A, B, instr, pc_plus_2;
+    input[15:0] A, B, instr, pc_plus_2, se4_0, ze4_0, se7_0, ze7_0, se10_0;
     input[2:0] alu_src;
+    input[1:0] reg_dst;
     input invA, invB, Cin;
 
-    output[15:0] result, pc_updated;
-    output err, reg_7_en;
+    output[15:0] result, pc_updated, sum1, sum2;
+    output[2:0] reg_wr_sel;
+    output err, reg_7_en, jr;
 
-    wire[15:0] se4_0, ze4_0, se7_0, ze7_0, se10_0, alu_in_2, branch_out, pc_inc, sum1, sum2;
-    wire P, N, Z, branch, jump_disp, cout1, cout2, pg1, pg2, gg1, gg2, jr;
-
-    // Extend to 16 bits
-    SignExtend8_16 se8(.in(instr[7:0]), .out(se7_0));
-    SignExtend11_16 se11(.in(instr[10:0]), .out(se10_0));
-    ZeroExtend8_16 ze8(.in(instr[7:0]), .out(ze7_0));
-    ZeroExtend5_16 ze5(.in(instr[4:0]), .out(ze4_0));
-    SignExtend5_16 se5(.in(instr[4:0]), .out(se4_0));
+    wire[15:0] alu_in_2, branch_out, pc_inc;
+    wire P, N, Z, branch, jump_disp, cout1, cout2, pg1, pg2, gg1, gg2;
 
     // Select alu input 2
     mux8_1_16 mux1(.InA(B), .InB(se4_0), .InC(ze4_0), .InD(se7_0), .InE(ze7_0), .InF(16'h0000), .InG(16'h0000), .InH(16'h0000), .S(alu_src), .Out(alu_in_2));
@@ -30,10 +25,9 @@ module execute (instr, invA, invB, Cin, alu_src, A, B, pc_plus_2, result, pc_upd
     mux2_1_16 mux2(.InA(16'h0000), .InB(se7_0), .S(branch), .Out(branch_out));
     mux2_1_16 mux3(.InA(branch_out), .InB(se10_0), .S(jump_disp), .Out(pc_inc));
 
+    mux4_1_3 mux1(.InA(instr[4:2]), .InB(instr[7:5]), .InC(instr[10:8]), .InD(3'b111), .S(reg_dst), .Out(reg_wr_sel));
+
     cla16 add1(.A(pc_plus_2), .B(pc_inc), .Cin(1'b0), .Cout(cout1), .PG(pg1), .GG(gg1), .S(sum1));
     cla16 add2(.A(A), .B(se7_0), .Cin(1'b0), .Cout(cout2), .PG(pg2), .GG(gg2), .S(sum2));
-
-    // Update PC
-    mux2_1_16 mux4(.InA(sum1), .InB(sum2), .S(jr), .Out(pc_updated));
 
 endmodule

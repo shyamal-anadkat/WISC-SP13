@@ -6,26 +6,27 @@ module IDEXmod (instr_in, A_in, B_in, se4_0_in, ze4_0_in, se7_0_in, ze7_0_in,
                 mem_write_out, mem_to_reg_out, invA_out, invB_out, Cin_out, dump_out,
 		clk, en, rst);
 
-    input[15:0] A_in, B_in, se4_0_in, ze4_0_in, se7_0_in, ze7_0_in, se10_0_in;
+    input[15:0] A_in, B_in, se4_0_in, ze4_0_in, se7_0_in, ze7_0_in, se10_0_in, instr_in;
     input[2:0] alu_src_in;
     input[1:0] reg_dst_in;
     input mem_write_in, mem_to_reg_in, invA_in, invB_in, Cin_in, dump_in, clk, en, rst;
     input reg_write_in;
 
-    output[15:0] A_out, B_out, se4_0_out, ze4_0_out, se7_0_out, ze7_0_out, se10_0_out;
+    output[15:0] A_out, B_out, se4_0_out, ze4_0_out, se7_0_out, ze7_0_out, se10_0_out, instr_out;
     output[2:0] alu_src_out;
     output[1:0] reg_dst_out;
     output mem_write_out, mem_to_reg_out, invA_out, invB_out, Cin_out, dump_out;
     output reg_write_out;
 
     wire[15:0] rstOrIns;
-    wire mem_write_sel, mem_to_reg_sel, dump_sel, reg_write_sel;
+    wire mem_write_sel, mem_to_reg_sel, dump_sel, reg_write_sel, isNop;
 
     assign rstOrIns = rst ? 16'b00001_00000000000 : instr_in;
-    assign mem_write_sel = rst ? 1'b0 : mem_write_in;
-    assign reg_write_sel = rst ? 1'b0 : reg_write_in;
-    assign mem_to_reg_sel = rst ? 1'b0 : mem_to_reg_in;
-    assign dump_sel = rst ? 1'b0 : dump_in;
+    assign isNop = (~(rstOrIns[15] | rstOrIns[14] | rstOrIns[13] | rstOrIns[12]) & rstOrIns[11]);
+    assign mem_write_sel = isNop ? 1'b0 : mem_write_in;
+    assign reg_write_sel = isNop ? 1'b0 : reg_write_in;
+    assign mem_to_reg_sel = isNop ? 1'b0 : mem_to_reg_in;
+    assign dump_sel = isNop ? 1'b0 : dump_in;
 
     dff16 mod1(.out(A_out), .in(A_in), .en(en), .rst(1'b0), .clk(clk));
     dff16 mod2(.out(B_out), .in(B_in), .en(en), .rst(1'b0), .clk(clk));

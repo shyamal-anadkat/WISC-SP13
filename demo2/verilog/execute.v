@@ -5,7 +5,7 @@ module execute (instr, invA, invB, Cin, alu_src, A, B, pc_plus_2, result, reg_7_
     input[1:0] reg_dst;
     input invA, invB, Cin;
 
-    output[15:0] result, pc_updated, sum1, sum2;
+    output[15:0] result, sum1, sum2;  // add pc_updated ?
     output[2:0] reg_wr_sel;
     output err, reg_7_en, jr;
 
@@ -25,7 +25,7 @@ module execute (instr, invA, invB, Cin, alu_src, A, B, pc_plus_2, result, reg_7_
     mux2_1_16 mux2(.InA(16'h0000), .InB(se7_0), .S(branch), .Out(branch_out));
     mux2_1_16 mux3(.InA(branch_out), .InB(se10_0), .S(jump_disp), .Out(pc_inc));
 
-    mux4_1_3 mux1(.InA(instr[4:2]), .InB(instr[7:5]), .InC(instr[10:8]), .InD(3'b111), .S(reg_dst), .Out(reg_wr_sel));
+    mux4_1_3 mux4(.InA(instr[4:2]), .InB(instr[7:5]), .InC(instr[10:8]), .InD(3'b111), .S(reg_dst), .Out(reg_wr_sel));
 
     cla16 add1(.A(pc_plus_2), .B(pc_inc), .Cin(1'b0), .Cout(cout1), .PG(pg1), .GG(gg1), .S(sum1));
     cla16 add2(.A(A), .B(se7_0), .Cin(1'b0), .Cout(cout2), .PG(pg2), .GG(gg2), .S(sum2));

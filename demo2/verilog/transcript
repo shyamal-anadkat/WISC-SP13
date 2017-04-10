@@ -1,3 +1,6 @@
+# vsim -c proc_hier_pbench -lib __work -voptargs="+acc" -wlf dump.wlf -do "log -howmany -rec /* ; run -all" 
+# Start time: 15:56:36 on Apr 10,2017
+# ** Note: (vsim-3812) Design is being optimized...
 # //  Questa Sim
 # //  Version 10.4c linux Jul 19 2015
 # //
@@ -13,5 +16,79 @@
 # //  FURTHERMORE, THIS INFORMATION IS PROHIBITED FROM DISCLOSURE UNDER
 # //  THE TRADE SECRETS ACT, 18 U.S.C. SECTION 1905.
 # //
-# dump.wlf opened as dataset "dataset"
-add wave -position end dataset:/proc_hier_pbench/*
+# Loading work.proc_hier_pbench(fast)
+# Loading work.proc_hier(fast)
+# Loading work.clkrst(fast)
+# Loading work.proc(fast)
+# Loading work.fetch(fast)
+# Loading work.reg16(fast)
+# Loading work.memory2c(fast)
+# Loading work.cla16(fast)
+# Loading work.cla4(fast)
+# Loading work.or2(fast)
+# Loading work.and2(fast)
+# Loading work.nand2(fast)
+# Loading work.and3(fast)
+# Loading work.or3(fast)
+# Loading work.and4(fast)
+# Loading work.or4(fast)
+# Loading work.and5(fast)
+# Loading work.or5(fast)
+# Loading work.xor3(fast)
+# Loading work.IFIDmod(fast)
+# Loading work.dff16(fast)
+# Loading work.dff(fast)
+# Loading work.mux2_1_16(fast)
+# Loading work.quadmux2_1(fast)
+# Loading work.decode(fast)
+# Loading work.master_ctrl(fast)
+# Loading work.mux4_1(fast)
+# Loading work.mux2_1(fast)
+# Loading work.not1(fast)
+# Loading work.rf_bypass(fast)
+# Loading work.rf(fast)
+# Loading work.dec3_8(fast)
+# Loading work.SignExtend8_16(fast)
+# Loading work.SignExtend11_16(fast)
+# Loading work.ZeroExtend8_16(fast)
+# Loading work.ZeroExtend5_16(fast)
+# Loading work.SignExtend5_16(fast)
+# Loading work.hazard_detection(fast)
+# Loading work.IDEXmod(fast)
+# Loading work.dff3(fast)
+# Loading work.mux2_1_3(fast)
+# Loading work.dff1(fast)
+# Loading work.execute(fast)
+# Loading work.mux8_1_16(fast)
+# Loading work.quadmux8_1(fast)
+# Loading work.alu(fast)
+# Loading work.inv16(fast)
+# Loading work.left_shift(fast)
+# Loading work.right_shift(fast)
+# Loading work.left_rotate(fast)
+# Loading work.right_rotate(fast)
+# Loading work.bit_rotate(fast)
+# Loading work.or16(fast)
+# Loading work.xor16(fast)
+# Loading work.and16(fast)
+# Loading work.mux4_1_16(fast)
+# Loading work.quadmux4_1(fast)
+# Loading work.zero_out(fast)
+# Loading work.branch_ctrl(fast)
+# Loading work.jump_ctrl(fast)
+# Loading work.mux4_1_3(fast)
+# Loading work.EXMEMmod(fast)
+# Loading work.memory(fast)
+# Loading work.MEMWBmod(fast)
+# Loading work.writeback(fast)
+# Loading work.mux8_1(fast)
+# Loading work.xor2(fast)
+# log -howmany -rec /* 
+# 40369
+#  run -all
+# Hello world...simulation starting
+# See verilogsim.log and verilogsim.ptrace for output
+# ** Note: $finish    : proc_hier_pbench.v(121)
+#    Time: 8405 ns  Iteration: 0  Instance: /proc_hier_pbench
+# End time: 15:56:41 on Apr 10,2017, Elapsed time: 0:00:05
+# Errors: 0, Warnings: 0

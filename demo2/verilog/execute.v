@@ -1,4 +1,4 @@
-module execute (instr, invA, invB, Cin, alu_src, A, B, pc_plus_2, result, reg_7_en, err, branch_cond, se4_0, ze4_0, se7_0, ze7_0, se10_0, reg_dst, reg_wr_sel, pc_out_br);
+module execute (instr, invA, invB, Cin, alu_src, A, B, pc_plus_2, result, reg_7_en, err, branch_cond, se4_0, ze4_0, se7_0, ze7_0, se10_0, reg_dst, reg_wr_sel, pc_out_br, jr);
     // A - Rs, B - Rt, instr - Instruction
     input[15:0] A, B, instr, pc_plus_2, se4_0, ze4_0, se7_0, ze7_0, se10_0;
     input[2:0] alu_src;
@@ -7,7 +7,7 @@ module execute (instr, invA, invB, Cin, alu_src, A, B, pc_plus_2, result, reg_7_
 
     output[15:0] result, pc_out_br;  // add pc_updated ?
     output[2:0] reg_wr_sel;
-    output err, reg_7_en;
+    output err, reg_7_en, jr;
 
     wire[15:0] alu_in_2, pc_inc, sum1, sum2;
     wire P, N, Z, branch, jump_disp, cout1, cout2, pg1, pg2, gg1, gg2;

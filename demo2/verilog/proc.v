@@ -30,7 +30,7 @@ module proc (/*AUTOARG*/
    wire dump, mem_write, mem_writeEXMEM, stall, mem_to_reg, mem_to_regIDEX, branch_cond_in, branch_cond_out, mem_to_regEXMEM, invA, invA_IDEX, invB, invB_IDEX, Cin, err1, err2, jr, en, reg_write, IFIDWriteEn, reg_writeIDEX, reg_writeEXMEM,mem_writeIDEX, Cin_IDEX, dumpIDEX, dumpEXMEM, jrEXMEM, reg_writeMEMWB, mem_to_regMEMWB, JALenMEMWB, PCWriteEn;
 
    //************************ FETCH*********************************************//
-   fetch fetch0(.clk(clk), .rst(rst), .dump(dumpEXMEM), .pc_branch(pc_branch_out), .branch_cond(branch_cond_out), .nextPC(pc_plus_2), .instr(instr), .stallPC(currPCIFID), .isNop(stall), .currPC(pcCurrent), .PCWriteEn(PCWriteEn));
+   fetch fetch0(.clk(clk), .rst(rst), .dump(1'b0), .pc_branch(pc_branch_out), .branch_cond(branch_cond_in), .nextPC(pc_plus_2), .instr(instr), .stallPC(currPCIFID), .isNop(stall), .currPC(pcCurrent), .PCWriteEn(PCWriteEn), .branch_cond_EXMEM(branch_cond_out));
 
    
    //************************ IFID LATCH*****************************************//
@@ -97,7 +97,7 @@ module proc (/*AUTOARG*/
 
 
    //************************EXECUTE**********************************************//
-   execute exe1(.instr(instr_outIDEX), .invA(invA_IDEX), .invB(invB_IDEX), .Cin(Cin_IDEX), .alu_src(alu_srcIDEX), .A(A_IDEX), .B(B_IDEX), .pc_plus_2(nextPCIDEX), .result(alu_out), .reg_7_en(JALen), .err(err2), .se4_0(se4_0IDEX), .ze4_0(ze4_0IDEX), .se7_0(se7_0IDEX), .ze7_0(ze7_0IDEX), .se10_0(se10_0IDEX), .reg_dst(reg_dstIDEX), .reg_wr_sel(reg_wr_sel), .pc_out_br(pc_branch_in), .branch_cond(branch_cond_in));
+   execute exe1(.instr(instr_outIDEX), .invA(invA_IDEX), .invB(invB_IDEX), .Cin(Cin_IDEX), .alu_src(alu_srcIDEX), .A(A_IDEX), .B(B_IDEX), .pc_plus_2(nextPCIDEX), .result(alu_out), .reg_7_en(JALen), .err(err2), .se4_0(se4_0IDEX), .ze4_0(ze4_0IDEX), .se7_0(se7_0IDEX), .ze7_0(ze7_0IDEX), .se10_0(se10_0IDEX), .reg_dst(reg_dstIDEX), .reg_wr_sel(reg_wr_sel), .pc_out_br(pc_branch_in), .branch_cond(branch_cond_in), .jr(jr));
 
 
    //************************ EXMEM LATCH*****************************************//
@@ -123,7 +123,9 @@ module proc (/*AUTOARG*/
 		     .pc_out_br_out(pc_branch_out),
                      .en(1'b1), 
                      .clk(clk), 
-                     .rst(rst));
+                     .rst(rst),
+		     .jr_in(jr),
+		     .jr_out(jrEXMEM));
 
 
    //************************ MEMORY*********************************************//
@@ -151,7 +153,7 @@ module proc (/*AUTOARG*/
   //************************WRITEBACK*****************************************//
   writeback wb1(.write_data(write_data), .read_data(read_dataMEMWB), .alu_out(resultMEMWB), .next_PC(nextPCMEMWB), .JALen(JALenMEMWB), .memToReg(mem_to_regMEMWB));
 
-assign err =(err1 | err2);
+assign err = (err2);
 //assign err = 1'b0;
 
 endmodule // proc

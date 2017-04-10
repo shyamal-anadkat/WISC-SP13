@@ -27,12 +27,13 @@ assign raw6 = ((memwbWR == ifidRD2) & hasAB[0]);
 
 assign memEn = (memReadEXMEM | memWriteEXMEM);
 
-assign cond1 = ((raw1 | raw2) & idexRegWR) ? ASSERT : ZERO;
-assign cond2 = ((raw3 | raw4) & exmemRegWR) ? ASSERT : ZERO;
-assign cond3 = ((raw5 | raw6) & memwbRegWR) ? ASSERT : ZERO;
+assign cond1 = ((raw1 | raw2) & idexRegWR);
+assign cond2 = ((raw3 | raw4) & exmemRegWR);
+assign cond3 = ((raw5 | raw6) & memwbRegWR);
 
-assign stall = ((cond1 | cond2 | cond3) & memEn & ~memWriteEXMEM) ? ASSERT: ZERO;
+//assign stall = ((cond1 | cond2 | cond3) & memEn & ~memWriteEXMEM) ? ASSERT: ZERO;
 
+assign stall = (cond1 | cond2 | cond3);
 assign PCwriteEn = (stall) ?  ZERO : ASSERT;
 assign IFIDwriteEn = (stall) ?  ZERO : ASSERT;
 

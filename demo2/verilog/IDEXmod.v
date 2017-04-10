@@ -49,5 +49,6 @@ module IDEXmod (instr_in, A_in, B_in, se4_0_in, ze4_0_in, se7_0_in, ze7_0_in,
 
     dff16 mod16(.out(instr_out), .in(rstOrIns), .en(en), .rst(rst), .clk(clk));
     dff16 mod17(.out(nextPC_out), .in(nextPC_in), .en(en), .rst(rst), .clk(clk));
+    dff mod18[1:0] (.q(reg_dst_out), .d(reg_dst_in), .clk(clk), .rst(rst));
 
 endmodule

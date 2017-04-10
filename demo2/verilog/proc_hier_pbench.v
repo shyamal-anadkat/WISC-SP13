@@ -75,17 +75,13 @@ module proc_hier_pbench();
             ICacheReq_count = ICacheReq_count + 1;	 	
 	     end    
 
-         $fdisplay(sim_log_file, "SIMLOG:: Cycle %d PC: %8x ALU: %8x ALU_EXMEM: %8x PC Curr: %8x decINS: %8x IFID: %8x IDEX: %8x EXMEM: %8x MEMWR: %8x WRITE: %1x STALL: %1x I: %8x R: %d %3d %8x M: %d %d %8x %8x",
+         $fdisplay(sim_log_file, "SIMLOG:: Cycle %d PC: %8x ALU: %8x PC Curr: %8x decINS: %8x VALUE: 0x%04x WRITE: %1x STALL: %1x I: %8x R: %d %3d %8x M: %d %d %8x %8x",
                   DUT.c0.cycle_count,
                   PC,
 		  alu,
-		  alu_exmem,
 		  pcCurr,
 		  decins,
-		  nexifid,
-		  nexidex,
-		  nexexmem,
-		  nexmemwr,
+		  WriteData,
 		  memwbregwr,
 		  stall,
                   Inst,
@@ -163,10 +159,10 @@ module proc_hier_pbench();
    assign WriteData = DUT.p0.wb1.write_data;
    // Data being written to the register. (16 bits)
    
-   assign MemRead =  (DUT.p0.memory0.memRead & ~DUT.p0.memory0.memWrite);
+   assign MemRead =  (DUT.p0.memory0.memRead & DUT.p0.memory0.memReadorWrite);
    // Is memory being read, one bit signal (1 means yes, 0 means no)
    
-   assign MemWrite = DUT.p0.memory0.memWrite;
+   assign MemWrite = (DUT.p0.memory0.memWrite & DUT.p0.memory0.memReadorWrite);
    // Is memory being written to (1 bit signal)
    
    assign MemAddress = DUT.p0.memory0.aluResult;

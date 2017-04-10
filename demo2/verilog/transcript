@@ -1,5 +1,5 @@
 # vsim -c proc_hier_pbench -lib __work -voptargs="+acc" -wlf dump.wlf -do "log -howmany -rec /* ; run -all" 
-# Start time: 01:13:59 on Apr 10,2017
+# Start time: 02:15:48 on Apr 10,2017
 # ** Note: (vsim-3812) Design is being optimized...
 # //  Questa Sim
 # //  Version 10.4c linux Jul 19 2015
@@ -84,13 +84,11 @@
 # Loading work.mux8_1(fast)
 # Loading work.xor2(fast)
 # log -howmany -rec /* 
-# 40314
+# 40309
 #  run -all
 # Hello world...simulation starting
 # See verilogsim.log and verilogsim.ptrace for output
-# hmm....more than 100000 cycles of simulation...error?
-# 
-# ** Note: $finish    : clkrst.v(41)
-#    Time: 10 ms  Iteration: 1  Instance: /proc_hier_pbench/DUT/c0
-# End time: 01:14:02 on Apr 10,2017, Elapsed time: 0:00:03
+# ** Note: $finish    : proc_hier_pbench.v(118)
+#    Time: 13405 ns  Iteration: 0  Instance: /proc_hier_pbench
+# End time: 02:15:51 on Apr 10,2017, Elapsed time: 0:00:03
 # Errors: 0, Warnings: 0

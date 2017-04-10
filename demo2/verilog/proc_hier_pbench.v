@@ -75,10 +75,12 @@ module proc_hier_pbench();
             ICacheReq_count = ICacheReq_count + 1;	 	
 	     end    
 
-         $fdisplay(sim_log_file, "SIMLOG:: Cycle %d PC: %8x PC Curr: %8x I: %8x R: %d %3d %8x M: %d %d %8x %8x",
+         $fdisplay(sim_log_file, "SIMLOG:: Cycle %d PC: %8x PC Curr: %8x decINS: %8x IDEXDisp: %8x I: %8x R: %d %3d %8x M: %d %d %8x %8x",
                   DUT.c0.cycle_count,
                   PC,
 		  pcCurr,
+		  decins,
+		  idexins,
                   Inst,
                   RegWrite,
                   WriteRegister,
@@ -128,16 +130,18 @@ module proc_hier_pbench();
    // Edit the example below. You must change the signal
    // names on the right hand side
    
-   wire[15:0] pcCurr; 
+   wire[15:0] pcCurr, idexins, decins; 
    assign PC = DUT.p0.fetch0.pcCurrent;
    assign Inst = DUT.p0.ifidmod.instrOut;
    assign pcCurr = DUT.p0.fetch0.nextPC;
+   assign idexins = DUT.p0.idexmod.instr_out;
+   assign decins = DUT.p0.decode0.instr;
    //assign Inst = DUT.p0.fetch0.instr;
    
-   assign RegWrite = DUT.p0.memwbmod.reg_write_out;
+   assign RegWrite = DUT.p0.memwbmod.reg_write_outi;
    // Is register file being written to, one bit signal (1 means yes, 0 means no)
    
-   assign WriteRegister = DUT.p0.reg_wr_selMEMWB;
+   assign WriteRegister = DUT.p0.decode0.reg_wr_sel;
    // The name of the register being written to. (3 bit signal)
    
    assign WriteData = DUT.p0.wb1.write_data;
@@ -146,7 +150,7 @@ module proc_hier_pbench();
    assign MemRead =  (DUT.p0.memory0.memRead & ~DUT.p0.memory0.memWrite);
    // Is memory being read, one bit signal (1 means yes, 0 means no)
    
-   assign MemWrite = (DUT.p0.memory0.memRead & ~DUT.p0.memory0.memWrite);
+   assign MemWrite = DUT.p0.memory0.memWrite;
    // Is memory being written to (1 bit signal)
    
    assign MemAddress = DUT.p0.memory0.aluResult;

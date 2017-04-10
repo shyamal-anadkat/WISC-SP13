@@ -92,7 +92,7 @@ module proc (/*AUTOARG*/
                .Cin_out(Cin_IDEX), 
                .dump_out(dumpIDEX),
                .nextPC_out(nextPCIDEX),
-               .clk(clk), .en(1'b0), .rst(rst));
+               .clk(clk), .en(1'b1), .rst(rst), .stall(stall));
 
 
 

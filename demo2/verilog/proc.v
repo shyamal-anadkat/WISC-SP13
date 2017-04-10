@@ -26,13 +26,11 @@ module proc (/*AUTOARG*/
    wire[15:0] instr,instr_out, instr_outIDEX, pc_plus_2, next_pc, A, B, B_EXMEM, A_EXMEM, alu_out, resultEXMEM, write_data, data_out, pcCurrent, A_IDEX, B_IDEX, nextPCIDEX, nextPCEXMEM, nextPCMEMWB, data_outMEMWB, resultMEMWB;
    wire[15:0] se4_0, ze4_0, se7_0, ze7_0, se10_0, sum1, sum2, sum1EXMEM, sum2EXMEM, currPCIFID, nextPCIFID, se4_0IDEX, ze4_0IDEX, se7_0IDEX, ze7_0IDEX, se10_0IDEX, read_dataMEMWB;
    wire[2:0] alu_src, reg_wr_sel, alu_srcIDEX, reg_wr_selEXMEM, reg_wr_selMEMWB;
-   wire[1:0] reg_dst, reg_dstIDEX;
-   wire dump, mem_write, mem_writeEXMEM, mem_to_reg, mem_to_regIDEX, mem_to_regEXMEM, invA, invA_IDEX, invB, invB_IDEX, Cin, err1, err2, jr, en, reg_write, reg_writeIDEX, reg_writeEXMEM,mem_writeIDEX, Cin_IDEX, dumpIDEX, dumpEXMEM, jrEXMEM, reg_writeMEMWB, mem_to_regMEMWB, JALenMEMWB;
-
-   assign en = 1'b1;
+   wire[1:0] reg_dst, reg_dstIDEX, hasAB;
+   wire dump, mem_write, mem_writeEXMEM, stall, mem_to_reg, mem_to_regIDEX, mem_to_regEXMEM, invA, invA_IDEX, invB, invB_IDEX, Cin, err1, err2, jr, en, reg_write, IFIDWriteEn, reg_writeIDEX, reg_writeEXMEM,mem_writeIDEX, Cin_IDEX, dumpIDEX, dumpEXMEM, jrEXMEM, reg_writeMEMWB, mem_to_regMEMWB, JALenMEMWB, PCWriteEn;
 
    //************************ FETCH*********************************************//
-   fetch fetch0(.clk(clk), .rst(rst), .dump(dump), .sum1(sum1EXMEM), .sum2(sum2EXMEM), .jr(jrEXMEM), .nextPC(pc_plus_2), .instr(instr), .stallPC(16'h0), .isNop(1'b0), .currPC(pcCurrent));
+   fetch fetch0(.clk(clk), .rst(rst), .dump(dumpEXMEM), .sum1(sum1EXMEM), .sum2(sum2EXMEM), .jr(jrEXMEM), .nextPC(pc_plus_2), .instr(instr), .stallPC(currPCIFID), .isNop(stall), .currPC(pcCurrent), .PCWriteEn(PCWriteEn));
 
    
    //************************ IFID LATCH*****************************************//
@@ -42,12 +40,20 @@ module proc (/*AUTOARG*/
                      .instrOut(instr_out), 
                      .currPCOut(currPCIFID), 
                      .nextPCOut(nextPCIFID), 
-                     .en(en), .clk(clk), .rst(rst));
+                     .en(IFIDWriteEn), .clk(clk), .rst(rst));
 
 
    //************************ DECODE********************************************//
-   decode decode0(.instr(instr_out), .write_data(write_data), .clk(clk), .rst(rst), .err(err1), .alu_src(alu_src), .mem_write(mem_write), .mem_to_reg(mem_to_reg), .reg_wr_sel(reg_wr_selMEMWB), .invA(invA), .invB(invB), .Cin(Cin), .A(A), .B(B), .se4_0(se4_0), .ze4_0(ze4_0), .se7_0(se7_0), .ze7_0(ze7_0), .se10_0(se10_0), .dump(dump), .reg_dst(reg_dst),.reg_write(reg_write));
+   decode decode0(.instr(instr_out), .write_data(write_data), .clk(clk), .rst(rst), .err(err1), .alu_src(alu_src), .mem_write(mem_write), .mem_to_reg(mem_to_reg), .reg_wr_sel(reg_wr_selMEMWB), .invA(invA), .invB(invB), .Cin(Cin), .A(A), .B(B), .se4_0(se4_0), .ze4_0(ze4_0), .se7_0(se7_0), .ze7_0(ze7_0), .se10_0(se10_0), .dump(dump), .reg_dst(reg_dst), .reg_write(reg_write), .hasAB(hasAB));
 
+   //************************* HAZARD DETECTION ********************************//
+    hazard_detection hd(.instr(instr_out), .idexWR(reg_wr_sel), .exmemWR(reg_wr_selEXMEM),
+		     .memwbWR(reg_wr_selMEMWB), .ifidRD1(instr_out[10:8]),
+		     .ifidRD2(instr_out[7:5]), .idexRegWR(reg_writeIDEX),
+                     .exmemRegWR(reg_writeEXMEM), .memwbRegWR(reg_writeMEMWB),
+		     .IFIDwriteEn(IFIDWriteEn), .PCwriteEn(PCWriteEn), .hasAB(hasAB),
+                     .memReadEXMEM(mem_to_regEXMEM), .memWriteEXMEM(mem_writeEXMEM),
+		     .stall(stall));
 
   //************************ IDEX LATCH*****************************************//
    IDEXmod idexmod( .instr_in(instr_out), 
@@ -86,7 +92,7 @@ module proc (/*AUTOARG*/
                .Cin_out(Cin_IDEX), 
                .dump_out(dumpIDEX),
                .nextPC_out(nextPCIDEX),
-               .clk(clk), .en(en), .rst(rst));
+               .clk(clk), .en(1'b0), .rst(rst));
 
 
 
@@ -116,7 +122,7 @@ module proc (/*AUTOARG*/
                      .nextPC_out(nextPCEXMEM), 
                      .dump_out(dumpEXMEM), 
                      .reg_write_out(reg_writeEXMEM), 
-                     .en(en), 
+                     .en(1'b1), 
                      .clk(clk), 
                      .rst(rst));
 
@@ -139,7 +145,7 @@ module proc (/*AUTOARG*/
                      .read_data_out(read_dataMEMWB), 
                      .result_out(resultMEMWB), 
                      .reg_wr_sel_out(reg_wr_selMEMWB), 
-                     .nextPC_out(nextPCMEMWB), .en(en), .rst(rst), .clk(clk));
+                     .nextPC_out(nextPCMEMWB), .en(1'b1), .rst(rst), .clk(clk));
 
 
 

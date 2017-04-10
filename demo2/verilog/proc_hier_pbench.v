@@ -75,9 +75,10 @@ module proc_hier_pbench();
             ICacheReq_count = ICacheReq_count + 1;	 	
 	     end    
 
-         $fdisplay(sim_log_file, "SIMLOG:: Cycle %d PC: %8x I: %8x R: %d %3d %8x M: %d %d %8x %8x",
+         $fdisplay(sim_log_file, "SIMLOG:: Cycle %d PC: %8x PC Curr: %8x I: %8x R: %d %3d %8x M: %d %d %8x %8x",
                   DUT.c0.cycle_count,
                   PC,
+		  pcCurr,
                   Inst,
                   RegWrite,
                   WriteRegister,
@@ -126,9 +127,12 @@ module proc_hier_pbench();
 
    // Edit the example below. You must change the signal
    // names on the right hand side
-    
-   assign PC = DUT.p0.fetch0.currPC;
-   assign Inst = DUT.p0.fetch0.instr;
+   
+   wire[15:0] pcCurr; 
+   assign PC = DUT.p0.fetch0.pcCurrent;
+   assign Inst = DUT.p0.ifidmod.instrOut;
+   assign pcCurr = DUT.p0.fetch0.nextPC;
+   //assign Inst = DUT.p0.fetch0.instr;
    
    assign RegWrite = DUT.p0.memwbmod.reg_write_out;
    // Is register file being written to, one bit signal (1 means yes, 0 means no)
@@ -171,8 +175,7 @@ module proc_hier_pbench();
    // Signal indicating a valid data cache hit
    // Above assignment is a dummy example
    
-   //assign Halt = DUT.p0.memory0.halt;
-   assign Halt = 0;
+   assign Halt = DUT.p0.memory0.halt;
    // Processor halted
    
    

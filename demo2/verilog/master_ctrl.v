@@ -1,9 +1,9 @@
 module master_ctrl (opcode, lower_two, alu_src, mem_write, reg_write,
-                    mem_to_reg, reg_dst, invA, invB, Cin, dump, err);
+                    mem_to_reg, reg_dst, invA, invB, Cin, dump, err, hasAB);
     input[4:0] opcode;
     input[1:0] lower_two;
     output mem_write, reg_write, mem_to_reg, invA, invB, Cin, dump, err;
-    output[1:0] reg_dst;
+    output[1:0] reg_dst, hasAB;
     output[2:0] alu_src;
 
     reg mem_write, reg_write, mem_to_reg, invA, invB, Cin, dump, err;
@@ -26,7 +26,7 @@ module master_ctrl (opcode, lower_two, alu_src, mem_write, reg_write,
 	7 - X
     */
     reg[2:0] alu_src;
-    reg[1:0] reg_dst;
+    reg[1:0] reg_dst, hasAB;
     wire[2:0] out_alu_arith;
 
     // ADD, SUB, XOR, ANDN invA select
@@ -50,6 +50,7 @@ module master_ctrl (opcode, lower_two, alu_src, mem_write, reg_write,
                 invB = 1'b0;
                 Cin = 1'b0;
 		dump = 1'b1;
+		hasAB = 2'b00;
 		err = 1'b0;
             end
 
@@ -63,6 +64,7 @@ module master_ctrl (opcode, lower_two, alu_src, mem_write, reg_write,
                 invB = 1'b0;
                 Cin = 1'b0;
 		dump = 1'b0;
+		hasAB = 2'b00;
                 err = 1'b0;
             end
 
@@ -76,6 +78,7 @@ module master_ctrl (opcode, lower_two, alu_src, mem_write, reg_write,
 		invB = 1'b0;
 		Cin = 1'b0;
 		dump = 1'b0;
+		hasAB = 2'b10;
                 err = 1'b0;
 	    end
 
@@ -89,6 +92,7 @@ module master_ctrl (opcode, lower_two, alu_src, mem_write, reg_write,
 		invB = 1'b0;
 		Cin = 1'b1;
 		dump = 1'b0;
+		hasAB = 2'b10;
                 err = 1'b0;
             end
 
@@ -102,6 +106,7 @@ module master_ctrl (opcode, lower_two, alu_src, mem_write, reg_write,
 		invB = 1'b0;
 		Cin = 1'b0;
 		dump = 1'b0;
+		hasAB = 2'b10;
                 err = 1'b0;
             end
 
@@ -115,6 +120,7 @@ module master_ctrl (opcode, lower_two, alu_src, mem_write, reg_write,
 		invB = 1'b1;
 		Cin = 1'b0;
 		dump = 1'b0;
+		hasAB = 2'b10;
                 err = 1'b0;
             end
 
@@ -128,6 +134,7 @@ module master_ctrl (opcode, lower_two, alu_src, mem_write, reg_write,
                 invB = 1'b0;
                 Cin = 1'b0;
 		dump = 1'b0;
+		hasAB = 2'b10;
                 err = 1'b0;
             end
 
@@ -141,6 +148,7 @@ module master_ctrl (opcode, lower_two, alu_src, mem_write, reg_write,
                 invB = 1'b0;
                 Cin = 1'b0;
 		dump = 1'b0;
+		hasAB = 2'b10;
                 err = 1'b0;
             end
 
@@ -154,6 +162,7 @@ module master_ctrl (opcode, lower_two, alu_src, mem_write, reg_write,
                 invB = 1'b0;
                 Cin = 1'b0;
 		dump = 1'b0;
+		hasAB = 2'b10;
                 err = 1'b0;
             end
 
@@ -167,6 +176,7 @@ module master_ctrl (opcode, lower_two, alu_src, mem_write, reg_write,
                 invB = 1'b0;
                 Cin = 1'b0;
 		dump = 1'b0;
+		hasAB = 2'b10;
                 err = 1'b0;
             end
 
@@ -182,6 +192,7 @@ module master_ctrl (opcode, lower_two, alu_src, mem_write, reg_write,
                 invB = 1'b0;
                 Cin = 1'b0;
 		dump = 1'b0;
+		hasAB = 2'b01;
                 err = 1'b0;
             end
 
@@ -195,6 +206,7 @@ module master_ctrl (opcode, lower_two, alu_src, mem_write, reg_write,
                 invB = 1'b0;
                 Cin = 1'b0;
 		dump = 1'b0;
+		hasAB = 2'b10;
                 err = 1'b0;
             end
 
@@ -209,6 +221,7 @@ module master_ctrl (opcode, lower_two, alu_src, mem_write, reg_write,
                 invB = 1'b0;
                 Cin = 1'b0;
 		dump = 1'b0;
+		hasAB = 2'b01;
                 err = 1'b0;
             end
 
@@ -222,6 +235,7 @@ module master_ctrl (opcode, lower_two, alu_src, mem_write, reg_write,
                 invB = 1'b0;
                 Cin = 1'b0;
 		dump = 1'b0;
+		hasAB = 2'b10;
                 err = 1'b0;
             end
 
@@ -235,6 +249,7 @@ module master_ctrl (opcode, lower_two, alu_src, mem_write, reg_write,
                 invB = out_alu_arith[1];
                 Cin = out_alu_arith[0];
 		dump = 1'b0;
+		hasAB = 2'b11;
                 err = 1'b0;
             end
 
@@ -248,6 +263,7 @@ module master_ctrl (opcode, lower_two, alu_src, mem_write, reg_write,
                 invB = 1'b0;
                 Cin = 1'b0;
 		dump = 1'b0;
+		hasAB = 2'b11;
                 err = 1'b0;
             end
 
@@ -261,6 +277,7 @@ module master_ctrl (opcode, lower_two, alu_src, mem_write, reg_write,
                 invB = 1'b1;
                 Cin = 1'b1;
 		dump = 1'b0;
+		hasAB = 2'b11;
                 err = 1'b0;
             end
 
@@ -274,6 +291,7 @@ module master_ctrl (opcode, lower_two, alu_src, mem_write, reg_write,
                 invB = 1'b1;
                 Cin = 1'b1;
 		dump = 1'b0;
+		hasAB = 2'b11;
                 err = 1'b0;
             end
 
@@ -287,6 +305,7 @@ module master_ctrl (opcode, lower_two, alu_src, mem_write, reg_write,
                 invB = 1'b1;
                 Cin = 1'b1;
 		dump = 1'b0;
+		hasAB = 2'b11;
                 err = 1'b0;
             end
 
@@ -300,6 +319,7 @@ module master_ctrl (opcode, lower_two, alu_src, mem_write, reg_write,
                 invB = 1'b0;
                 Cin = 1'b0;
 		dump = 1'b0;
+		hasAB = 2'b11;
                 err = 1'b0;
             end
 
@@ -313,6 +333,7 @@ module master_ctrl (opcode, lower_two, alu_src, mem_write, reg_write,
                 invB = 1'b1;
                 Cin = 1'b1;
 		dump = 1'b0;
+		hasAB = 2'b10;
                 err = 1'b0;
             end
 
@@ -339,6 +360,7 @@ module master_ctrl (opcode, lower_two, alu_src, mem_write, reg_write,
                 invB = 1'b1;
                 Cin = 1'b1;
 		dump = 1'b0;
+		hasAB = 2'b10;
                 err = 1'b0;
             end
 
@@ -352,6 +374,7 @@ module master_ctrl (opcode, lower_two, alu_src, mem_write, reg_write,
                 invB = 1'b1;
                 Cin = 1'b1;
 		dump = 1'b0;
+		hasAB = 2'b10;
                 err = 1'b0;
             end
 
@@ -365,6 +388,7 @@ module master_ctrl (opcode, lower_two, alu_src, mem_write, reg_write,
                 invB = 1'b0;
                 Cin = 1'b0;
 		dump = 1'b0;
+		hasAB = 2'b10;
                 err = 1'b0;
             end
 
@@ -378,6 +402,7 @@ module master_ctrl (opcode, lower_two, alu_src, mem_write, reg_write,
                 invB = 1'b0;
                 Cin = 1'b0;
 		dump = 1'b0;
+		hasAB = 2'b10;
                 err = 1'b0;
             end
 
@@ -391,6 +416,7 @@ module master_ctrl (opcode, lower_two, alu_src, mem_write, reg_write,
                 invB = 1'b0;
                 Cin = 1'b0;
                 dump = 1'b0;
+		hasAB = 2'b00;
                 err = 1'b0;
             end
 
@@ -404,6 +430,7 @@ module master_ctrl (opcode, lower_two, alu_src, mem_write, reg_write,
                 invB = 1'b0;
                 Cin = 1'b0;
                 dump = 1'b0;
+		hasAB = 2'b10;
                 err = 1'b0;
             end
 
@@ -417,6 +444,7 @@ module master_ctrl (opcode, lower_two, alu_src, mem_write, reg_write,
                 invB = 1'b0;
                 Cin = 1'b0;
 		dump = 1'b0;
+		hasAB = 2'b00;
                 err = 1'b0;
             end
 
@@ -430,6 +458,7 @@ module master_ctrl (opcode, lower_two, alu_src, mem_write, reg_write,
                 invB = 1'b0;
                 Cin = 1'b0;
 		dump = 1'b0;
+		hasAB = 2'b10;
                 err = 1'b0;
             end
 
@@ -443,6 +472,7 @@ module master_ctrl (opcode, lower_two, alu_src, mem_write, reg_write,
                 invB = 1'b0;
                 Cin = 1'b0;
                 dump = 1'b0;
+		hasAB = 2'b00;
                 err = 1'b0;
 	    end
 
@@ -456,6 +486,7 @@ module master_ctrl (opcode, lower_two, alu_src, mem_write, reg_write,
                 invB = 1'b0;
                 Cin = 1'b0;
                 dump = 1'b0;
+		hasAB = 2'b00;
                 err = 1'b0;
             end
 
@@ -469,6 +500,7 @@ module master_ctrl (opcode, lower_two, alu_src, mem_write, reg_write,
                 invB = 1'b0;
                 Cin = 1'b0;
                 dump = 1'b0;
+		hasAB = 2'b00;
                 err = 1'b1;
             end
 

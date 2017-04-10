@@ -18,7 +18,7 @@ module rf_bypass (
    output [15:0] read2data;
    output        err;
 
-   wire [15:0] bp1, bp2;
+   wire bp1, bp2;
    wire [15:0] read1, read2;
 
    rf rfmod(
@@ -38,11 +38,13 @@ module rf_bypass (
  //bp1 = 1 if read1sel = writeregsel && write
  //bp2 = 1 if read2sel = writeregsel && write 
 
+assign bp1 = ((read1regsel == writeregsel) && write) ? 1'b1 : 1'b0;
+assign bp2 = ((read2regsel == writeregsel) && write) ? 1'b1 : 1'b0;
 
 
  //select between write and read1
- mux2_1 bypass1mod (.InA(writedata),.InB(read1),.S(bp1),.Out(read1data));
- mux2_1 bypass2mod (.InA(writedata),.InB(read2),.S(bp2),.Out(read2data));
+ mux2_1_16 bypass1mod (.InA(writedata),.InB(read1),.S(bp1),.Out(read1data));
+ mux2_1_16 bypass2mod (.InA(writedata),.InB(read2),.S(bp2),.Out(read2data));
 
 
 endmodule

@@ -19,19 +19,19 @@ module EXMEMmod(jr_in, mem_to_reg_in, mem_write_in, sum1_in, sum2_in, result_in,
     assign dump_sel = rst ? 1'b0 : dump_in;
     assign reg_write_sel = rst ? 1'b0 : reg_write_in;
 
-    dff16 mod1(.out(sum1_out), .in(sum1_in), .en(en), .rst(1'b0), .clk(clk));
-    dff16 mod2(.out(sum2_out), .in(sum2_in), .en(en), .rst(1'b0), .clk(clk));
-    dff16 mod3(.out(result_out), .in(result_in), .en(en), .rst(1'b0), .clk(clk));
-    dff16 mod4(.out(B_out), .in(B_in), .en(en), .rst(1'b0), .clk(clk));
+    dff16 mod1(.out(sum1_out), .in(sum1_in), .en(en), .rst(rst), .clk(clk));
+    dff16 mod2(.out(sum2_out), .in(sum2_in), .en(en), .rst(rst), .clk(clk));
+    dff16 mod3(.out(result_out), .in(result_in), .en(en), .rst(rst), .clk(clk));
+    dff16 mod4(.out(B_out), .in(B_in), .en(en), .rst(rst), .clk(clk));
 
-    dff3 mod5(.out(reg_wr_sel_out), .in(reg_wr_sel_in), .en(en), .rst(1'b0), .clk(clk));
+    dff3 mod5(.out(reg_wr_sel_out), .in(reg_wr_sel_in), .en(en), .rst(rst), .clk(clk));
 
-    dff1 mod6(.out(jr_out), .in(jr_sel), .en(en), .rst(1'b0), .clk(clk));
-    dff1 mod7(.out(mem_to_reg_out), .in(mem_to_reg_sel), .en(en), .rst(1'b0), .clk(clk));
-    dff1 mod8(.out(mem_write_out), .in(mem_write_sel), .en(en), .rst(1'b0), .clk(clk));
-    dff1 mod9(.out(dump_out), .in(dump_sel), .en(en), .rst(1'b0), .clk(clk));
-    dff1 mod10(.out(reg_write_out), .in(reg_write_sel), .en(en), .rst(1'b0), .clk(clk));
+    dff1 mod6(.out(jr_out), .in(jr_sel), .en(en), .rst(rst), .clk(clk));
+    dff1 mod7(.out(mem_to_reg_out), .in(mem_to_reg_sel), .en(en), .rst(rst), .clk(clk));
+    dff1 mod8(.out(mem_write_out), .in(mem_write_sel), .en(en), .rst(rst), .clk(clk));
+    dff1 mod9(.out(dump_out), .in(dump_sel), .en(en), .rst(rst), .clk(clk));
+    dff1 mod10(.out(reg_write_out), .in(reg_write_sel), .en(en), .rst(rst), .clk(clk));
 
-    dff16 mod11(.out(nextPC_out), .in(nextPC_in), .en(en), .rst(1'b0), .clk(clk));
+    dff16 mod11(.out(nextPC_out), .in(nextPC_in), .en(en), .rst(rst), .clk(clk));
 
 endmodule

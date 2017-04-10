@@ -1,9 +1,9 @@
 //Fetch Instruction module **3/4/2017**
-module fetch(clk, rst, dump, sum1, sum2, jr, nextPC, instr, stallPC, isNop, currPC,
-	     PCWriteEn);
+module fetch(clk, rst, dump, pc_branch, branch_cond, nextPC, instr, stallPC, isNop,
+	     currPC, PCWriteEn);
 
-input[15:0] sum1, sum2, stallPC;
-input clk, rst, dump, jr, isNop, PCWriteEn;
+input[15:0] stallPC, pc_branch;
+input clk, rst, dump, isNop, PCWriteEn, branch_cond;
 
 output [15:0] nextPC, currPC;
 output [15:0] instr;
@@ -26,9 +26,6 @@ wire PG_cla, GG_cla, Cout_cla, ofl_out; //NOT USED/DUMMY
 
     cla16 cla_mod(.A(pcCurrent), .B(16'h0002), .Cin(1'b0), .Cout(Cout_cla), .PG(PG_cla), .GG(GG_cla), .S(nextPC));
 
-    // Update PC
-    mux2_1_16 mux1(.InA(sum1), .InB(sum2), .S(jr), .Out(pc_out_jr));
-
-    assign pc_updated = (isNop) ? stallPC : pc_out_jr;
+    assign pc_updated = (isNop) ? stallPC : ((branch_cond) ? pc_branch : nextPC);
 
 endmodule

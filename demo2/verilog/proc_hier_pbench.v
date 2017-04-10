@@ -75,12 +75,19 @@ module proc_hier_pbench();
             ICacheReq_count = ICacheReq_count + 1;	 	
 	     end    
 
-         $fdisplay(sim_log_file, "SIMLOG:: Cycle %d PC: %8x PC Curr: %8x decINS: %8x IDEXDisp: %8x I: %8x R: %d %3d %8x M: %d %d %8x %8x",
+         $fdisplay(sim_log_file, "SIMLOG:: Cycle %d PC: %8x ALU: %8x ALU_EXMEM: %8x PC Curr: %8x decINS: %8x IFID: %8x IDEX: %8x EXMEM: %8x MEMWR: %8x WRITE: %1x STALL: %1x I: %8x R: %d %3d %8x M: %d %d %8x %8x",
                   DUT.c0.cycle_count,
                   PC,
+		  alu,
+		  alu_exmem,
 		  pcCurr,
 		  decins,
-		  idexins,
+		  nexifid,
+		  nexidex,
+		  nexexmem,
+		  nexmemwr,
+		  memwbregwr,
+		  stall,
                   Inst,
                   RegWrite,
                   WriteRegister,
@@ -130,15 +137,24 @@ module proc_hier_pbench();
    // Edit the example below. You must change the signal
    // names on the right hand side
    
-   wire[15:0] pcCurr, idexins, decins; 
+   wire[15:0] alu, pcCurr, idexins, decins, nexifid, alu_exmem, nexidex, nexexmem, nexmemwr; 
+   wire memwbregwr, stall;
    assign PC = DUT.p0.fetch0.pcCurrent;
-   assign Inst = DUT.p0.ifidmod.instrOut;
+   assign Inst = DUT.p0.fetch0.instr;
    assign pcCurr = DUT.p0.fetch0.nextPC;
    assign idexins = DUT.p0.idexmod.instr_out;
    assign decins = DUT.p0.decode0.instr;
+   assign memwbregwr = DUT.p0.memwbmod.reg_write_out;
+   assign stall = DUT.p0.hd.stall;
+   assign nexifid = DUT.p0.ifidmod.nextPCOut;
+   assign nexidex = DUT.p0.idexmod.nextPC_out;
+   assign nexexmem = DUT.p0.exmemmod.nextPC_out;
+   assign nexmemwr = DUT.p0.memwbmod.nextPC_out;
+   assign alu = DUT.p0.exe1.result;
+   assign alu_exmem = DUT.p0.exmemmod.result_out;
    //assign Inst = DUT.p0.fetch0.instr;
    
-   assign RegWrite = DUT.p0.memwbmod.reg_write_outi;
+   assign RegWrite = DUT.p0.memwbmod.reg_write_out;
    // Is register file being written to, one bit signal (1 means yes, 0 means no)
    
    assign WriteRegister = DUT.p0.decode0.reg_wr_sel;

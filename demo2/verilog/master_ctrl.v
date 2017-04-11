@@ -194,7 +194,7 @@ module master_ctrl (opcode, lower_two, alu_src, mem_write, reg_write,
                 invB = 1'b0;
                 Cin = 1'b0;
 		dump = 1'b0;
-		hasAB = 5'b00001;
+		hasAB = 5'b00011;
                 err = 1'b0;
             end
 

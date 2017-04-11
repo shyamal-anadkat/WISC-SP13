@@ -75,7 +75,7 @@ module proc_hier_pbench();
             ICacheReq_count = ICacheReq_count + 1;	 	
 	     end    
 
-         $fdisplay(sim_log_file, "SIMLOG:: DecA: 0x%4x A: 0x%4x B: 0x%4x REGA: %1x REGB: %1x REG_EXE: %1x REG_EXMEM: %1x REG_MEMWB: %1x Cycle %d PC: %8x ALU: %8x PC Curr: %8x decINS: %8x VALUE: 0x%04x WRITE: %1x STALL: %1x I: %8x R: %d %3d %8x M: %d %d %8x %8x",
+         $fdisplay(sim_log_file, "SIMLOG:: DecA: 0x%4x A: 0x%4x B: 0x%4x REGA: %1x REGB: %1x REG_EXE: %1x REG_EXMEM: %1x REG_MEMWB: %1x Cycle %d PC: %8x ALU: %8x PC Curr: %8x decINS: %8x VALUE: 0x%04x BR_COND: %1x STALL: %1x I: %8x R: %d %3d %8x M: %d %d %8x %8x",
                   decA,
 		  A,
 		  B,
@@ -90,7 +90,7 @@ module proc_hier_pbench();
 		  pcCurr,
 		  decins,
 		  WriteData,
-		  memwbregwr,
+		  br_cond,
 		  stall,
                   Inst,
                   RegWrite,
@@ -143,13 +143,12 @@ module proc_hier_pbench();
    
    wire[15:0] decA, A, B, alu, pcCurr, idexins, decins, nexifid, alu_exmem, nexidex, nexexmem, nexmemwr;
    wire[2:0] wr_reg_exe, wr_reg_EXMEM, wr_reg_MEMWB, regA, regB; 
-   wire memwbregwr, stall;
+   wire br_cond, stall;
    assign PC = DUT.p0.fetch0.pcCurrent;
    assign Inst = DUT.p0.fetch0.instr;
    assign pcCurr = DUT.p0.fetch0.nextPC;
    assign idexins = DUT.p0.idexmod.instr_out;
    assign decins = DUT.p0.decode0.instr;
-   assign memwbregwr = DUT.p0.memwbmod.reg_write_out;
    assign stall = DUT.p0.hd.stall;
    assign nexifid = DUT.p0.ifidmod.nextPCOut;
    assign nexidex = DUT.p0.idexmod.nextPC_out;
@@ -165,6 +164,7 @@ module proc_hier_pbench();
    assign A = DUT.p0.idexmod.A_out;
    assign B = DUT.p0.idexmod.B_out;
    assign decA = DUT.p0.decode0.A;
+   assign br_cond = DUT.p0.br_stall_cond;
    //assign Inst = DUT.p0.fetch0.instr;
    
    assign RegWrite = DUT.p0.memwbmod.reg_write_out;

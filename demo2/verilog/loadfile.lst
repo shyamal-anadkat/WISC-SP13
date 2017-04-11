@@ -1,13 +1,222 @@
-          // Original test: ./neel/hw4/problem6/bltz_0.asm
-          // Author: neel
-          // Test source code follows
+          // stallTest - try progressive numbers of stalls.
+          //
+          // A test specifically for the pipelined implementation.
+          //
+          // CS/ECE 552, Spring 2006
+          // Andy Phelps  11 April 2006
+          //
           
+0000 202c j .RealStart
           
-          //Tests bltz when register < 0
-          //branches to inst lbi r2,30
-          
-0000 c1ff lbi r1,255
-0002 7102 bltz r1,2
-0004 c214 lbi r2,20
-0006 c21e lbi r2,30
+0002 0000 halt
+0004 0000 halt
+0006 0000 halt
 0008 0000 halt
+000a 0000 halt
+000c      .Data1:
+000c 0000 halt
+000e 0000 halt
+0010      .Data2:
+0010 0000 halt
+0012 0000 halt
+0014      .Data3:
+0014 0000 halt
+0016 0000 halt
+0018      .Data4:
+0018 0000 halt
+001a      .Data5:
+001a 0000 halt
+001c 0000 halt
+001e 0000 halt
+0020 0000 halt
+0022 0000 halt
+0024 0000 halt
+0026 0000 halt
+0028 0000 halt
+002a 0000 halt
+002c 0000 halt
+          
+002e      .RealStart:
+          
+002e c003 lbi r0, 3
+0030 0800 nop
+0032 0800 nop
+0034 0800 nop
+0036 0800 nop
+0038 0800 nop
+003a 4001 addi r0, r0, 1     // r0 = 4
+          
+003c c106 lbi r1, 6
+003e 0800 nop
+0040 0800 nop
+0042 0800 nop
+0044 0800 nop
+0046 4121 addi r1, r1, 1     // r1 = 7
+          
+0048 c205 lbi r2, 5
+004a 0800 nop
+004c 0800 nop
+004e 0800 nop
+0050 4241 addi r2, r2, 1     // r2 = 6
+          
+0052 c307 lbi r3, 7
+0054 0800 nop
+0056 0800 nop
+0058 4361 addi r3, r3, 1     // r3 = 8
+          
+005a c409 lbi r4, 9
+005c 0800 nop
+005e 4481 addi r4, r4, 1     // r4 = 10
+          
+0060 c50b lbi r5, 11
+0062 45a1 addi r5, r5, 1     // r5 = 12
+          
+0064 d820 add r0, r0, r1     // r0 = 11
+0066 db48 add r2, r3, r2     // r2 = 14
+0068 dcb0 add r4, r4, r5     // r4 = 22
+006a d840 add r0, r0, r2     // r0 = 25
+006c d89c add r7, r0, r4     // r7 = 47 = 0x002f
+          
+006e c601 lbi r6, 1          // r6 = 1
+          
+0070 c003 lbi r0, 3
+0072 0800 nop
+0074 0800 nop
+0076 0800 nop
+0078 0800 nop
+007a 0800 nop
+007c de00 add r0, r6, r0     // r0 = 4
+          
+007e c106 lbi r1, 6
+0080 0800 nop
+0082 0800 nop
+0084 0800 nop
+0086 0800 nop
+0088 de24 add r1, r6, r1     // r1 = 7
+          
+008a c205 lbi r2, 5
+008c 0800 nop
+008e 0800 nop
+0090 0800 nop
+0092 de48 add r2, r6, r2     // r2 = 6
+          
+0094 c307 lbi r3, 7
+0096 0800 nop
+0098 0800 nop
+009a de6c add r3, r6, r3     // r3 = 8
+          
+009c c409 lbi r4, 9
+009e 0800 nop
+00a0 de90 add r4, r6, r4     // r4 = 10
+          
+00a2 c50b lbi r5, 11
+00a4 deb4 add r5, r6, r5     // r5 = 12
+          
+00a6 d900 add r0, r1, r0     // r0 = 11
+00a8 da68 add r2, r2, r3     // r2 = 14
+00aa dd90 add r4, r5, r4     // r4 = 22
+00ac da00 add r0, r2, r0     // r0 = 25
+00ae dc18 add r6, r4, r0     // r6 = 47 = 0x002f
+00b0 defc add r7, r6, r7     // r7 = 94 = 0x005e
+          
+00b2 c00c lbi r0, L.Data1
+00b4 0800 nop
+00b6 0800 nop
+00b8 0800 nop
+00ba 0800 nop
+00bc 80e0 st r7, r0, 0       // .Data1 = 0x005e
+          
+00be c010 lbi r0, L.Data2
+00c0 0800 nop
+00c2 0800 nop
+00c4 0800 nop
+00c6 80e0 st r7, r0, 0       // .Data2 = 0x005e
+          
+00c8 c014 lbi r0, L.Data3
+00ca 0800 nop
+00cc 0800 nop
+00ce 80e0 st r7, r0, 0       // .Data3 = 0x005e
+          
+00d0 c018 lbi r0, L.Data4
+00d2 0800 nop
+00d4 80e0 st r7, r0, 0       // .Data4 = 0x005e
+          
+00d6 c01a lbi r0, L.Data5
+00d8 98c2 stu r6, r0, 2      // .Data5+2 = 0x002f
+00da 0800 nop
+00dc 0800 nop
+00de 0800 nop
+00e0 0800 nop
+00e2 98c2 stu r6, r0, 2      // .Data5+4 = 0x002f
+00e4 0800 nop
+00e6 0800 nop
+00e8 0800 nop
+00ea 98c2 stu r6, r0, 2      // .Data5+6 = 0x002f
+00ec 0800 nop
+00ee 0800 nop
+00f0 98c2 stu r6, r0, 2      // .Data5+8 = 0x002f
+00f2 0800 nop
+00f4 98c2 stu r6, r0, 2      // .Data5+10 = 0x002f
+00f6 98e2 stu r7, r0, 2      // .Data5+12 = 0x005e
+          
+00f8 c00c lbi r0, L.Data1
+00fa 0800 nop
+00fc 0800 nop
+00fe 0800 nop
+0100 8820 ld  r1, r0, 0      // r1 = 0x005e
+0102 0800 nop
+0104 0800 nop
+0106 0800 nop
+0108 41c0 addi r6, r1, 0     // r6 = 0x005e
+          
+010a c10c lbi r1, L.Data1
+010c 0800 nop
+010e 0800 nop
+0110 8940 ld  r2, r1, 0      // r2 = 0x005e
+0112 0800 nop
+0114 0800 nop
+0116 de58 add r6, r6, r2     // r6 = 0x00bc
+          
+0118 c20c lbi r2, L.Data1
+011a 0800 nop
+011c 8a60 ld  r3, r2, 0      // r3 = 0x005e
+011e 0800 nop
+0120 de78 add r6, r6, r3     // r6 = 0x011a
+          
+0122 c30c lbi r3, L.Data1
+0124 8b80 ld  r4, r3, 0      // r4 = 0x005e
+0126 de98 add r6, r6, r4     // r6 = 0x0178
+0128 83de st r6, r3, -2      // .Data1-1 = 0x0178
+          
+012a c300 lbi r3, 0
+012c 6308 beqz r3, .GoHere
+012e 0000 halt
+0130 0000 halt
+0132 0000 halt
+0134 0000 halt
+          
+0136      .GoHere:
+0136 8a60 ld r3, r2, 0       // r3 = 0x005e
+0138 6b08 bnez r3, .GoThere
+013a 0000 halt
+013c 0000 halt
+013e 0000 halt
+0140 0000 halt
+          
+0142      .GoThere:
+0142 c001 lbi r0, U.GoGoGo
+0144 9050 slbi r0, L.GoGoGo
+0146 3800 jalr r0, 0
+0148      .RetAddr:
+0148 0000 halt
+014a 0000 halt
+014c 0000 halt
+014e 0000 halt
+          
+0150      .GoGoGo:
+0150 82fe st r7, r2, -2      // .Data1-2 = .RetAddr (0x00a4)
+0152 0000 halt
+0154 0000 halt
+0156 0000 halt
+          
+          

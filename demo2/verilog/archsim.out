@@ -5,71 +5,73 @@ Type "help" for more information
 
 Loading program...
 Executing...
-lbi r0, 10
-INUM:        0 PC: 0x0000 REG: 0 VALUE: 0x000a
-slbi r0, 116
-INUM:        1 PC: 0x0002 REG: 0 VALUE: 0x0a74
-lbi r1, -43
-INUM:        2 PC: 0x0004 REG: 1 VALUE: 0xffd5
-slbi r1, 86
-INUM:        3 PC: 0x0006 REG: 1 VALUE: 0xd556
-lbi r2, -112
-INUM:        4 PC: 0x0008 REG: 2 VALUE: 0xff90
-slbi r2, 0
-INUM:        5 PC: 0x000a REG: 2 VALUE: 0x9000
-lbi r3, 48
-INUM:        6 PC: 0x000c REG: 3 VALUE: 0x0030
-slbi r3, -3
-INUM:        7 PC: 0x000e REG: 3 VALUE: 0x30fd
-lbi r4, -64
-INUM:        8 PC: 0x0010 REG: 4 VALUE: 0xffc0
-slbi r4, 93
-INUM:        9 PC: 0x0012 REG: 4 VALUE: 0xc05d
-lbi r5, 89
-INUM:       10 PC: 0x0014 REG: 5 VALUE: 0x0059
-slbi r5, -110
-INUM:       11 PC: 0x0016 REG: 5 VALUE: 0x5992
-lbi r6, 33
-INUM:       12 PC: 0x0018 REG: 6 VALUE: 0x0021
-slbi r6, 16
-INUM:       13 PC: 0x001a REG: 6 VALUE: 0x2110
-lbi r7, -13
-INUM:       14 PC: 0x001c REG: 7 VALUE: 0xfff3
-slbi r7, 39
-INUM:       15 PC: 0x001e REG: 7 VALUE: 0xf327
-add r6, r4, r1
-INUM:       16 PC: 0x0020 REG: 6 VALUE: 0x95b3
-add r1, r1, r4
-INUM:       17 PC: 0x0022 REG: 1 VALUE: 0x95b3
-add r7, r0, r4
-INUM:       18 PC: 0x0024 REG: 7 VALUE: 0xcad1
-add r4, r2, r7
-INUM:       19 PC: 0x0026 REG: 4 VALUE: 0x5ad1
-add r5, r3, r7
-INUM:       20 PC: 0x0028 REG: 5 VALUE: 0xfbce
-add r0, r1, r7
-INUM:       21 PC: 0x002a REG: 0 VALUE: 0x6084
-add r0, r0, r7
-INUM:       22 PC: 0x002c REG: 0 VALUE: 0x2b55
-add r5, r6, r2
-INUM:       23 PC: 0x002e REG: 5 VALUE: 0x25b3
-add r2, r3, r4
-INUM:       24 PC: 0x0030 REG: 2 VALUE: 0x8bce
-add r5, r3, r5
-INUM:       25 PC: 0x0032 REG: 5 VALUE: 0x56b0
-add r2, r6, r6
-INUM:       26 PC: 0x0034 REG: 2 VALUE: 0x2b66
-add r1, r7, r5
-INUM:       27 PC: 0x0036 REG: 1 VALUE: 0x2181
-add r3, r7, r5
-INUM:       28 PC: 0x0038 REG: 3 VALUE: 0x2181
-add r2, r4, r3
-INUM:       29 PC: 0x003a REG: 2 VALUE: 0x7c52
-add r4, r7, r2
-INUM:       30 PC: 0x003c REG: 4 VALUE: 0x4723
-add r4, r5, r4
-INUM:       31 PC: 0x003e REG: 4 VALUE: 0x9dd3
+lbi r0, 0
+INUM:        0 PC: 0x0000 REG: 0 VALUE: 0x0000
+slbi r0, 76
+INUM:        1 PC: 0x0002 REG: 0 VALUE: 0x004c
+lbi r1, 0
+INUM:        2 PC: 0x0004 REG: 1 VALUE: 0x0000
+slbi r1, 84
+INUM:        3 PC: 0x0006 REG: 1 VALUE: 0x0054
+lbi r2, 7
+INUM:        4 PC: 0x0008 REG: 2 VALUE: 0x0007
+st r2, r0, 0
+INUM:        5 PC: 0x000a ADDR: 0x004c VALUE: 0x0007
+ld r3, r0, 0
+INUM:        6 PC: 0x000c REG: 3 VALUE: 0x0007 ADDR: 0x004c
+lbi r4, -7
+INUM:        7 PC: 0x000e REG: 4 VALUE: 0xfff9
+st r4, r0, 4
+INUM:        8 PC: 0x0010 ADDR: 0x0050 VALUE: 0xfff9
+addi r0, r0, 4
+INUM:        9 PC: 0x0012 REG: 0 VALUE: 0x0050
+ld r5, r0, 0
+INUM:       10 PC: 0x0014 REG: 5 VALUE: 0xfff9 ADDR: 0x0050
+addi r2, r2, 8
+INUM:       11 PC: 0x0016 REG: 2 VALUE: 0x000f
+st r2, r0, -2
+INUM:       12 PC: 0x0018 ADDR: 0x004e VALUE: 0x000f
+addi r0, r0, -3
+INUM:       13 PC: 0x001a REG: 0 VALUE: 0x004d
+ld r6, r0, 1
+INUM:       14 PC: 0x001c REG: 6 VALUE: 0x000f ADDR: 0x004e
+lbi r2, 86
+INUM:       15 PC: 0x001e REG: 2 VALUE: 0x0056
+slbi r2, 120
+INUM:       16 PC: 0x0020 REG: 2 VALUE: 0x5678
+addi r3, r2, 1
+INUM:       17 PC: 0x0022 REG: 3 VALUE: 0x5679
+addi r4, r2, 2
+INUM:       18 PC: 0x0024 REG: 4 VALUE: 0x567a
+stu r2, r1, 2
+INUM:       19 PC: 0x0026 REG: 1 VALUE: 0x0056 ADDR: 0x0056 VALUE: 0x5678
+stu r3, r1, 2
+INUM:       20 PC: 0x0028 REG: 1 VALUE: 0x0058 ADDR: 0x0058 VALUE: 0x5679
+stu r4, r1, 6
+INUM:       21 PC: 0x002a REG: 1 VALUE: 0x005e ADDR: 0x005e VALUE: 0x567a
+ld r4, r1, -8
+INUM:       22 PC: 0x002c REG: 4 VALUE: 0x5678 ADDR: 0x0056
+ld r3, r1, -6
+INUM:       23 PC: 0x002e REG: 3 VALUE: 0x5679 ADDR: 0x0058
+ld r2, r1, 0
+INUM:       24 PC: 0x0030 REG: 2 VALUE: 0x567a ADDR: 0x005e
+ld r1, r0, 3
+INUM:       25 PC: 0x0032 REG: 1 VALUE: 0xfff9 ADDR: 0x0050
+roli r4, r4, 1
+INUM:       26 PC: 0x0034 REG: 4 VALUE: 0xacf0
+roli r3, r3, 4
+INUM:       27 PC: 0x0036 REG: 3 VALUE: 0x6795
+add r7, r3, r4
+INUM:       28 PC: 0x0038 REG: 7 VALUE: 0x1485
+add r7, r7, r2
+INUM:       29 PC: 0x003a REG: 7 VALUE: 0x6aff
+add r7, r7, r1
+INUM:       30 PC: 0x003c REG: 7 VALUE: 0x6af8
+add r7, r7, r6
+INUM:       31 PC: 0x003e REG: 7 VALUE: 0x6b07
+st r7, r0, 5
+INUM:       32 PC: 0x0040 ADDR: 0x0052 VALUE: 0x6b07
 halt
 program halted
-INUM:       32 PC: 0x0040
+INUM:       33 PC: 0x0042
 Program Finished

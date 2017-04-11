@@ -1,4 +1,9 @@
-lbi r0, 0
-addi r1, r0, 2
-addi r2, r1, 3
+add r4, r1, r4
+nop
+nop
+nop
+nop
+add r4, r1, r4
+add r4, r0, r4
+nop
 halt

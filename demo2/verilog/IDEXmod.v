@@ -23,7 +23,7 @@ module IDEXmod (instr_in, A_in, B_in, se4_0_in, ze4_0_in, se7_0_in, ze7_0_in,
     wire[15:0] rstOrIns;
     wire mem_write_sel, mem_to_reg_sel, dump_sel, reg_write_sel;
 
-    assign rstOrIns = stall ? 16'b00001_00000000000 : instr_in;
+    assign rstOrIns = stall ? 16'b00001_xxxxxxxxxxx : instr_in;
     assign mem_write_sel = stall ? 1'b0 : mem_write_in;
     assign reg_write_sel = stall ? 1'b0 : reg_write_in;
     assign mem_to_reg_sel = stall ? 1'b0 : mem_to_reg_in;

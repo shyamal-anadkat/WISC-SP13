@@ -40,11 +40,11 @@ module proc (/*AUTOARG*/
                      .instrOut(instr_out), 
                      .currPCOut(currPCIFID), 
                      .nextPCOut(nextPCIFID), 
-                     .en(IFIDWriteEn), .clk(clk), .rst(rst));
+                     .en(IFIDWriteEn), .clk(clk), .rst(rst), .branch_cond(branch_cond_in));
 
 
    //************************ DECODE********************************************//
-   decode decode0(.instr(instr_out), .write_data(write_data), .clk(clk), .rst(rst), .err(err1), .alu_src(alu_src), .mem_write(mem_write), .mem_to_reg(mem_to_reg), .reg_wr_sel(reg_wr_selMEMWB), .invA(invA), .invB(invB), .Cin(Cin), .A(A), .B(B), .se4_0(se4_0), .ze4_0(ze4_0), .se7_0(se7_0), .ze7_0(ze7_0), .se10_0(se10_0), .dump(dump), .reg_dst(reg_dst), .reg_write(reg_write), .hasAB(hasAB));
+   decode decode0(.instr(instr_out), .write_data(write_data), .clk(clk), .rst(rst), .err(err1), .alu_src(alu_src), .mem_write(mem_write), .mem_to_reg(mem_to_reg), .reg_wr_sel(reg_wr_selMEMWB), .invA(invA), .invB(invB), .Cin(Cin), .A(A), .B(B), .se4_0(se4_0), .ze4_0(ze4_0), .se7_0(se7_0), .ze7_0(ze7_0), .se10_0(se10_0), .dump(dump), .reg_dst(reg_dst), .reg_write_out(reg_write), .hasAB(hasAB), .reg_write_in(reg_writeMEMWB));
 
    //************************* HAZARD DETECTION ********************************//
     hazard_detection hd(.instr(instr_out), .idexWR(reg_wr_sel), .exmemWR(reg_wr_selEXMEM),

@@ -26,7 +26,7 @@ wire PG_cla, GG_cla, Cout_cla, ofl_out; //NOT USED/DUMMY
 
     cla16 cla_mod(.A(pcCurrent), .B(16'h0002), .Cin(1'b0), .Cout(Cout_cla), .PG(PG_cla), .GG(GG_cla), .S(nextPC));
 
-    //assign pc_updated = (isNop | branch_cond | branch_cond_EXMEM) ? stallPC : ((branch_cond) ? pc_branch : nextPC);
-    assign pc_updated = nextPC;
+    assign pc_updated = (isNop | branch_cond | branch_cond_EXMEM) ? stallPC : ((branch_cond) ? pc_branch : nextPC);
+    //assign pc_updated = nextPC;
 
 endmodule

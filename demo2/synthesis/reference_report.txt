@@ -1,0 +1,43 @@
+Information: Updating graph... (UID-83)
+Warning: Design 'proc' contains 2 high-fanout nets. A fanout number of 1000 will be used for delay calculations involving these nets. (TIM-134)
+ 
+****************************************
+Report : reference
+Design : proc
+Version: L-2016.03-SP4-1
+Date   : Tue Apr 11 02:19:31 2017
+****************************************
+
+Attributes:
+    b - black box (unknown)
+   bo - allows boundary optimization
+    d - dont_touch
+   mo - map_only
+    h - hierarchical
+    n - noncombinational
+    r - removable
+    s - synthetic operator
+    u - contains unmapped logic
+
+Reference          Library       Unit Area   Count    Total Area   Attributes
+-----------------------------------------------------------------------------
+AND2X1             gscl45nm       2.346500      15     35.197499  
+BUFX2              gscl45nm       2.346500       1      2.346500  
+EXMEMmod                       2020.805755       1   2020.805755  h, n
+IDEXmod                        4030.817604       1   4030.817604  h, n
+IFIDmod                        1335.627769       1   1335.627769  h, n
+INVX1              gscl45nm       1.407900      18     25.342200  
+MEMWBmod                       1853.265659       1   1853.265659  h, n
+NAND3X1            gscl45nm       2.346500       1      2.346500  
+NOR3X1             gscl45nm       2.815800       2      5.631600  
+OR2X1              gscl45nm       2.346500       4      9.386000  
+OR2X2              gscl45nm       2.815800       2      5.631600  
+decode                         7006.648840       1   7006.648840  h, n
+execute                       16268.753478       1  16268.753478  h
+fetch                         16276.731597       1  16276.731597  h, n
+hazard_detection                164.254996       1    164.254996  h
+memory                        13098.162776       1  13098.162776  h, n
+writeback                       658.897185       1    658.897185  h
+-----------------------------------------------------------------------------
+Total 17 references                                 62799.847556
+1

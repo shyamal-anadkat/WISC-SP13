@@ -1,0 +1,83 @@
+ 
+****************************************
+Report : cell
+Design : proc
+Version: L-2016.03-SP4-1
+Date   : Tue Apr 11 02:19:31 2017
+****************************************
+
+Attributes:
+    b - black box (unknown)
+    h - hierarchical
+    n - noncombinational
+    r - removable
+    u - contains unmapped logic
+
+Cell                      Reference       Library             Area  Attributes
+--------------------------------------------------------------------------------
+U27                       OR2X2           gscl45nm        2.815800  
+U28                       INVX1           gscl45nm        1.407900  
+U29                       INVX1           gscl45nm        1.407900  
+U30                       INVX1           gscl45nm        1.407900  
+U31                       BUFX2           gscl45nm        2.346500  
+U32                       OR2X1           gscl45nm        2.346500  
+U33                       OR2X1           gscl45nm        2.346500  
+U34                       INVX1           gscl45nm        1.407900  
+U35                       AND2X1          gscl45nm        2.346500  
+U36                       AND2X1          gscl45nm        2.346500  
+U37                       AND2X1          gscl45nm        2.346500  
+U38                       AND2X1          gscl45nm        2.346500  
+U39                       AND2X1          gscl45nm        2.346500  
+U40                       AND2X1          gscl45nm        2.346500  
+U41                       AND2X1          gscl45nm        2.346500  
+U42                       AND2X1          gscl45nm        2.346500  
+U43                       AND2X1          gscl45nm        2.346500  
+U44                       AND2X1          gscl45nm        2.346500  
+U45                       AND2X1          gscl45nm        2.346500  
+U46                       AND2X1          gscl45nm        2.346500  
+U47                       OR2X1           gscl45nm        2.346500  
+U48                       OR2X1           gscl45nm        2.346500  
+U49                       INVX1           gscl45nm        1.407900  
+U50                       INVX1           gscl45nm        1.407900  
+U51                       INVX1           gscl45nm        1.407900  
+U52                       INVX1           gscl45nm        1.407900  
+U53                       INVX1           gscl45nm        1.407900  
+U54                       INVX1           gscl45nm        1.407900  
+U55                       INVX1           gscl45nm        1.407900  
+U56                       INVX1           gscl45nm        1.407900  
+U57                       INVX1           gscl45nm        1.407900  
+U58                       INVX1           gscl45nm        1.407900  
+U59                       INVX1           gscl45nm        1.407900  
+U60                       INVX1           gscl45nm        1.407900  
+U61                       INVX1           gscl45nm        1.407900  
+U62                       INVX1           gscl45nm        1.407900  
+U63                       AND2X1          gscl45nm        2.346500  
+U64                       AND2X1          gscl45nm        2.346500  
+U65                       AND2X1          gscl45nm        2.346500  
+U67                       NOR3X1          gscl45nm        2.815800  
+U68                       NOR3X1          gscl45nm        2.815800  
+U69                       NAND3X1         gscl45nm        2.346500  
+U70                       OR2X2           gscl45nm        2.815800  
+decode0                   decode                          7006.648840
+                                                                    h, n
+exe1                      execute                         16268.753478
+                                                                    h
+exmemmod                  EXMEMmod                        2020.805755
+                                                                    h, n
+fetch0                    fetch                           16276.731597
+                                                                    h, n
+hd                        hazard_detection                164.254996
+                                                                    h
+idexmod                   IDEXmod                         4030.817604
+                                                                    h, n
+ifidmod                   IFIDmod                         1335.627769
+                                                                    h, n
+memory0                   memory                          13098.162776
+                                                                    h, n
+memwbmod                  MEMWBmod                        1853.265659
+                                                                    h, n
+wb1                       writeback                       658.897185
+                                                                    h
+--------------------------------------------------------------------------------
+Total 53 cells                                            62799.847556
+1

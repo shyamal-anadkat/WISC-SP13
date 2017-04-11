@@ -1,0 +1,5 @@
+/u/s/h/shyamal/private/WISC-SP13/demo2/verification/mytests/mytest1.asm SUCCESS CPI:4.5 CYCLES:18 ICOUNT:4 IHITRATE: 0 DHITRATE: 0
+/u/s/h/shyamal/private/WISC-SP13/demo2/verification/mytests/mytest2.asm SUCCESS CPI:6.3 CYCLES:19 ICOUNT:3 IHITRATE: 0 DHITRATE: 0
+/u/s/h/shyamal/private/WISC-SP13/demo2/verification/mytests/mytest3.asm SUCCESS CPI:16.8 CYCLES:17 ICOUNT:1 IHITRATE: 0 DHITRATE: 0
+/u/s/h/shyamal/private/WISC-SP13/demo2/verification/mytests/mytest4.asm SUCCESS CPI:4.3 CYCLES:13 ICOUNT:3 IHITRATE: 0 DHITRATE: 0
+/u/s/h/shyamal/private/WISC-SP13/demo2/verification/mytests/mytest5.asm SUCCESS CPI:4.3 CYCLES:13 ICOUNT:3 IHITRATE: 0 DHITRATE: 0

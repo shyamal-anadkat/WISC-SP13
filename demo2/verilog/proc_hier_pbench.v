@@ -75,23 +75,9 @@ module proc_hier_pbench();
             ICacheReq_count = ICacheReq_count + 1;	 	
 	     end    
 
-         $fdisplay(sim_log_file, "SIMLOG:: DecA: 0x%4x A: 0x%4x B: 0x%4x REGA: %1x REGB: %1x REG_EXE: %1x REG_EXMEM: %1x REG_MEMWB: %1x Cycle %d PC: %8x ALU: %8x PC Curr: %8x decINS: %8x VALUE: 0x%04x BR_COND: %1x STALL: %1x I: %8x R: %d %3d %8x M: %d %d %8x %8x",
-                  decA,
-		  A,
-		  B,
-		  regA,
-		  regB,
-		  wr_reg_exe,
-		  wr_reg_EXMEM,
-		  wr_reg_MEMWB,
+         $fdisplay(sim_log_file, "SIMLOG:: Cycle %d PC: %8x I: %8x R: %d %3d %8x M: %d %d %8x %8x",
 		  DUT.c0.cycle_count,
                   PC,
-		  alu,
-		  pcCurr,
-		  decins,
-		  WriteData,
-		  br_cond,
-		  stall,
                   Inst,
                   RegWrite,
                   WriteRegister,
@@ -141,31 +127,8 @@ module proc_hier_pbench();
    // Edit the example below. You must change the signal
    // names on the right hand side
    
-   wire[15:0] decA, A, B, alu, pcCurr, idexins, decins, nexifid, alu_exmem, nexidex, nexexmem, nexmemwr;
-   wire[2:0] wr_reg_exe, wr_reg_EXMEM, wr_reg_MEMWB, regA, regB; 
-   wire br_cond, stall;
    assign PC = DUT.p0.fetch0.pcCurrent;
    assign Inst = DUT.p0.fetch0.instr;
-   assign pcCurr = DUT.p0.fetch0.nextPC;
-   assign idexins = DUT.p0.idexmod.instr_out;
-   assign decins = DUT.p0.decode0.instr;
-   assign stall = DUT.p0.hd.stall;
-   assign nexifid = DUT.p0.ifidmod.nextPCOut;
-   assign nexidex = DUT.p0.idexmod.nextPC_out;
-   assign nexexmem = DUT.p0.exmemmod.nextPC_out;
-   assign nexmemwr = DUT.p0.memwbmod.nextPC_out;
-   assign alu = DUT.p0.exe1.result;
-   assign alu_exmem = DUT.p0.exmemmod.result_out;
-   assign wr_reg_exe = DUT.p0.exe1.reg_wr_sel;
-   assign wr_reg_EXMEM = DUT.p0.exmemmod.reg_wr_sel_out;
-   assign wr_reg_MEMWB = DUT.p0.memwbmod.reg_wr_sel_out;
-   assign regA = DUT.p0.ifidmod.instrOut[10:8];
-   assign regB = DUT.p0.ifidmod.instrOut[7:5];
-   assign A = DUT.p0.idexmod.A_out;
-   assign B = DUT.p0.idexmod.B_out;
-   assign decA = DUT.p0.decode0.A;
-   assign br_cond = DUT.p0.br_stall_cond;
-   //assign Inst = DUT.p0.fetch0.instr;
    
    assign RegWrite = DUT.p0.memwbmod.reg_write_out;
    // Is register file being written to, one bit signal (1 means yes, 0 means no)

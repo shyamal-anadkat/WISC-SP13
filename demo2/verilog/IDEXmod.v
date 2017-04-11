@@ -4,10 +4,11 @@ module IDEXmod (instr_in, A_in, B_in, se4_0_in, ze4_0_in, se7_0_in, ze7_0_in,
 		B_out, se4_0_out, ze4_0_out, reg_dst_out, reg_write_out,
 		se7_0_out, ze7_0_out, se10_0_out, alu_src_out, stall,
                 mem_write_out, mem_to_reg_out, invA_out, invB_out, Cin_out, dump_out, nextPC_out, 
-		clk, en, rst);
+		clk, en, rst, hasAB_in, hasAB_out);
 
     input[15:0] A_in, B_in, se4_0_in, ze4_0_in, se7_0_in, ze7_0_in, se10_0_in, instr_in;
     input[15:0] nextPC_in;
+    input[4:0] hasAB_in;
     input[2:0] alu_src_in;
     input[1:0] reg_dst_in;
     input mem_write_in, mem_to_reg_in, invA_in, invB_in, Cin_in, dump_in, clk, en, rst;
@@ -15,6 +16,7 @@ module IDEXmod (instr_in, A_in, B_in, se4_0_in, ze4_0_in, se7_0_in, ze7_0_in,
 
     output[15:0] A_out, B_out, se4_0_out, ze4_0_out, se7_0_out, ze7_0_out, se10_0_out;
     output[15:0] instr_out, nextPC_out;
+    output[4:0] hasAB_out;
     output[2:0] alu_src_out;
     output[1:0] reg_dst_out;
     output mem_write_out, mem_to_reg_out, invA_out, invB_out, Cin_out, dump_out;
@@ -23,7 +25,7 @@ module IDEXmod (instr_in, A_in, B_in, se4_0_in, ze4_0_in, se7_0_in, ze7_0_in,
     wire[15:0] rstOrIns;
     wire mem_write_sel, mem_to_reg_sel, dump_sel, reg_write_sel;
 
-    assign rstOrIns = stall ? 16'b00001_xxxxxxxxxxx : instr_in;
+    assign rstOrIns = stall ? 16'b00001_00000000000 : instr_in;
     assign mem_write_sel = stall ? 1'b0 : mem_write_in;
     assign reg_write_sel = stall ? 1'b0 : reg_write_in;
     assign mem_to_reg_sel = stall ? 1'b0 : mem_to_reg_in;
@@ -50,5 +52,6 @@ module IDEXmod (instr_in, A_in, B_in, se4_0_in, ze4_0_in, se7_0_in, ze7_0_in,
     dff16 mod16(.out(instr_out), .in(rstOrIns), .en(en), .rst(rst), .clk(clk));
     dff16 mod17(.out(nextPC_out), .in(nextPC_in), .en(en), .rst(rst), .clk(clk));
     dff mod18[1:0] (.q(reg_dst_out), .d(reg_dst_in), .clk(clk), .rst(rst));
+    dff mod19[4:0] (.q(hasAB_out), .d(hasAB_in), .clk(clk), .rst(rst));
 
 endmodule

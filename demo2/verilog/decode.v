@@ -10,7 +10,8 @@ module decode (instr, write_data, clk, rst, err, alu_src, mem_write, mem_to_reg,
     output err, mem_write, mem_to_reg, invA, invB, Cin, dump;
 
     input[2:0] reg_wr_sel;
-    output[1:0] reg_dst, hasAB;
+    output[1:0] reg_dst;
+    output[4:0] hasAB;
     output reg_write_out; 
     wire err1, err2;
 

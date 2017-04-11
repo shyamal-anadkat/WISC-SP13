@@ -9,7 +9,7 @@ localparam ZERO   = 1'b0;
 input idexRegWR, exmemRegWR, memwbRegWR, memReadEXMEM, memWriteEXMEM;
 input [15:0] instr;
 input [2:0] idexWR, exmemWR, memwbWR, ifidRD1, ifidRD2;
-input [1:0] hasAB;
+input [4:0] hasAB;
 output IFIDwriteEn, PCwriteEn, stall;
 
 wire raw1,raw2,raw3,raw4,raw5,raw6, memEn; 

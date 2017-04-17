@@ -23,6 +23,20 @@ module mem_system(/*AUTOARG*/
    output CacheHit;
    output err;
 
+   //**************STATES**************//
+
+   localparam IDLE 			= 4'b0000;
+   localparam COMP_RD		=
+   localparam COMP_WR		=
+   localparam WRITEBACK0	=	
+   localparam WRITEBACK1	=
+   localparam WRITEBACK2	=
+   localparam WRITEBACK3	=
+   localparam 
+
+
+
+
    /* data_mem = 1, inst_mem = 0 *
     * needed for cache parameter */
    parameter mem_type = 0;

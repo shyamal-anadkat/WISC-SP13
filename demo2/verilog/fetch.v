@@ -10,7 +10,7 @@ output [15:0] instr;
 
 wire[15:0] pcCurrent, pc_out_jr, pc_updated, pc_inc;
 wire PG_cla, GG_cla, Cout_cla, ofl_out; //NOT USED/DUMMY
-//reg[15:0] pc_updated;
+wire mem_err;
 
 //PC Register - always enabled
 
@@ -18,7 +18,8 @@ wire PG_cla, GG_cla, Cout_cla, ofl_out; //NOT USED/DUMMY
 
 //Instruction Memory to fetch instruction from PC
 
-    memory2c fetchmem(.data_out(instr), .data_in(16'b0), .addr(pcCurrent), .enable(1'b1), .wr(1'b0), .createdump(dump), .clk(clk), .rst(rst));
+	//TODO: should halt when mem_err is asserted for aligned memory
+    memory2c_align fetchmem(.data_out(instr), .data_in(16'b0), .addr(pcCurrent), .enable(1'b1), .wr(1'b0), .createdump(dump), .clk(clk), .rst(rst), .err(mem_err));
 
     assign currPC = pcCurrent;
     assign pc_inc = (isNop | branch_cond) ? 16'h0 : 16'h2;

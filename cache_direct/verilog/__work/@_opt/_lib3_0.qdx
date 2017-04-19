@@ -1,0 +1,12 @@
+3 118 INSERT OR REPLACE INTO mainfiles (auxid,fileid,duname,name,size,time,flags) VALUES (?,?,?,?,?,strftime('%s','now'),?); 6 0 3 0 1 2 5 @_opt 2 10 vopti023t7 1 4225 0 267
+3 118 INSERT OR REPLACE INTO mainfiles (auxid,fileid,duname,name,size,time,flags) VALUES (?,?,?,?,?,strftime('%s','now'),?); 6 0 3 0 2 2 5 @_opt 2 10 voptk67143 1 757 0 267
+3 118 INSERT OR REPLACE INTO mainfiles (auxid,fileid,duname,name,size,time,flags) VALUES (?,?,?,?,?,strftime('%s','now'),?); 6 0 3 0 3 2 5 @_opt 2 10 vopted4ev8 1 514 0 267
+3 118 INSERT OR REPLACE INTO mainfiles (auxid,fileid,duname,name,size,time,flags) VALUES (?,?,?,?,?,strftime('%s','now'),?); 6 0 3 0 4 2 5 @_opt 2 10 voptat6sw9 1 2555 0 267
+3 118 INSERT OR REPLACE INTO mainfiles (auxid,fileid,duname,name,size,time,flags) VALUES (?,?,?,?,?,strftime('%s','now'),?); 6 0 3 0 5 2 5 @_opt 2 10 vopt6794ya 1 2931 0 267
+3 118 INSERT OR REPLACE INTO mainfiles (auxid,fileid,duname,name,size,time,flags) VALUES (?,?,?,?,?,strftime('%s','now'),?); 6 0 3 0 6 2 5 @_opt 2 10 vopt2kbfzb 1 2702 0 267
+3 118 INSERT OR REPLACE INTO mainfiles (auxid,fileid,duname,name,size,time,flags) VALUES (?,?,?,?,?,strftime('%s','now'),?); 6 0 3 0 7 2 5 @_opt 2 10 vopty0et0d 1 1154 0 267
+3 118 INSERT OR REPLACE INTO mainfiles (auxid,fileid,duname,name,size,time,flags) VALUES (?,?,?,?,?,strftime('%s','now'),?); 6 0 3 0 8 2 5 @_opt 2 10 voptntig3f 1 3271 0 267
+3 118 INSERT OR REPLACE INTO mainfiles (auxid,fileid,duname,name,size,time,flags) VALUES (?,?,?,?,?,strftime('%s','now'),?); 6 0 3 0 9 2 5 @_opt 2 10 vopttdg52e 1 1271 0 267
+3 118 INSERT OR REPLACE INTO mainfiles (auxid,fileid,duname,name,size,time,flags) VALUES (?,?,?,?,?,strftime('%s','now'),?); 6 0 3 0 10 2 5 @_opt 2 10 voptgj9c54 1 1748 0 267
+3 118 INSERT OR REPLACE INTO mainfiles (auxid,fileid,duname,name,size,time,flags) VALUES (?,?,?,?,?,strftime('%s','now'),?); 6 0 3 0 11 2 5 @_opt 2 10 voptnjzqr6 1 1106 0 267
+25 125 INSERT OR REPLACE INTO meta (key,value1,value2) VALUES (?,?,IFNULL((SELECT value2 FROM meta WHERE key=? AND value1=?), 0)+?); 5 2 12 page_inserts 0 3 2 12 page_inserts 0 3 0 11

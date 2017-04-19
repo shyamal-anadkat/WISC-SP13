@@ -1,7 +1,7 @@
 # vsim -c cache.v -lib __work -voptargs="+acc" -wlf dump.wlf -do "log -howmany -rec /* ; run -all" 
-# Start time: 20:41:14 on Apr 18,2017
+# Start time: 22:52:16 on Apr 18,2017
 # ** Error: (vsim-19) Failed to access library 'cache' at "cache".
 # No such file or directory. (errno = ENOENT)
 # Error loading design
-# End time: 20:41:14 on Apr 18,2017, Elapsed time: 0:00:00
+# End time: 22:52:16 on Apr 18,2017, Elapsed time: 0:00:00
 # Errors: 1, Warnings: 0

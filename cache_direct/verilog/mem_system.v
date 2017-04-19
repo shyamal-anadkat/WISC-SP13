@@ -47,7 +47,6 @@ module mem_system(/*AUTOARG*/
    wire stall;
    wire [3:0] busy; 
 
-
    //****OUTPUTS**************//
 
    wire err, valid, dirty, hit; 
@@ -153,14 +152,11 @@ module mem_system(/*AUTOARG*/
 
     	end
 
-
     	MEMREAD0: begin
-
 
     	end
 
     	MEMREAD1: begin
-
 
     	end
 

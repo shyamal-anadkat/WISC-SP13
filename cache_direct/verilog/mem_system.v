@@ -38,20 +38,25 @@ module mem_system(/*AUTOARG*/
    wire [7:0] index; 
    reg enable;
    reg comp; 
-   wire write;
+   wire cache_write;
    wire [4:0] tag_in;
-   wire [15:0] data_in; 
+   wire [15:0] cache_data_in; 
    wire valid_in; 
 
-   //inputs from four_bank_mem
-   wire stall;
-   wire [3:0] busy; 
 
    //****OUTPUTS**************//
 
-   wire err, valid, dirty, hit; 
+   wire cache_err, valid, dirty, hit; 
    wire [4:0] tag_out; 
-   wire [15:0] data_out; 
+   wire [15:0] cache_data_out; 
+
+
+
+   //*****OUTPUTS from four_bank_mem****//
+   wire mem_stall;
+   wire [3:0] busy; 
+   wire mem_err;
+   wire[15:0] mem_data_out;
 
 
    //**************STATES**************//
@@ -79,41 +84,46 @@ module mem_system(/*AUTOARG*/
     * needed for cache parameter */
    parameter mem_type = 0;
    cache #(0 + mem_type) c0(// Outputs
-                          .tag_out              (),
-                          .data_out             (),
-                          .hit                  (),
-                          .dirty                (),
-                          .valid                (),
-                          .err                  (),
+                          .tag_out              (tag_out),
+                          .data_out             (cache_data_out),
+                          .hit                  (hit),
+                          .dirty                (dirty),
+                          .valid                (valid),
+                          .err                  (cache_err),
                           // Inputs
-                          .enable               (),
-                          .clk                  (),
-                          .rst                  (),
-                          .createdump           (),
-                          .tag_in               (),
-                          .index                (),
-                          .offset               (),
-                          .data_in              (),
-                          .comp                 (),
-                          .write                (),
-                          .valid_in             ());
+                          .enable               (enable),
+                          .clk                  (clk),
+                          .rst                  (rst),
+                          .createdump           (createdump),
+                          .tag_in               (tag_in),
+                          .index                (index),
+                          .offset               (offset),
+                          .data_in              (cache_data_in),
+                          .comp                 (comp),
+                          .write                (cache_write),
+                          .valid_in             (valid_in));
 
    four_bank_mem mem(// Outputs
-                     .data_out          (),
-                     .stall             (),
-                     .busy              (),
-                     .err               (),
+                     .data_out          (mem_data_out),
+                     .stall             (mem_stall),
+                     .busy              (busy),
+                     .err               (mem_err),
                      // Inputs
-                     .clk               (),
-                     .rst               (),
-                     .createdump        (),
-                     .addr              (),
-                     .data_in           (),
-                     .wr                (),
-                     .rd                ());
+                     .clk               (clk),
+                     .rst               (rst),
+                     .createdump        (createdump),
+                     .addr              (Addr),
+                     .data_in           (DataIn),
+                     .wr                (wr),
+                     .rd                (rd));
 
    
    // your code here
+
+  assign index =  Addr[10:3]; 
+  assign tag_in = Addr[15:11];
+  assign offset = Addr[2:0];      //if lsb is 1 then err, o.w 0
+
 
    dff dffmod [4:0] (.q(curr_state), .d(next_state), .clk(clk), .rst(rst));
 

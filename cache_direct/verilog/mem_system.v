@@ -23,31 +23,54 @@ module mem_system(/*AUTOARG*/
    output CacheHit;
    output err;
 
+   //****FOR CACHE-DIRECT (Shyamal, Sanjay)***//
 
-   wire [4:0] curr_state, next_state;
-   wire mem_err, cache_err, err, dirty, valid, stall;
+
+   //***FOR STATE LOGIC******//
+
+   wire [4:0] curr_state, 
+   reg [4:0] next_state;
+
+
+   //****INPUTS************//
+
+   wire [2:0] offset;
+   wire [7:0] index; 
+   reg enable;
+   reg comp; 
+   wire write;
+   wire [4:0] tag_in;
+   wire [15:0] data_in; 
+   wire valid_in; 
+
+
+   //****OUTPUTS**************//
+
+   wire err, valid, dirty, hit; 
+   wire [4:0] tag_out; 
+   wire [15:0] data_out; 
+
 
    //**************STATES**************//
 
    localparam IDLE 			= 5'h00;
-   localparam COMP			= 5'h01;
-   localparam WR			= 5'h02;
-   localparam WRITEBACK1	= 5'h03;
-   localparam WRITEBACK2	= 5'h04;
-   localparam WRITEBACK3	= 5'h05;
-   localparam WRITEBACK4	= 5'h06;
-   localparam READ1			= 5'h07;
-   localparam READ2			= 5'h08;
-   localparam READ3			= 5'h09;
-   localparam READ4			= 5'h0A;
-   localparam HIT 			= 5'h0B;
-   localparam MISS1			= 5'h0C;
-   localparam MISS2			= 5'h0D;
-   localparam MISS3			= 5'h0E;
-   localparam MISS4			= 5'h0F; 
-   localparam DONE			= 5'h10;
+   localparam COMPRD		= 5'h01;
+   localparam COMPWR		= 5'h02;
+   localparam WRITEBACK0	= 5'h03;
+   localparam WRITEBACK1	= 5'h04;
+   localparam WRITEBACK2	= 5'h05;
+   localparam WRITEBACK3	= 5'h06;
+   localparam MEMREAD0		= 5'h07;
+   localparam MEMREAD1		= 5'h08;
+   localparam MEMREAD2		= 5'h09;
+   localparam MEMREAD3		= 5'h0A;
+   localparam STORECACHE0	= 5'h0B;
+   localparam STORECACHE1	= 5'h0C;
+   localparam STORECACHE2	= 5'h0D;
+   localparam STORECACHE3	= 5'h0E; 
+   localparam DONE			= 5'h0F;
 
-  //**************STATES**************//
+  //*********************************//
 
    /* data_mem = 1, inst_mem = 0 *
     * needed for cache parameter */
@@ -89,36 +112,90 @@ module mem_system(/*AUTOARG*/
    
    // your code here
 
-   //assign err = (mem_err | cache_err);
-
-
    dff dffmod [4:0] (.q(curr_state), .d(next_state), .clk(clk), .rst(rst));
 
-   always @(*) begin
-   	casex(state, Rd, Wr, hit, valid, dirty, stall)
 
-   		11'b0000000xxxx: begin
-   		assign next_state = IDLE;
-   		end
+   always@(*)begin 
+    case(currState)
 
-   		11'b00000x1xxxx: begin
-   		assign next_state = COMP;
-   		end
-
-   		11'b000001xxxxx: begin
-   		assign next_state = COMP;
-   		end
+    	IDLE: begin
 
 
+    	end
+
+    	COMPRD: begin
 
 
+    	end
+
+    	COMPWR: begin
+
+    	end
+
+    	WRITEBACK0: begin
+
+    	end
+
+    	WRITEBACK1: begin
+
+    	end
+
+    	WRITEBACK2: begin
+
+    	end
 
 
+    	WRITEBACK3: begin
+
+    	end
 
 
+    	MEMREAD0: begin
+
+
+    	end
+
+    	MEMREAD1: begin
+
+
+    	end
+
+    	MEMREAD2: begin
+
+
+    	end
+
+    	MEMREAD3: begin
+
+
+    	end
+
+
+    	STORECACHE0: begin
+
+    	end
+
+
+    	STORECACHE1: begin
+
+    	end
+
+
+    	STORECACHE2: begin
+
+    	end
+
+    	STORECACHE3: begin
+
+    	end
+
+
+ 		DONE: begin
+
+
+ 		end 
    	endcase
    end
-
 
 
    

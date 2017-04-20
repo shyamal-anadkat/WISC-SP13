@@ -22,6 +22,7 @@ module mem_system(/*AUTOARG*/
    output Stall;
    output CacheHit;
    output err;
+   reg CacheHit, Done;
 
    //****FOR CACHE-DIRECT (Shyamal, Sanjay)***//
 
@@ -38,20 +39,19 @@ module mem_system(/*AUTOARG*/
    wire [7:0] index; 
    reg enable;
    reg comp; 
-   reg cache_write;
+   reg write;
    wire [4:0] tag_in;
-   wire [15:0] cache_data_in; 
+   wire [15:0] mem_addr; 
    wire valid_in; 
-
+   reg[15:0] cAddr, mem_data_in, cache_data_in;
+   reg[4:0] tag_mem;
+   reg[2:0] offset_mem;
 
    //****OUTPUTS**************//
 
    wire cache_err, valid, dirty, hit; 
    wire [4:0] tag_out; 
    wire [15:0] cache_data_out; 
-   reg Done; 
-
-
 
    //*****OUTPUTS from four_bank_mem****//
    wire mem_stall;
@@ -65,22 +65,22 @@ module mem_system(/*AUTOARG*/
 
    //**************STATES**************//
 
-   localparam IDLE 			  = 5'h00;
-   localparam COMPRD		  = 5'h01;
-   localparam COMPWR		  = 5'h02;
-   localparam WRITEBACK0	= 5'h03;
-   localparam WRITEBACK1	= 5'h04;
-   localparam WRITEBACK2	= 5'h05;
-   localparam WRITEBACK3	= 5'h06;
-   localparam MEMREAD0		= 5'h07;
-   localparam MEMREAD1		= 5'h08;
-   localparam MEMREAD2		= 5'h09;
-   localparam MEMREAD3		= 5'h0A;
-   localparam STORECACHE0	= 5'h0B;
-   localparam STORECACHE1	= 5'h0C;
-   localparam STORECACHE2	= 5'h0D;
-   localparam STORECACHE3	= 5'h0E; 
-   localparam DONE			  = 5'h0F;
+   localparam IDLE        = 5'h00;
+   localparam COMPRD      = 5'h01;
+   localparam COMPWR      = 5'h02;
+   localparam WRITEBACK0  = 5'h03;
+   localparam WRITEBACK1  = 5'h04;
+   localparam WRITEBACK2  = 5'h05;
+   localparam WRITEBACK3  = 5'h06;
+   localparam MEMREAD0    = 5'h07;
+   localparam MEMREAD1    = 5'h08;
+   localparam MEMREAD2    = 5'h09;
+   localparam MEMREAD3    = 5'h0A;
+   localparam STORECACHE0 = 5'h0B;
+   localparam STORECACHE1 = 5'h0C;
+   localparam STORECACHE2 = 5'h0D;
+   localparam STORECACHE3 = 5'h0E; 
+   localparam DONE        = 5'h0F;
    localparam ERR         = 5'h10;
 
   //*********************************//
@@ -105,8 +105,8 @@ module mem_system(/*AUTOARG*/
                           .offset               (offset),
                           .data_in              (cache_data_in),
                           .comp                 (comp),
-                          .write                (cache_write),
-                          .valid_in             (valid_in));
+                          .write                (write),
+                          .valid_in             (1'b1));
 
    four_bank_mem mem(// Outputs
                      .data_out          (mem_data_out),
@@ -117,189 +117,195 @@ module mem_system(/*AUTOARG*/
                      .clk               (clk),
                      .rst               (rst),
                      .createdump        (createdump),
-                     .addr              (Addr),
-                     .data_in           (DataIn),
+                     .addr              (mem_addr),
+                     .data_in           (mem_data_in),
                      .wr                (wr),
                      .rd                (rd));
 
    
    // your code here
-
-  assign index =  Addr[10:3]; 
-  assign tag_in = Addr[15:11];
-  assign offset = Addr[2:0];      //if lsb is 1 then err, o.w 0
-
+   //assign CacheHit = (hit & valid);
+   //assign Done = (Wr ^ Rd) & (hit & valid);
+   assign mem_addr = {tag_mem, cAddr[10:3], offset_mem};
+   assign tag_in = cAddr[15:11];
+   assign index = cAddr[10:3];
+   assign offset = cAddr[2:0];
+   assign err = mem_err | cache_err;
+   assign DataOut = cache_data_out;
+   //assign Stall = (~((hit & valid) & (Wr ^ Rd)) & (curr_state != IDLE));
+   assign Stall = (curr_state != IDLE) & ~Done;
 
   dff dffmod [4:0] (.q(curr_state), .d(next_state), .clk(clk), .rst(rst));
 
    always@(*)begin 
    comp = 1'b0;
-   Done = (hit & valid); 
+   enable = 1'b1;
+   CacheHit = 1'b0;
+   write = 1'b0;
+   offset_mem = 3'b0;
+   cAddr = Addr;
+   tag_mem = Addr[15:11];
+   cache_data_in = DataIn;
+   mem_data_in = DataOut;
+   wr = 1'b0;
+   rd = 1'b0;
+   Done = 1'b0;
 
     case(curr_state)
 
-    	IDLE: begin
+      IDLE: begin
+        next_state = (~Rd & ~Wr) ? IDLE : (Rd & ~ Wr) ? COMPRD : (~Rd & Wr) ? COMPWR : ERR;
+        CacheHit = (hit & valid) ? 1'b1 : 1'b0;
+        Done = (Rd ^ Wr) & (hit & valid);
+      end
 
-      wr = 0;
-      rd = 0; 
-      cache_write = 1'b0;
-      Done = (Wr | Rd) & (hit & valid);
-      next_state = ((Rd & Wr) | mem_err) ? ERR: (Rd & ~Wr) ? COMPRD : (~Rd & Wr) ? COMPWR : (~Rd & ~Wr) ? IDLE : ERR;
-    	end
+      COMPRD: begin
 
-    	COMPRD: begin
+      comp = 1'b1;
+      next_state = (hit & valid) ? IDLE : (~dirty & (~hit | ~valid)) ? MEMREAD0 : (dirty) ? WRITEBACK0 : ERR;
+      end
 
-      comp = 1'b1; 
-      cache_write = 1'b0;
+      COMPWR: begin
 
-    	end
+      comp = 1'b1;
+      write = 1'b1;
+      next_state = (hit & valid) ? IDLE : (~dirty & (~hit | ~valid)) ? MEMREAD0 : (dirty | Wr) ? WRITEBACK0 : ERR;
+      end
 
-    	COMPWR: begin
-
-      comp = 1'b1; 
-      cache_write = 1'b1;
-
-      next_state = (valid & hit) ? IDLE : (~valid & ~hit & dirty) ? WRITEBACK0 : (~valid & ~hit & ~dirty) ? MEMREAD0 : ERR; 
-    	end
-
-    	WRITEBACK0: begin
+      WRITEBACK0: begin
       comp = 1'b0;
-      cache_write = 1'b0;
       wr = 1'b1; 
+      cAddr = {Addr[15:3], 3'b000};
+      tag_mem = tag_out;
+      next_state = (mem_stall) ? WRITEBACK0 : WRITEBACK1;
+      end
 
-      next_state = (busy[0]) ? WRITEBACK0 : WRITEBACK1;
-    	end
-
-    	WRITEBACK1: begin
+      WRITEBACK1: begin
       comp = 1'b0;
-      cache_write = 1'b0;
-      wr = 1'b1; 
+      write = 1'b0;
+      wr = 1'b1;
+      offset_mem = 3'b010;
+      tag_mem = tag_out;
+      cAddr = {Addr[15:3], 3'b010};
+      next_state = (mem_stall) ? WRITEBACK1: WRITEBACK2;
+      end
 
-
-      next_state = (busy[1]) ? WRITEBACK1: WRITEBACK2;
-    	end
-
-    	WRITEBACK2: begin
+      WRITEBACK2: begin
       comp = 1'b0;
-      cache_write = 1'b0;
-      wr = 1'b1; 
-
-      next_state = (busy[2]) ? WRITEBACK2: WRITEBACK3;
-    	end
-
-
-    	WRITEBACK3: begin
-
-      comp = 1'b0;
-      cache_write = 1'b0;
-      wr = 1'b1; 
-
-      next_state = (busy[3]) ? WRITEBACK3: MEMREAD0;
-
-    	end
-
-    	MEMREAD0: begin
-
-      comp = 1'b0;
-      cache_write = 1'b0;
-      rd = 1'b1; 
-      enable = 1'b0;
-
-      next_state = (busy[0]) ? MEMREAD0: MEMREAD1;
-
-    	end
-
-    	MEMREAD1: begin
-
-      comp = 1'b0;
-      cache_write = 1'b0;
-      rd = 1'b1;
-      enable = 1'b0;
-
-      next_state = (busy[1]) ? MEMREAD1: MEMREAD2;
-
-    	end
-
-    	MEMREAD2: begin
-
-      comp = 1'b0;
-      cache_write = 1'b0;
-      rd = 1'b1;
-      enable = 1'b0;
-
-      next_state = (busy[2]) ? MEMREAD2: MEMREAD3;
-
-    	end
-
-    	MEMREAD3: begin
-
-      comp = 1'b0;
-      cache_write = 1'b0;
-      rd = 1'b1;
-      enable = 1'b0;
-
-      next_state = (busy[3]) ? MEMREAD3: STORECACHE0;
-
-    	end
-
-
-    	STORECACHE0: begin
-
-      comp = 1'b0;
-      cache_write = 1'b1;
-      enable  = 1'b1;
-
-
-      next_state = STORECACHE1;
-    	end
-
-
-    	STORECACHE1: begin
-
-      comp = 1'b0;
-      cache_write = 1'b1;
-      enable  = 1'b1;
-
-      next_state = STORECACHE2;
-
-    	end
-
-
-    	STORECACHE2: begin
-
-      comp = 1'b0;
-      cache_write = 1'b1;
-      enable  = 1'b1;
-
-      next_state = STORECACHE3; 
-    	end
-
-    	STORECACHE3: begin
-
-      comp = 1'b0;
-      cache_write = 1'b1;
-      enable  = 1'b1;
-
-      next_state = (mem_stall) ? STORECACHE3: IDLE;
-
-    	end
-
-      ERR: begin
-
-      next_state = (~mem_err) ? IDLE : ERR;
-      Done = 1'b1;
+      write = 1'b0;
+      wr = 1'b1;
+      offset_mem = 3'b100;
+      tag_mem = tag_out;
+      cAddr = {Addr[15:3], 3'b100};
+      next_state = (mem_stall) ? WRITEBACK2: WRITEBACK3;
       end
 
 
- 		DONE: begin
+      WRITEBACK3: begin
+
+      comp = 1'b0;
+      write = 1'b0;
+      wr = 1'b1; 
+      offset_mem = 3'b110;
+      tag_mem = tag_out;
+      cAddr = {Addr[15:3], 3'b110};
+      next_state = (mem_stall) ? WRITEBACK3: MEMREAD0;
+
+      end
+
+      MEMREAD0: begin
+      rd = 1'b1; 
+      enable = 1'b0;
+
+      next_state = (mem_stall) ? MEMREAD0: MEMREAD1;
+
+      end
+
+      MEMREAD1: begin
+      rd = 1'b1;
+      enable = 1'b0;
+      offset_mem = 3'b010;
+
+      next_state = (mem_stall) ? MEMREAD1: MEMREAD2;
+
+      end
+
+      MEMREAD2: begin
+
+      rd = 1'b1;
+      enable = 1'b0;
+      offset_mem = 3'b100;
+      next_state = (mem_stall) ? MEMREAD2: MEMREAD3;
+
+      end
+
+      MEMREAD3: begin
+
+      rd = 1'b1;
+      enable = 1'b0;
+      offset_mem = 3'b110;
+      next_state = (mem_stall) ? MEMREAD3: STORECACHE0;
+
+      end
 
 
- 		end 
-   	endcase
+      STORECACHE0: begin
+
+      write = 1'b1;
+      cAddr = {Addr[15:3], 3'b000};
+      cache_data_in = mem_data_out;
+      next_state = STORECACHE1;
+      end
+
+
+      STORECACHE1: begin
+
+      write = 1'b1;
+      cAddr = {Addr[15:3], 3'b010};
+      offset_mem = 3'b010;
+      cache_data_in = mem_data_out;
+      next_state = STORECACHE2;
+
+      end
+
+
+      STORECACHE2: begin
+
+      write = 1'b1;
+      cAddr = {Addr[15:3], 3'b100};
+      offset_mem = 3'b100;
+      cache_data_in = mem_data_out;
+      next_state = STORECACHE3; 
+      end
+
+      STORECACHE3: begin
+
+      write = 1'b1;
+      cAddr = {Addr[15:3], 3'b110};
+      offset_mem = 3'b110;
+      cache_data_in = mem_data_out;
+      next_state = (Wr & ~Rd) ? COMPWR : DONE;
+
+      end
+
+      DONE: begin
+        Done = 1'b1;
+        next_state = (Wr & ~Rd) ? COMPWR : (Rd & ~Wr) ? COMPRD : IDLE;
+      end
+
+      ERR: begin
+        enable = 1'b0;
+        next_state = (Rd & Wr) ? ERR : IDLE;
+      end
+
+      default: begin
+        enable = 1'b0;
+      end
+    endcase
    end
 
-
-   
 endmodule // mem_system
 
 // DUMMY LINE FOR REV CONTROL :9:
+
+

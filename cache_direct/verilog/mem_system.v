@@ -84,6 +84,10 @@ module mem_system(/*AUTOARG*/
    localparam ERR         = 5'h10;
    localparam DONE        = 5'h11;
    localparam WRITEMEM    = 5'h12;
+   localparam WAITSTATE0  = 5'h13;
+   localparam WAITSTATE1  = 5'h14;
+   localparam WAITSTATE2  = 5'h15;
+   localparam WAITSTATE3  = 5'h16;
 
   //*********************************//
 
@@ -108,7 +112,7 @@ module mem_system(/*AUTOARG*/
                           .data_in              (cache_data_in),
                           .comp                 (comp),
                           .write                (write),
-                          .valid_in             (1'b1));
+                          .valid_in             (valid_in));
 
    four_bank_mem mem(// Outputs
                      .data_out          (mem_data_out),
@@ -126,16 +130,13 @@ module mem_system(/*AUTOARG*/
 
    
    // your code here
-   //assign CacheHit = (hit & valid);
-   //assign Done = (Wr ^ Rd) & (hit & valid);
    assign mem_addr = {tag_mem, cAddr[10:3], offset_mem};
    assign tag_in = cAddr[15:11];
    assign index = cAddr[10:3];
    assign offset = cAddr[2:0];
    assign err = mem_err | cache_err;
    assign DataOut = cache_data_out;
-   //assign Stall = (~((hit & valid) & (Wr ^ Rd)) & (curr_state != IDLE));
-   //assign Stall = (curr_state != IDLE) & ~Done;
+   assign valid_in = 1'b1;
 
   dff dffmod [4:0] (.q(curr_state), .d(next_state), .clk(clk), .rst(rst));
 
@@ -144,7 +145,7 @@ module mem_system(/*AUTOARG*/
    enable = 1'b0;
    CacheHit = 1'b0;
    write = 1'b0;
-   offset_mem = 3'b0;
+   offset_mem = 3'b000;
    cAddr = Addr;
    tag_mem = Addr[15:11];
    cache_data_in = DataIn;
@@ -160,8 +161,6 @@ module mem_system(/*AUTOARG*/
         enable = 1'b1;
         Stall = 1'b0;
         next_state = (~Rd & ~Wr) ? IDLE : (Rd & ~ Wr) ? COMPRD : (~Rd & Wr) ? COMPWR : ERR;
-        //CacheHit = (hit & valid) ? 1'b1 : 1'b0;
-        //Done = (Rd ^ Wr) & (hit & valid);
       end
 
       COMPRD: begin
@@ -223,41 +222,60 @@ module mem_system(/*AUTOARG*/
 
       MEMREAD0: begin
       rd = 1'b1; 
-      next_state = (mem_stall) ? MEMREAD0: MEMREAD1;
+      next_state = (mem_stall) ? MEMREAD0: WAITSTATE0;
 
+      end
+
+      WAITSTATE0: begin
+      rd = 1'b1;
+      next_state = STORECACHE0;
       end
 
       MEMREAD1: begin
       rd = 1'b1;
       offset_mem = 3'b010;
 
-      next_state = (mem_stall) ? MEMREAD1: STORECACHE0;
+      next_state = (mem_stall) ? MEMREAD1: WAITSTATE1;
 
+      end
+
+      WAITSTATE1: begin
+      rd = 1'b1;
+      next_state = STORECACHE1;
       end
 
       MEMREAD2: begin
 
       rd = 1'b1;
       offset_mem = 3'b100;
-      next_state = (mem_stall) ? MEMREAD2: MEMREAD3;
+      next_state = (mem_stall) ? MEMREAD2: WAITSTATE2;
 
+      end
+
+      WAITSTATE2: begin
+      rd = 1'b1;
+      next_state = STORECACHE2;
       end
 
       MEMREAD3: begin
 
       rd = 1'b1;
       offset_mem = 3'b110;
-      next_state = (mem_stall) ? MEMREAD3: STORECACHE2;
+      next_state = (mem_stall) ? MEMREAD3: WAITSTATE3;
 
       end
 
+      WAITSTATE3: begin
+      rd = 1'b1;
+      next_state = STORECACHE3;
+      end
 
       STORECACHE0: begin
       enable = 1'b1;
       write = 1'b1;
       cAddr = {Addr[15:3], 3'b000};
       cache_data_in = mem_data_out;
-      next_state = STORECACHE1;
+      next_state = MEMREAD1;
       end
 
 
@@ -278,7 +296,7 @@ module mem_system(/*AUTOARG*/
       cAddr = {Addr[15:3], 3'b100};
       offset_mem = 3'b100;
       cache_data_in = mem_data_out;
-      next_state = STORECACHE3; 
+      next_state = MEMREAD3; 
       end
 
       STORECACHE3: begin
@@ -325,5 +343,3 @@ module mem_system(/*AUTOARG*/
 endmodule // mem_system
 
 // DUMMY LINE FOR REV CONTROL :9:
-
-

@@ -1,5 +1,5 @@
 # vsim "+addr_trace_file_name=mem.addr" -c mem_system_perfbench -lib __work -voptargs="+acc" -wlf dump.wlf -do "log -howmany -rec /* ; run -all" 
-# Start time: 22:55:43 on Apr 19,2017
+# Start time: 00:28:04 on Apr 20,2017
 # ** Note: (vsim-3812) Design is being optimized...
 # //  Questa Sim
 # //  Version 10.4c linux Jul 19 2015
@@ -33,16 +33,57 @@
 # 1445
 #  run -all
 # Using trace file                                                                                                                                                                                                                                                         mem.addr
-# LOG: ReQNum    1 Cycle       14 ReqCycle        3 Wr Addr 0x015c Value 0x0018 ValueRef 0x0018 HIT 1
+# LOG: ReQNum    1 Cycle       14 ReqCycle        3 Wr Addr 0x015e Value 0x000c ValueRef 0x000c HIT 0
 # 
-# LOG: WARNING: PERFORMANCE ERROR? CacheHit Latency ( 11) greater than 2 cycles?
-# LOG: ReqNum    2 Cycle       16 ReqCycle       14 Rd Addr 0x015c Value 0x0018 ValueRef 0x0018 HIT 1
+# LOG: ReqNum    2 Cycle       16 ReqCycle       14 Rd Addr 0x015e Value 0x000c ValueRef 0x000c HIT 1
 # 
-# LOG: Done all Requests:          2 Replies:          2 Cycles:         16 Hits:          2
-# Test status: FAIL
+# LOG: ReQNum    3 Cycle       18 ReqCycle       16 Wr Addr 0x015c Value 0x000e ValueRef 0x000e HIT 1
+# 
+# LOG: ReQNum    4 Cycle       20 ReqCycle       18 Wr Addr 0x0158 Value 0x0010 ValueRef 0x0010 HIT 1
+# 
+# LOG: ReQNum    5 Cycle       22 ReqCycle       20 Wr Addr 0x015a Value 0x000f ValueRef 0x000f HIT 1
+# 
+# LOG: ReqNum    6 Cycle       24 ReqCycle       22 Rd Addr 0x0158 Value 0x0010 ValueRef 0x0010 HIT 1
+# 
+# LOG: ReqNum    7 Cycle       26 ReqCycle       24 Rd Addr 0x015a Value 0x000f ValueRef 0x000f HIT 1
+# 
+# LOG: ReqNum    8 Cycle       28 ReqCycle       26 Rd Addr 0x015c Value 0x000e ValueRef 0x000e HIT 1
+# 
+# LOG: ReQNum    9 Cycle       43 ReqCycle       28 Wr Addr 0x095e Value 0x007b ValueRef 0x007b HIT 0
+# 
+# LOG: ReqNum   10 Cycle       45 ReqCycle       43 Rd Addr 0x095c Value 0x79cf ValueRef 0x79cf HIT 1
+# 
+# LOG: ReQNum   11 Cycle       47 ReqCycle       45 Wr Addr 0x095c Value 0x007b ValueRef 0x007b HIT 1
+# 
+# LOG: ReQNum   12 Cycle       49 ReqCycle       47 Wr Addr 0x095a Value 0x007b ValueRef 0x007b HIT 1
+# 
+# LOG: ReqNum   13 Cycle       51 ReqCycle       49 Rd Addr 0x095e Value 0x007b ValueRef 0x007b HIT 1
+# 
+# LOG: ReQNum   14 Cycle       53 ReqCycle       51 Wr Addr 0x0958 Value 0x007b ValueRef 0x007b HIT 1
+# 
+# LOG: ReQNum   15 Cycle       55 ReqCycle       53 Wr Addr 0x095a Value 0x007c ValueRef 0x007c HIT 1
+# 
+# LOG: ReqNum   16 Cycle       69 ReqCycle       55 Rd Addr 0x015c Value 0x000e ValueRef 0x000e HIT 0
+# 
+# LOG: ReqNum   17 Cycle       71 ReqCycle       69 Rd Addr 0x015e Value 0x000c ValueRef 0x000c HIT 1
+# 
+# LOG: ReQNum   18 Cycle       73 ReqCycle       71 Wr Addr 0x015c Value 0x000e ValueRef 0x000e HIT 1
+# 
+# LOG: ReQNum   19 Cycle       75 ReqCycle       73 Wr Addr 0x0158 Value 0x0010 ValueRef 0x0010 HIT 1
+# 
+# LOG: ReQNum   20 Cycle       77 ReqCycle       75 Wr Addr 0x015a Value 0x000f ValueRef 0x000f HIT 1
+# 
+# LOG: ReqNum   21 Cycle       79 ReqCycle       77 Rd Addr 0x0158 Value 0x0010 ValueRef 0x0010 HIT 1
+# 
+# LOG: ReqNum   22 Cycle       81 ReqCycle       79 Rd Addr 0x015a Value 0x000f ValueRef 0x000f HIT 1
+# 
+# LOG: ReqNum   23 Cycle       83 ReqCycle       81 Rd Addr 0x015c Value 0x000e ValueRef 0x000e HIT 1
+# 
+# LOG: Done all Requests:         23 Replies:         23 Cycles:         83 Hits:         20
+# Test status: SUCCESS
 # ** Note: $stop    : mem_system_perfbench.v(200)
-#    Time: 1587 ns  Iteration: 0  Instance: /mem_system_perfbench
+#    Time: 8287 ns  Iteration: 0  Instance: /mem_system_perfbench
 # Break in Task end_simulation at mem_system_perfbench.v line 200
 # Stopped at mem_system_perfbench.v line 200
-# End time: 22:56:11 on Apr 19,2017, Elapsed time: 0:00:28
+# End time: 00:32:48 on Apr 20,2017, Elapsed time: 0:04:44
 # Errors: 0, Warnings: 0

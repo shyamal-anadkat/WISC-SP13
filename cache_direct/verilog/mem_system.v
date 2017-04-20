@@ -22,7 +22,7 @@ module mem_system(/*AUTOARG*/
    output Stall;
    output CacheHit;
    output err;
-   reg CacheHit, Done;
+   reg CacheHit, Done, Stall;
 
    //****FOR CACHE-DIRECT (Shyamal, Sanjay)***//
 
@@ -80,8 +80,10 @@ module mem_system(/*AUTOARG*/
    localparam STORECACHE1 = 5'h0C;
    localparam STORECACHE2 = 5'h0D;
    localparam STORECACHE3 = 5'h0E; 
-   localparam DONE        = 5'h0F;
+   localparam STOREDONE   = 5'h0F;
    localparam ERR         = 5'h10;
+   localparam DONE        = 5'h11;
+   localparam WRITEMEM    = 5'h12;
 
   //*********************************//
 
@@ -133,13 +135,13 @@ module mem_system(/*AUTOARG*/
    assign err = mem_err | cache_err;
    assign DataOut = cache_data_out;
    //assign Stall = (~((hit & valid) & (Wr ^ Rd)) & (curr_state != IDLE));
-   assign Stall = (curr_state != IDLE) & ~Done;
+   //assign Stall = (curr_state != IDLE) & ~Done;
 
   dff dffmod [4:0] (.q(curr_state), .d(next_state), .clk(clk), .rst(rst));
 
    always@(*)begin 
    comp = 1'b0;
-   enable = 1'b1;
+   enable = 1'b0;
    CacheHit = 1'b0;
    write = 1'b0;
    offset_mem = 3'b0;
@@ -150,29 +152,33 @@ module mem_system(/*AUTOARG*/
    wr = 1'b0;
    rd = 1'b0;
    Done = 1'b0;
+   Stall = 1'b1;
 
     case(curr_state)
 
       IDLE: begin
+        enable = 1'b1;
+        Stall = 1'b0;
         next_state = (~Rd & ~Wr) ? IDLE : (Rd & ~ Wr) ? COMPRD : (~Rd & Wr) ? COMPWR : ERR;
-        CacheHit = (hit & valid) ? 1'b1 : 1'b0;
-        Done = (Rd ^ Wr) & (hit & valid);
+        //CacheHit = (hit & valid) ? 1'b1 : 1'b0;
+        //Done = (Rd ^ Wr) & (hit & valid);
       end
 
       COMPRD: begin
-
+      enable = 1'b1;
       comp = 1'b1;
-      next_state = (hit & valid) ? IDLE : (~dirty & (~hit | ~valid)) ? MEMREAD0 : (dirty) ? WRITEBACK0 : ERR;
+      next_state = (hit & valid) ? DONE : (~dirty & (~hit | ~valid)) ? MEMREAD0 : (dirty) ? WRITEBACK0 : ERR;
       end
 
       COMPWR: begin
-
+      enable = 1'b1;
       comp = 1'b1;
       write = 1'b1;
-      next_state = (hit & valid) ? IDLE : (~dirty & (~hit | ~valid)) ? MEMREAD0 : (dirty | Wr) ? WRITEBACK0 : ERR;
+      next_state = (hit & valid) ? DONE : (~dirty & (~hit | ~valid)) ? MEMREAD0 : (dirty | Wr) ? WRITEBACK0 : ERR;
       end
 
       WRITEBACK0: begin
+      enable = 1'b1;
       comp = 1'b0;
       wr = 1'b1; 
       cAddr = {Addr[15:3], 3'b000};
@@ -181,6 +187,7 @@ module mem_system(/*AUTOARG*/
       end
 
       WRITEBACK1: begin
+      enable = 1'b1;
       comp = 1'b0;
       write = 1'b0;
       wr = 1'b1;
@@ -191,6 +198,7 @@ module mem_system(/*AUTOARG*/
       end
 
       WRITEBACK2: begin
+      enable = 1'b1;
       comp = 1'b0;
       write = 1'b0;
       wr = 1'b1;
@@ -202,7 +210,7 @@ module mem_system(/*AUTOARG*/
 
 
       WRITEBACK3: begin
-
+      enable = 1'b1;
       comp = 1'b0;
       write = 1'b0;
       wr = 1'b1; 
@@ -215,25 +223,21 @@ module mem_system(/*AUTOARG*/
 
       MEMREAD0: begin
       rd = 1'b1; 
-      enable = 1'b0;
-
       next_state = (mem_stall) ? MEMREAD0: MEMREAD1;
 
       end
 
       MEMREAD1: begin
       rd = 1'b1;
-      enable = 1'b0;
       offset_mem = 3'b010;
 
-      next_state = (mem_stall) ? MEMREAD1: MEMREAD2;
+      next_state = (mem_stall) ? MEMREAD1: STORECACHE0;
 
       end
 
       MEMREAD2: begin
 
       rd = 1'b1;
-      enable = 1'b0;
       offset_mem = 3'b100;
       next_state = (mem_stall) ? MEMREAD2: MEMREAD3;
 
@@ -242,15 +246,14 @@ module mem_system(/*AUTOARG*/
       MEMREAD3: begin
 
       rd = 1'b1;
-      enable = 1'b0;
       offset_mem = 3'b110;
-      next_state = (mem_stall) ? MEMREAD3: STORECACHE0;
+      next_state = (mem_stall) ? MEMREAD3: STORECACHE2;
 
       end
 
 
       STORECACHE0: begin
-
+      enable = 1'b1;
       write = 1'b1;
       cAddr = {Addr[15:3], 3'b000};
       cache_data_in = mem_data_out;
@@ -259,18 +262,18 @@ module mem_system(/*AUTOARG*/
 
 
       STORECACHE1: begin
-
+      enable = 1'b1;
       write = 1'b1;
       cAddr = {Addr[15:3], 3'b010};
       offset_mem = 3'b010;
       cache_data_in = mem_data_out;
-      next_state = STORECACHE2;
+      next_state = MEMREAD2;
 
       end
 
 
       STORECACHE2: begin
-
+      enable = 1'b1;
       write = 1'b1;
       cAddr = {Addr[15:3], 3'b100};
       offset_mem = 3'b100;
@@ -279,27 +282,42 @@ module mem_system(/*AUTOARG*/
       end
 
       STORECACHE3: begin
-
+      enable = 1'b1;
       write = 1'b1;
       cAddr = {Addr[15:3], 3'b110};
       offset_mem = 3'b110;
       cache_data_in = mem_data_out;
-      next_state = (Wr & ~Rd) ? COMPWR : DONE;
+      next_state = (Wr & ~Rd) ? WRITEMEM : STOREDONE;
 
       end
 
-      DONE: begin
+      WRITEMEM: begin
+        enable = 1'b1;
+        comp = 1'b1;
+        write = 1'b1;
+        next_state = STOREDONE;
+      end
+
+      STOREDONE: begin
+        enable = 1'b1;
         Done = 1'b1;
+        Stall = 1'b0;
         next_state = (Wr & ~Rd) ? COMPWR : (Rd & ~Wr) ? COMPRD : IDLE;
       end
 
       ERR: begin
-        enable = 1'b0;
         next_state = (Rd & Wr) ? ERR : IDLE;
       end
 
+      DONE: begin
+        enable = 1'b1;
+        Done = 1'b1;
+        CacheHit = 1'b1;
+        Stall = 1'b0;
+        next_state = (Wr & ~Rd) ? COMPWR : (Rd & ~Wr) ? COMPRD : IDLE;
+      end
+
       default: begin
-        enable = 1'b0;
       end
     endcase
    end

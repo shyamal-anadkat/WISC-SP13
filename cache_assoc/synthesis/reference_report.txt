@@ -1,0 +1,63 @@
+Information: Updating graph... (UID-83)
+Warning: Design 'mem_system' contains 1 high-fanout nets. A fanout number of 1000 will be used for delay calculations involving these nets. (TIM-134)
+Information: Timing loop detected. (OPT-150)
+	U93/A U93/Y c0/U97/A c0/U97/Y c0/U13/A c0/U13/Y c0/U20/A c0/U20/Y c0/mem_vl/U724/A c0/mem_vl/U724/Y c0/mem_vl/U36/B c0/mem_vl/U36/Y c0/mem_vl/U37/A c0/mem_vl/U37/Y c0/U160/A c0/U160/Y c0/U143/A c0/U143/Y U1062/A U1062/Y U1063/A U1063/Y 
+Information: Timing loop detected. (OPT-150)
+	c1/U198/B c1/U198/Y c1/U110/A c1/U110/Y c1/U191/A c1/U191/Y c1/mem_tg/U23/A c1/mem_tg/U23/Y c1/mem_tg/U718/B c1/mem_tg/U718/Y c1/mem_tg/U27/A c1/mem_tg/U27/Y c1/mem_tg/U28/A c1/mem_tg/U28/Y c1/mem_tg/U966/A c1/mem_tg/U966/Y c1/U156/A c1/U156/Y c1/U17/A c1/U17/Y c1/U51/A c1/U51/Y c1/U122/A c1/U122/Y c1/U123/A c1/U123/Y c1/U200/A c1/U200/Y c1/U111/A c1/U111/Y c1/U153/A c1/U153/Y U1196/A U1196/Y U1399/B U1399/Y c1/U124/A c1/U124/Y c1/U22/A c1/U22/Y c1/U167/A c1/U167/Y 
+Warning: Disabling timing arc between pins 'A' and 'Y' on cell 'U93'
+         to break a timing loop. (OPT-314)
+Warning: Disabling timing arc between pins 'A' and 'Y' on cell 'c1/U22'
+         to break a timing loop. (OPT-314)
+ 
+****************************************
+Report : reference
+Design : mem_system
+Version: L-2016.03-SP4-1
+Date   : Thu Apr 20 07:01:17 2017
+****************************************
+
+Attributes:
+    b - black box (unknown)
+   bo - allows boundary optimization
+    d - dont_touch
+   mo - map_only
+    h - hierarchical
+    n - noncombinational
+    r - removable
+    s - synthetic operator
+    u - contains unmapped logic
+
+Reference          Library       Unit Area   Count    Total Area   Attributes
+-----------------------------------------------------------------------------
+AND2X1             gscl45nm       2.346500      13     30.504499  
+AND2X2             gscl45nm       2.815800      47    132.342598  
+AOI21X1            gscl45nm       2.815800      11     30.973799  
+AOI22X1            gscl45nm       3.285100      44    144.544399  
+BUFX2              gscl45nm       2.346500      38     89.166997  
+INVX1              gscl45nm       1.407900     259    364.646094  
+INVX2              gscl45nm       1.877200      12     22.526400  
+INVX4              gscl45nm       3.285100       2      6.570200  
+INVX8              gscl45nm       3.285100       1      3.285100  
+LATCH              gscl45nm       5.162300       5     25.811501  n
+MUX2X1             gscl45nm       3.754400       6     22.526400  
+NAND2X1            gscl45nm       1.877200       4      7.508800  
+NAND3X1            gscl45nm       2.346500      18     42.236999  
+NOR2X1             gscl45nm       2.346500       3      7.039500  
+NOR3X1             gscl45nm       2.815800       7     19.710600  
+OAI21X1            gscl45nm       2.815800      19     53.500199  
+OR2X1              gscl45nm       2.346500      23     53.969498  
+OR2X2              gscl45nm       2.815800       4     11.263200  
+XOR2X1             gscl45nm       4.693000       1      4.693000  
+cache_cache_id0               47325.619093       1  47325.619093  h, n
+cache_cache_id2               47823.077085       1  47823.077085  h, n
+dff_216                          11.732500       1     11.732500  h, n
+dff_217                          11.732500       1     11.732500  h, n
+dff_218                          11.732500       1     11.732500  h, n
+dff_219                          11.732500       1     11.732500  h, n
+dff_220                          11.732500       1     11.732500  h, n
+dff_221                          11.732500       1     11.732500  h, n
+dff_222                          11.732500       1     11.732500  h, n
+four_bank_mem                 22503.403888       1  22503.403888  h, n
+-----------------------------------------------------------------------------
+Total 29 references                                 118807.047346
+1

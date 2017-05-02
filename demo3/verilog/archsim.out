@@ -1,0 +1,15 @@
+
+WISCalculator v1.0
+Author Derek Hower (drh5@cs.wisc.edu)
+Type "help" for more information
+
+Loading program...
+Executing...
+lbi r1, 24
+INUM:        0 PC: 0x0000 REG: 1 VALUE: 0x0018
+xori r2, r1, 7
+INUM:        1 PC: 0x0002 REG: 2 VALUE: 0x001f
+halt
+program halted
+INUM:        2 PC: 0x0004
+Program Finished

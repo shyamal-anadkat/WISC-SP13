@@ -1,0 +1,10 @@
+Line 54: Bad keyword integer
+Line 55: Bad keyword integer
+Line 61: Bad keyword initial
+Line 62: begin without always/case
+Line 71: Bad keyword posedge
+Line 72: Bad keyword if
+Line 81: Bad keyword else
+Line 82: Bad keyword if
+Line 71: Always without case(x)
+End of file /u/s/h/shyamal/private/WISC-SP13/demo2/verilog/memory2c.syn.v. Hash = -1188222417

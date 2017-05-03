@@ -36,13 +36,15 @@ module proc (/*AUTOARG*/
    wire done_fetch, cache_hit_fetch, stall_fetch;
    wire done_mem, cache_hit_mem, stall_mem, err_fetch;
 
+   wire cache_hit_datamem, stall_datamem, done_datamem, err_datamem; 
+
    wire memory_halt_out;
-   wire memweb_halt_out;
+   wire memwb_halt_out;
 
 
    wire br_stall_cond, br_condMEMWB;
    //************************ FETCH*********************************************//
-   fetch fetch0(.clk(clk), .rst(rst), .dump(1'b0), .pc_branch(pc_branchMEMWB), .branch_cond(br_stall_cond), .nextPC(pc_plus_2), .instr(instr), .stallPC(currPCIFID), .isNop(stall), .currPC(pcCurrent), .PCWriteEn(PCWriteEn), .branch_cond_EXMEM(br_condMEMWB), .done(done_fetch), .cache_hit(cache_hit_fetch), .stall(stall_fetch), .err(err_fetch));
+   fetch fetch0(.clk(clk), .rst(rst), .dump(1'b0), .pc_branch(pc_branchMEMWB), .branch_cond(br_stall_cond), .nextPC(pc_plus_2), .instr(instr), .stallPC(currPCIFID), .isNop(stall), .currPC(pcCurrent), .PCWriteEn(PCWriteEn & (~stall_datamem)), .branch_cond_EXMEM(br_condMEMWB), .done(done_fetch), .cache_hit(cache_hit_fetch), .stall(stall_fetch), .err(err_fetch));
 
    
    //************************ IFID LATCH*****************************************//
@@ -52,7 +54,7 @@ module proc (/*AUTOARG*/
                      .instrOut(instr_out), 
                      .currPCOut(currPCIFID), 
                      .nextPCOut(nextPCIFID), 
-                     .en(IFIDWriteEn), .clk(clk), .rst(rst),
+                     .en(IFIDWriteEn & (~stall_datamem)), .clk(clk), .rst(rst),
 		     .branch_cond(branch_cond_in));
 
 
@@ -105,7 +107,7 @@ module proc (/*AUTOARG*/
                .Cin_out(Cin_IDEX), 
                .dump_out(dumpIDEX),
                .nextPC_out(nextPCIDEX),
-               .clk(clk), .en(1'b1), .rst(rst), .stall(stall),
+               .clk(clk), .en(~stall_datamem), .rst(rst), .stall(stall),
 	       .hasAB_in(hasAB_in), .hasAB_out(hasAB_IDEX));
 
    //assign br_stall_cond = (hasAB_IDEX[4] | hasAB_IDEX[3] | hasAB_IDEX[2] | hasAB_EXMEM[4] | hasAB_EXMEM[3] | hasAB_EXMEM[2] | hasAB_MEMWB[4] | hasAB_MEMWB[3] | hasAB_MEMWB[2]);
@@ -138,7 +140,7 @@ module proc (/*AUTOARG*/
                      .reg_write_out(reg_writeEXMEM),
 		     .branch_cond_out(branch_cond_out),
 		     .pc_out_br_out(pc_branch_out),
-                     .en(1'b1), 
+                     .en(~stall_datamem), 
                      .clk(clk), 
                      .rst(rst),
 		     .jal_in(JALen),
@@ -148,28 +150,35 @@ module proc (/*AUTOARG*/
 
 
    //************************ MEMORY*********************************************//
-   memory memory0(.aluResult(resultEXMEM), .readData(data_out), .writeData(B_EXMEM), .memRead(mem_to_regEXMEM), .memWrite(mem_writeEXMEM), .clk(clk), .rst(rst), .dump(dumpEXMEM), .halt(memory_halt_out));
+   memory memory0(.aluResult(resultEXMEM), .readData(data_out), .writeData(B_EXMEM), .memRead(mem_to_regEXMEM), .memWrite(mem_writeEXMEM), .clk(clk), .rst(rst), .dump(dumpEXMEM), .halt(memory_halt_out), .done(done_datamem), .stall_from_mem(stall_datamem), .cache_hit(cache_hit_datamem), .mem_err(err_datamem));
 
 
+ 
   //************************ MEMWB LATCH*****************************************//
-  MEMWBmod memwbmod( .reg_write_in(reg_writeEXMEM), 
-                     .mem_to_reg_in(mem_to_regEXMEM), 
-                     .JALen_in(jalEXMEM), 
-                     .read_data_in(data_out), 
-                     .result_in(resultEXMEM),
-                     .reg_wr_sel_in(reg_wr_selEXMEM), 
-                     .nextPC_in(nextPCEXMEM), 
-                     .halt_in(memory_halt_out),
-                      //OUTPUTS
-                     .reg_write_out(reg_writeMEMWB), 
-                     .mem_to_reg_out(mem_to_regMEMWB), 
-                     .JALen_out(JALenMEMWB),
-                     .read_data_out(read_dataMEMWB), 
-                     .result_out(resultMEMWB), 
-                     .reg_wr_sel_out(reg_wr_selMEMWB), 
-                     .nextPC_out(nextPCMEMWB), .en(1'b1), .rst(rst), .clk(clk),
-		     .hasAB_in(hasAB_EXMEM), .hasAB_out(hasAB_MEMWB), .pc_branch_in(pc_branch_out),
-		     .pc_branch_out(pc_branchMEMWB), .br_cond_in(branch_cond_out), .br_cond_out(br_condMEMWB), .halt_out(memwb_halt_out));
+  MEMWBmod memwbmod( 
+  .reg_write_in((stall_datamem == 1'b1) ? 1'b0 : reg_writeEXMEM), 
+  .mem_to_reg_in(mem_to_regEXMEM), 
+               .JALen_in(jalEXMEM), 
+               .read_data_in(data_out), 
+ .result_in(resultEXMEM),
+ .reg_wr_sel_in((stall_datamem == 1'b1) ? 3'b000 : reg_wr_selEXMEM), 
+               .nextPC_in(nextPCEXMEM), 
+               .halt_in(memory_halt_out),
+                //OUTPUTS
+               .reg_write_out(reg_writeMEMWB), 
+               .mem_to_reg_out(mem_to_regMEMWB), 
+               .JALen_out(JALenMEMWB),
+               .read_data_out(read_dataMEMWB), 
+               .result_out(resultMEMWB), 
+               .reg_wr_sel_out(reg_wr_selMEMWB), 
+               .nextPC_out(nextPCMEMWB), .en(1'b1), .rst(rst), .clk(clk),
+		     .hasAB_in(hasAB_EXMEM), 
+           .hasAB_out(hasAB_MEMWB), 
+           .pc_branch_in(pc_branch_out),
+		     .pc_branch_out(pc_branchMEMWB),
+           .br_cond_in(branch_cond_out), 
+           .br_cond_out(br_condMEMWB),
+           .halt_out(memwb_halt_out));
 
 
 

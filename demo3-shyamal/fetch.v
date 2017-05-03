@@ -10,11 +10,11 @@ output [15:0] instr;
 
 output done, cache_hit, stall, err;
 
-wire[15:0] pcCurrent, pc_out_jr, pc_updated, pc_inc;
+wire[15:0] pcCurrent, pc_out_jr, pc_updated, pc_inc, instr_mem_system;
 wire PG_cla, GG_cla, Cout_cla, ofl_out; //NOT USED/DUMMY
 wire stall_from_mem;
 
-assign stall = stall_from_mem;
+//assign stall = stall_from_mem;
 
 	//PC Register - always enabled
 
@@ -26,8 +26,22 @@ assign stall = stall_from_mem;
     //memory2c_align fetchmem(.data_out(instr), .data_in(16'b0), .addr(pcCurrent), .enable(1'b1), .wr(1'b0), .createdump(dump), .clk(clk), .rst(rst), .err(err));
 
 
+    stallmem icachestall(.DataOut(instr_mem_system), 
+    		  .Done(done), 
+    		  .Stall(stall_from_mem), 
+    		  .CacheHit(cache_hit), 
+    		  .err(err), 
+    		  .Addr(pcCurrent), 
+    		  .DataIn(16'b0), 
+    		  .Rd(1'b1), 
+    		  .Wr(1'b0), 
+    		  .createdump(dump), 
+    		  .clk(clk), 
+    		  .rst(rst));
+
+
 	//TODO: should halt when err is asserted
-	mem_system instrmem( 
+	/*mem_system instrmem( 
 						//Outputs 
 						.DataOut(instr_mem_system), 
 						.Done(done), 
@@ -39,13 +53,13 @@ assign stall = stall_from_mem;
 						.DataIn(16'b0),
 						.Rd(1'b1), 
 						.Wr(1'b0), 
-						.createdump(1'b0), 
+						.createdump(dump), 
 						.clk(clk), 
 						.rst(rst)
-						);
+						);*/
 
     assign currPC = pcCurrent;
-    assign pc_inc = (isNop | branch_cond) ? 16'h0 : 16'h2;
+    assign pc_inc = (isNop | branch_cond | stall_from_mem) ? 16'h0 : 16'h2;
 
     // Handle ERR and STALL here 
     

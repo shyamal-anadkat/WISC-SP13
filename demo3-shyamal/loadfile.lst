@@ -1,222 +1,2422 @@
-          // stallTest - try progressive numbers of stalls.
-          //
-          // A test specifically for the pipelined implementation.
-          //
-          // CS/ECE 552, Spring 2006
-          // Andy Phelps  11 April 2006
-          //
-          
-0000 202c j .RealStart
-          
-0002 0000 halt
-0004 0000 halt
-0006 0000 halt
-0008 0000 halt
-000a 0000 halt
-000c      .Data1:
-000c 0000 halt
-000e 0000 halt
-0010      .Data2:
-0010 0000 halt
-0012 0000 halt
-0014      .Data3:
-0014 0000 halt
-0016 0000 halt
-0018      .Data4:
-0018 0000 halt
-001a      .Data5:
-001a 0000 halt
-001c 0000 halt
-001e 0000 halt
-0020 0000 halt
-0022 0000 halt
-0024 0000 halt
-0026 0000 halt
-0028 0000 halt
-002a 0000 halt
-002c 0000 halt
-          
-002e      .RealStart:
-          
-002e c003 lbi r0, 3
-0030 0800 nop
-0032 0800 nop
-0034 0800 nop
-0036 0800 nop
-0038 0800 nop
-003a 4001 addi r0, r0, 1     // r0 = 4
-          
-003c c106 lbi r1, 6
-003e 0800 nop
-0040 0800 nop
-0042 0800 nop
-0044 0800 nop
-0046 4121 addi r1, r1, 1     // r1 = 7
-          
-0048 c205 lbi r2, 5
-004a 0800 nop
-004c 0800 nop
-004e 0800 nop
-0050 4241 addi r2, r2, 1     // r2 = 6
-          
-0052 c307 lbi r3, 7
-0054 0800 nop
-0056 0800 nop
-0058 4361 addi r3, r3, 1     // r3 = 8
-          
-005a c409 lbi r4, 9
-005c 0800 nop
-005e 4481 addi r4, r4, 1     // r4 = 10
-          
-0060 c50b lbi r5, 11
-0062 45a1 addi r5, r5, 1     // r5 = 12
-          
-0064 d820 add r0, r0, r1     // r0 = 11
-0066 db48 add r2, r3, r2     // r2 = 14
-0068 dcb0 add r4, r4, r5     // r4 = 22
-006a d840 add r0, r0, r2     // r0 = 25
-006c d89c add r7, r0, r4     // r7 = 47 = 0x002f
-          
-006e c601 lbi r6, 1          // r6 = 1
-          
-0070 c003 lbi r0, 3
-0072 0800 nop
-0074 0800 nop
-0076 0800 nop
-0078 0800 nop
-007a 0800 nop
-007c de00 add r0, r6, r0     // r0 = 4
-          
-007e c106 lbi r1, 6
-0080 0800 nop
-0082 0800 nop
-0084 0800 nop
-0086 0800 nop
-0088 de24 add r1, r6, r1     // r1 = 7
-          
-008a c205 lbi r2, 5
-008c 0800 nop
-008e 0800 nop
-0090 0800 nop
-0092 de48 add r2, r6, r2     // r2 = 6
-          
-0094 c307 lbi r3, 7
-0096 0800 nop
-0098 0800 nop
-009a de6c add r3, r6, r3     // r3 = 8
-          
-009c c409 lbi r4, 9
-009e 0800 nop
-00a0 de90 add r4, r6, r4     // r4 = 10
-          
-00a2 c50b lbi r5, 11
-00a4 deb4 add r5, r6, r5     // r5 = 12
-          
-00a6 d900 add r0, r1, r0     // r0 = 11
-00a8 da68 add r2, r2, r3     // r2 = 14
-00aa dd90 add r4, r5, r4     // r4 = 22
-00ac da00 add r0, r2, r0     // r0 = 25
-00ae dc18 add r6, r4, r0     // r6 = 47 = 0x002f
-00b0 defc add r7, r6, r7     // r7 = 94 = 0x005e
-          
-00b2 c00c lbi r0, L.Data1
-00b4 0800 nop
-00b6 0800 nop
-00b8 0800 nop
-00ba 0800 nop
-00bc 80e0 st r7, r0, 0       // .Data1 = 0x005e
-          
-00be c010 lbi r0, L.Data2
-00c0 0800 nop
-00c2 0800 nop
-00c4 0800 nop
-00c6 80e0 st r7, r0, 0       // .Data2 = 0x005e
-          
-00c8 c014 lbi r0, L.Data3
-00ca 0800 nop
-00cc 0800 nop
-00ce 80e0 st r7, r0, 0       // .Data3 = 0x005e
-          
-00d0 c018 lbi r0, L.Data4
-00d2 0800 nop
-00d4 80e0 st r7, r0, 0       // .Data4 = 0x005e
-          
-00d6 c01a lbi r0, L.Data5
-00d8 98c2 stu r6, r0, 2      // .Data5+2 = 0x002f
-00da 0800 nop
-00dc 0800 nop
-00de 0800 nop
-00e0 0800 nop
-00e2 98c2 stu r6, r0, 2      // .Data5+4 = 0x002f
-00e4 0800 nop
-00e6 0800 nop
-00e8 0800 nop
-00ea 98c2 stu r6, r0, 2      // .Data5+6 = 0x002f
-00ec 0800 nop
-00ee 0800 nop
-00f0 98c2 stu r6, r0, 2      // .Data5+8 = 0x002f
-00f2 0800 nop
-00f4 98c2 stu r6, r0, 2      // .Data5+10 = 0x002f
-00f6 98e2 stu r7, r0, 2      // .Data5+12 = 0x005e
-          
-00f8 c00c lbi r0, L.Data1
-00fa 0800 nop
-00fc 0800 nop
-00fe 0800 nop
-0100 8820 ld  r1, r0, 0      // r1 = 0x005e
-0102 0800 nop
-0104 0800 nop
-0106 0800 nop
-0108 41c0 addi r6, r1, 0     // r6 = 0x005e
-          
-010a c10c lbi r1, L.Data1
-010c 0800 nop
-010e 0800 nop
-0110 8940 ld  r2, r1, 0      // r2 = 0x005e
-0112 0800 nop
-0114 0800 nop
-0116 de58 add r6, r6, r2     // r6 = 0x00bc
-          
-0118 c20c lbi r2, L.Data1
-011a 0800 nop
-011c 8a60 ld  r3, r2, 0      // r3 = 0x005e
-011e 0800 nop
-0120 de78 add r6, r6, r3     // r6 = 0x011a
-          
-0122 c30c lbi r3, L.Data1
-0124 8b80 ld  r4, r3, 0      // r4 = 0x005e
-0126 de98 add r6, r6, r4     // r6 = 0x0178
-0128 83de st r6, r3, -2      // .Data1-1 = 0x0178
-          
-012a c300 lbi r3, 0
-012c 6308 beqz r3, .GoHere
-012e 0000 halt
-0130 0000 halt
-0132 0000 halt
-0134 0000 halt
-          
-0136      .GoHere:
-0136 8a60 ld r3, r2, 0       // r3 = 0x005e
-0138 6b08 bnez r3, .GoThere
-013a 0000 halt
-013c 0000 halt
-013e 0000 halt
-0140 0000 halt
-          
-0142      .GoThere:
-0142 c001 lbi r0, U.GoGoGo
-0144 9050 slbi r0, L.GoGoGo
-0146 3800 jalr r0, 0
-0148      .RetAddr:
-0148 0000 halt
-014a 0000 halt
-014c 0000 halt
-014e 0000 halt
-          
-0150      .GoGoGo:
-0150 82fe st r7, r2, -2      // .Data1-2 = .RetAddr (0x00a4)
-0152 0000 halt
-0154 0000 halt
-0156 0000 halt
-          
-          
+          // seed 2
+0000 c080 lbi r0, 128 // icount 0
+0002 9000 slbi r0, 0 // icount 1
+0004 c180 lbi r1, 128 // icount 2
+0006 9100 slbi r1, 0 // icount 3
+0008 c280 lbi r2, 128 // icount 4
+000a 9200 slbi r2, 0 // icount 5
+000c c380 lbi r3, 128 // icount 6
+000e 9300 slbi r3, 0 // icount 7
+0010 c480 lbi r4, 128 // icount 8
+0012 9400 slbi r4, 0 // icount 9
+0014 c580 lbi r5, 128 // icount 10
+0016 9500 slbi r5, 0 // icount 11
+0018 c680 lbi r6, 128 // icount 12
+001a 9600 slbi r6, 0 // icount 13
+001c c780 lbi r7, 128 // icount 14
+001e 0800 nop // to align meminst icount 15
+0020 9700 slbi r7, 0 // icount 16
+0022 0800 nop // to align meminst icount 17
+0024 89c6 ld r6, r1, 6 // icount 18
+0026 0800 nop // to align meminst icount 19
+0028 8098 st r4, r0, -8 // icount 20
+002a 0800 nop // to align meminst icount 21
+002c 9950 stu r2, r1, -16 // icount 22
+002e 0800 nop // to align meminst icount 23
+0030 805c st r2, r0, -4 // icount 24
+0032 0800 nop // to align meminst icount 25
+0034 8066 st r3, r0, 6 // icount 26
+0036 0800 nop // to align meminst icount 27
+0038 8852 ld r2, r0, -14 // icount 28
+003a 0800 nop // to align meminst icount 29
+003c 899a ld r4, r1, -6 // icount 30
+003e 0800 nop // to align meminst icount 31
+0040 819c st r4, r1, -4 // icount 32
+0042 0800 nop // to align meminst icount 33
+0044 9890 stu r4, r0, -16 // icount 34
+0046 0800 nop // to align meminst icount 35
+0048 89b4 ld r5, r1, -12 // icount 36
+004a 0800 nop // to align meminst icount 37
+004c 8876 ld r3, r0, -10 // icount 38
+004e 0800 nop // to align meminst icount 39
+0050 885e ld r2, r0, -2 // icount 40
+0052 0800 nop // to align meminst icount 41
+0054 8950 ld r2, r1, -16 // icount 42
+0056 0800 nop // to align meminst icount 43
+0058 8990 ld r4, r1, -16 // icount 44
+005a 0800 nop // to align meminst icount 45
+005c 8882 ld r4, r0, 2 // icount 46
+005e 0800 nop // to align meminst icount 47
+0060 8066 st r3, r0, 6 // icount 48
+0062 0800 nop // to align meminst icount 49
+0064 80ce st r6, r0, 14 // icount 50
+0066 0800 nop // to align meminst icount 51
+0068 887e ld r3, r0, -2 // icount 52
+006a 0800 nop // to align meminst icount 53
+006c 88c0 ld r6, r0, 0 // icount 54
+006e 0800 nop // to align meminst icount 55
+0070 81a6 st r5, r1, 6 // icount 56
+0072 0800 nop // to align meminst icount 57
+0074 81c4 st r6, r1, 4 // icount 58
+0076 0800 nop // to align meminst icount 59
+0078 995c stu r2, r1, -4 // icount 60
+007a 0800 nop // to align meminst icount 61
+007c 8170 st r3, r1, -16 // icount 62
+007e 0800 nop // to align meminst icount 63
+0080 999e stu r4, r1, -2 // icount 64
+0082 0800 nop // to align meminst icount 65
+0084 817c st r3, r1, -4 // icount 66
+0086 0800 nop // to align meminst icount 67
+0088 816a st r3, r1, 10 // icount 68
+008a 0800 nop // to align meminst icount 69
+008c 995c stu r2, r1, -4 // icount 70
+008e 0800 nop // to align meminst icount 71
+0090 9944 stu r2, r1, 4 // icount 72
+0092 0800 nop // to align meminst icount 73
+0094 8844 ld r2, r0, 4 // icount 74
+0096 0800 nop // to align meminst icount 75
+0098 99d0 stu r6, r1, -16 // icount 76
+009a 0800 nop // to align meminst icount 77
+009c 81b0 st r5, r1, -16 // icount 78
+009e 986a stu r3, r0, 10 // icount 79
+00a0 d6bc rol r7, r6, r5 // icount 80
+00a2 0800 nop // to align meminst icount 81
+00a4 88d0 ld r6, r0, -16 // icount 82
+00a6 0800 nop // to align meminst icount 83
+00a8 88d4 ld r6, r0, -12 // icount 84
+00aa 0800 nop // to align meminst icount 85
+00ac 99ac stu r5, r1, 12 // icount 86
+00ae 0800 nop // to align meminst icount 87
+00b0 8966 ld r3, r1, 6 // icount 88
+00b2 0800 nop // to align meminst icount 89
+00b4 80cc st r6, r0, 12 // icount 90
+00b6 0800 nop // to align meminst icount 91
+00b8 89c4 ld r6, r1, 4 // icount 92
+00ba 0800 nop // to align meminst icount 93
+00bc 886a ld r3, r0, 10 // icount 94
+00be 0800 nop // to align meminst icount 95
+00c0 817a st r3, r1, -6 // icount 96
+00c2 0800 nop // to align meminst icount 97
+00c4 81aa st r5, r1, 10 // icount 98
+00c6 0800 nop // to align meminst icount 99
+00c8 814e st r2, r1, 14 // icount 100
+00ca 0800 nop // to align meminst icount 101
+00cc 98a6 stu r5, r0, 6 // icount 102
+00ce 0800 nop // to align meminst icount 103
+00d0 98c0 stu r6, r0, 0 // icount 104
+00d2 0800 nop // to align meminst icount 105
+00d4 99b4 stu r5, r1, -12 // icount 106
+00d6 0800 nop // to align meminst icount 107
+00d8 806a st r3, r0, 10 // icount 108
+00da 0800 nop // to align meminst icount 109
+00dc 9984 stu r4, r1, 4 // icount 110
+00de 81d6 st r6, r1, -10 // icount 111
+00e0 c300 lbi r3, 0 // icount 112
+00e2 c500 lbi r5, 0 // icount 113
+00e4 0800 nop // to align branch icount 114
+00e6 721c bltz r2, 28 // icount 115
+00e8 d25d sll r7, r2, r2 // icount 116
+00ea f9f8 sco r6, r1, r7 // icount 117
+00ec ddd8 add r6, r5, r6 // icount 118
+00ee 5c65 andni r3, r4, 5 // icount 119
+00f0 c706 lbi r7, 6 // icount 120
+00f2 fcb4 sco r5, r4, r5 // icount 121
+00f4 e648 seq r2, r6, r2 // icount 122
+00f6 f830 sco r4, r0, r1 // icount 123
+00f8 dd8a xor r2, r5, r4 // icount 124
+00fa ea70 slt r4, r2, r3 // icount 125
+00fc 5c81 andni r4, r4, 1 // icount 126
+00fe 9caa stu r5, r4, 10 // icount 127
+0100 b5eb rori r7, r5, 11 // icount 128
+0102 de69 sub r2, r6, r3 // icount 129
+0104 5da1 andni r5, r5, 1 // icount 130
+0106 8d80 ld r4, r5, 0 // icount 131
+0108 4aab subi r5, r2, 11 // icount 132
+010a bbe3 srli r7, r3, 3 // icount 133
+010c c40f lbi r4, 15 // icount 134
+010e e2d8 seq r6, r2, r6 // icount 135
+0110 b3e9 rori r7, r3, 9 // icount 136
+0112 abe4 slli r7, r3, 4 // icount 137
+0114 4e89 subi r4, r6, 9 // icount 138
+0116 dc7d sub r7, r4, r3 // icount 139
+0118 b5cc rori r6, r5, 12 // icount 140
+011a deea xor r2, r6, r7 // icount 141
+011c f2bc sle r7, r2, r5 // icount 142
+011e ef50 slt r4, r7, r2 // icount 143
+0120 d249 sll r2, r2, r2 // icount 144
+0122 0800 nop // to align meminst icount 145
+0124 d611 sll r4, r6, r0 // icount 146
+0126 0800 nop // to align meminst icount 147
+0128 896e ld r3, r1, 14 // icount 148
+012a 0800 nop // to align meminst icount 149
+012c 8960 ld r3, r1, 0 // icount 150
+012e 0800 nop // to align meminst icount 151
+0130 815a st r2, r1, -6 // icount 152
+0132 0800 nop // to align meminst icount 153
+0134 895a ld r2, r1, -6 // icount 154
+0136 0800 nop // to align meminst icount 155
+0138 80b0 st r5, r0, -16 // icount 156
+013a 98d2 stu r6, r0, -14 // icount 157
+013c c300 lbi r3, 0 // icount 158
+013e c300 lbi r3, 0 // icount 159
+0140 0800 nop // to align branch icount 160
+0142 6018 beqz r0, 24 // icount 161
+0144 d510 rol r4, r5, r0 // icount 162
+0146 4b6a subi r3, r3, 10 // icount 163
+0148 f250 sle r4, r2, r2 // icount 164
+014a e22c seq r3, r2, r1 // icount 165
+014c aba8 slli r5, r3, 8 // icount 166
+014e f68c sle r3, r6, r4 // icount 167
+0150 e17c seq r7, r1, r3 // icount 168
+0152 a18a roli r4, r1, 10 // icount 169
+0154 5b61 andni r3, r3, 1 // icount 170
+0156 9b88 stu r4, r3, 8 // icount 171
+0158 b5ee rori r7, r5, 14 // icount 172
+015a 0800 nop // to align meminst icount 173
+015c 5921 andni r1, r1, 1 // icount 174
+015e 998c stu r4, r1, 12 // icount 175
+0160 d0cf srl r3, r0, r6 // icount 176
+0162 54c0 xori r6, r4, 0 // icount 177
+0164 c301 lbi r3, 1 // icount 178
+0166 dd6d sub r3, r5, r3 // icount 179
+0168 c300 lbi r3, 0 // icount 180
+016a 0800 nop // to align meminst icount 181
+016c 5801 andni r0, r0, 1 // icount 182
+016e 986a stu r3, r0, 10 // icount 183
+0170 c401 lbi r4, 1 // icount 184
+0172 e668 seq r2, r6, r3 // icount 185
+0174 d43d sll r7, r4, r1 // icount 186
+0176 b38b rori r4, r3, 11 // icount 187
+0178 46e3 addi r7, r6, 3 // icount 188
+017a 5e67 andni r3, r6, 7 // icount 189
+017c f2ac sle r3, r2, r5 // icount 190
+017e 995a stu r2, r1, -6 // icount 191
+0180 5ec1 andni r6, r6, 1 // icount 192
+0182 0800 nop // to align meminst icount 193
+0184 9e8c stu r4, r6, 12 // icount 194
+0186 0800 nop // to align meminst icount 195
+0188 8994 ld r4, r1, -12 // icount 196
+018a 0800 nop // to align meminst icount 197
+018c 898a ld r4, r1, 10 // icount 198
+018e 0800 nop // to align meminst icount 199
+0190 99c8 stu r6, r1, 8 // icount 200
+0192 0800 nop // to align meminst icount 201
+0194 9960 stu r3, r1, 0 // icount 202
+0196 0800 nop // to align meminst icount 203
+0198 809e st r4, r0, -2 // icount 204
+019a 0800 nop // to align meminst icount 205
+019c 89a2 ld r5, r1, 2 // icount 206
+019e 0800 nop // to align meminst icount 207
+01a0 8146 st r2, r1, 6 // icount 208
+01a2 0800 nop // to align meminst icount 209
+01a4 89aa ld r5, r1, 10 // icount 210
+01a6 80a8 st r5, r0, 8 // icount 211
+01a8 4132 addi r1, r1, -14   // change base addr // icount 212
+01aa c700 lbi r7, 0 // icount 213
+01ac c700 lbi r7, 0 // icount 214
+01ae 6918 bnez r1, 24 // icount 215
+01b0 5e69 andni r3, r6, 9 // icount 216
+01b2 0800 nop // to align meminst icount 217
+01b4 5a41 andni r2, r2, 1 // icount 218
+01b6 8aa6 ld r5, r2, 6 // icount 219
+01b8 c40b lbi r4, 11 // icount 220
+01ba db4f andn r3, r3, r2 // icount 221
+01bc e870 slt r4, r0, r3 // icount 222
+01be d4d8 rol r6, r4, r6 // icount 223
+01c0 f1d0 sle r4, r1, r6 // icount 224
+01c2 0800 nop // to align meminst icount 225
+01c4 5da1 andni r5, r5, 1 // icount 226
+01c6 8d86 ld r4, r5, 6 // icount 227
+01c8 d4cd sll r3, r4, r6 // icount 228
+01ca d5dc rol r7, r5, r6 // icount 229
+01cc d094 rol r5, r0, r4 // icount 230
+01ce 4163 addi r3, r1, 3 // icount 231
+01d0 d54d sll r3, r5, r2 // icount 232
+01d2 a3a2 roli r5, r3, 2 // icount 233
+01d4 a8ef slli r7, r0, 15 // icount 234
+01d6 e82c slt r3, r0, r1 // icount 235
+01d8 fa4c sco r3, r2, r2 // icount 236
+01da d632 ror r4, r6, r1 // icount 237
+01dc d4d6 ror r5, r4, r6 // icount 238
+01de d85d sub r7, r0, r2 // icount 239
+01e0 f114 sle r5, r1, r0 // icount 240
+01e2 d3df srl r7, r3, r6 // icount 241
+01e4 f8d8 sco r6, r0, r6 // icount 242
+01e6 0800 nop // to align meminst icount 243
+01e8 c200 lbi r2, 0 // icount 244
+01ea 0800 nop // to align meminst icount 245
+01ec 88be ld r5, r0, -2 // icount 246
+01ee 0800 nop // to align meminst icount 247
+01f0 89c4 ld r6, r1, 4 // icount 248
+01f2 88aa ld r5, r0, 10 // icount 249
+01f4 c700 lbi r7, 0 // icount 250
+01f6 c200 lbi r2, 0 // icount 251
+01f8 0800 nop // to align branch icount 252
+01fa 6310 beqz r3, 16 // icount 253
+01fc a5a9 roli r5, r5, 9 // icount 254
+01fe a1cd roli r6, r1, 13 // icount 255
+0200 f5bc sle r7, r5, r5 // icount 256
+0202 da2d sub r3, r2, r1 // icount 257
+0204 dbbb andn r6, r3, r5 // icount 258
+0206 b6e2 rori r7, r6, 2 // icount 259
+0208 a7e5 roli r7, r7, 5 // icount 260
+020a f5dc sle r7, r5, r6 // icount 261
+020c bb8f srli r4, r3, 15 // icount 262
+020e e70c seq r3, r7, r0 // icount 263
+0210 5a41 andni r2, r2, 1 // icount 264
+0212 9a8a stu r4, r2, 10 // icount 265
+0214 e7d8 seq r6, r7, r6 // icount 266
+0216 a0ee roli r7, r0, 14 // icount 267
+0218 4c69 subi r3, r4, 9 // icount 268
+021a fbec sco r3, r3, r7 // icount 269
+021c f22c sle r3, r2, r1 // icount 270
+021e 98a0 stu r5, r0, 0 // icount 271
+0220 c400 lbi r4, 0 // icount 272
+0222 c200 lbi r2, 0 // icount 273
+0224 0800 nop // to align branch icount 274
+0226 7c04 bgez r4, 4 // icount 275
+0228 d52a ror r2, r5, r1 // icount 276
+022a fd8c sco r3, r5, r4 // icount 277
+022c 5fa3 andni r5, r7, 3 // icount 278
+022e 0800 nop // to align meminst icount 279
+0230 d2cf srl r3, r2, r6 // icount 280
+0232 0800 nop // to align meminst icount 281
+0234 8174 st r3, r1, -12 // icount 282
+0236 0800 nop // to align meminst icount 283
+0238 88c4 ld r6, r0, 4 // icount 284
+023a 0800 nop // to align meminst icount 285
+023c 804a st r2, r0, 10 // icount 286
+023e 0800 nop // to align meminst icount 287
+0240 80c4 st r6, r0, 4 // icount 288
+0242 0800 nop // to align meminst icount 289
+0244 88d6 ld r6, r0, -10 // icount 290
+0246 0800 nop // to align meminst icount 291
+0248 895c ld r2, r1, -4 // icount 292
+024a 0800 nop // to align meminst icount 293
+024c 80da st r6, r0, -6 // icount 294
+024e 0800 nop // to align meminst icount 295
+0250 814e st r2, r1, 14 // icount 296
+0252 0800 nop // to align meminst icount 297
+0254 804a st r2, r0, 10 // icount 298
+0256 0800 nop // to align meminst icount 299
+0258 88d8 ld r6, r0, -8 // icount 300
+025a 0800 nop // to align meminst icount 301
+025c 9954 stu r2, r1, -12 // icount 302
+025e 0800 nop // to align meminst icount 303
+0260 888c ld r4, r0, 12 // icount 304
+0262 0800 nop // to align meminst icount 305
+0264 9856 stu r2, r0, -10 // icount 306
+0266 0800 nop // to align meminst icount 307
+0268 88be ld r5, r0, -2 // icount 308
+026a 0800 nop // to align meminst icount 309
+026c 986c stu r3, r0, 12 // icount 310
+026e 0800 nop // to align meminst icount 311
+0270 985e stu r2, r0, -2 // icount 312
+0272 0800 nop // to align meminst icount 313
+0274 8860 ld r3, r0, 0 // icount 314
+0276 0800 nop // to align meminst icount 315
+0278 897a ld r3, r1, -6 // icount 316
+027a 0800 nop // to align meminst icount 317
+027c 9888 stu r4, r0, 8 // icount 318
+027e 0800 nop // to align meminst icount 319
+0280 99b8 stu r5, r1, -8 // icount 320
+0282 0800 nop // to align meminst icount 321
+0284 8846 ld r2, r0, 6 // icount 322
+0286 0800 nop // to align meminst icount 323
+0288 88a2 ld r5, r0, 2 // icount 324
+028a 0800 nop // to align meminst icount 325
+028c 98a0 stu r5, r0, 0 // icount 326
+028e 0800 nop // to align meminst icount 327
+0290 89c4 ld r6, r1, 4 // icount 328
+0292 0800 nop // to align meminst icount 329
+0294 89a8 ld r5, r1, 8 // icount 330
+0296 0800 nop // to align meminst icount 331
+0298 88c8 ld r6, r0, 8 // icount 332
+029a 0800 nop // to align meminst icount 333
+029c 898e ld r4, r1, 14 // icount 334
+029e 0800 nop // to align meminst icount 335
+02a0 89b2 ld r5, r1, -14 // icount 336
+02a2 0800 nop // to align meminst icount 337
+02a4 80c0 st r6, r0, 0 // icount 338
+02a6 0800 nop // to align meminst icount 339
+02a8 80c6 st r6, r0, 6 // icount 340
+02aa 986c stu r3, r0, 12 // icount 341
+02ac 5921 andni r1, r1, 1 // icount 342
+02ae 0800 nop // to align meminst icount 343
+02b0 998a stu r4, r1, 10 // icount 344
+02b2 0800 nop // to align meminst icount 345
+02b4 80c8 st r6, r0, 8 // icount 346
+02b6 0800 nop // to align meminst icount 347
+02b8 89c2 ld r6, r1, 2 // icount 348
+02ba 0800 nop // to align meminst icount 349
+02bc 89d6 ld r6, r1, -10 // icount 350
+02be 884e ld r2, r0, 14 // icount 351
+02c0 401c addi r0, r0, -4   // change base addr // icount 352
+02c2 0800 nop // to align meminst icount 353
+02c4 4002 addi r0, r0, 2   // change base addr // icount 354
+02c6 0800 nop // to align meminst icount 355
+02c8 9890 stu r4, r0, -16 // icount 356
+02ca 0800 nop // to align meminst icount 357
+02cc 888a ld r4, r0, 10 // icount 358
+02ce 0800 nop // to align meminst icount 359
+02d0 8956 ld r2, r1, -10 // icount 360
+02d2 0800 nop // to align meminst icount 361
+02d4 8068 st r3, r0, 8 // icount 362
+02d6 0800 nop // to align meminst icount 363
+02d8 986a stu r3, r0, 10 // icount 364
+02da 0800 nop // to align meminst icount 365
+02dc 80c6 st r6, r0, 6 // icount 366
+02de 0800 nop // to align meminst icount 367
+02e0 8874 ld r3, r0, -12 // icount 368
+02e2 0800 nop // to align meminst icount 369
+02e4 8160 st r3, r1, 0 // icount 370
+02e6 0800 nop // to align meminst icount 371
+02e8 888c ld r4, r0, 12 // icount 372
+02ea 0800 nop // to align meminst icount 373
+02ec 8198 st r4, r1, -8 // icount 374
+02ee 0800 nop // to align meminst icount 375
+02f0 8848 ld r2, r0, 8 // icount 376
+02f2 0800 nop // to align meminst icount 377
+02f4 89d2 ld r6, r1, -14 // icount 378
+02f6 0800 nop // to align meminst icount 379
+02f8 99a4 stu r5, r1, 4 // icount 380
+02fa 0800 nop // to align meminst icount 381
+02fc 9952 stu r2, r1, -14 // icount 382
+02fe 0800 nop // to align meminst icount 383
+0300 80c4 st r6, r0, 4 // icount 384
+0302 81a6 st r5, r1, 6 // icount 385
+0304 dc50 add r4, r4, r2 // icount 386
+0306 0800 nop // to align meminst icount 387
+0308 887e ld r3, r0, -2 // icount 388
+030a 0800 nop // to align meminst icount 389
+030c 889a ld r4, r0, -6 // icount 390
+030e 0800 nop // to align meminst icount 391
+0310 804e st r2, r0, 14 // icount 392
+0312 0800 nop // to align meminst icount 393
+0314 8042 st r2, r0, 2 // icount 394
+0316 0800 nop // to align meminst icount 395
+0318 98de stu r6, r0, -2 // icount 396
+031a 0800 nop // to align meminst icount 397
+031c 89d6 ld r6, r1, -10 // icount 398
+031e 0800 nop // to align meminst icount 399
+0320 8944 ld r2, r1, 4 // icount 400
+0322 0800 nop // to align meminst icount 401
+0324 8984 ld r4, r1, 4 // icount 402
+0326 0800 nop // to align meminst icount 403
+0328 88ce ld r6, r0, 14 // icount 404
+032a 0800 nop // to align meminst icount 405
+032c 8096 st r4, r0, -10 // icount 406
+032e 0800 nop // to align meminst icount 407
+0330 889e ld r4, r0, -2 // icount 408
+0332 0800 nop // to align meminst icount 409
+0334 89d0 ld r6, r1, -16 // icount 410
+0336 0800 nop // to align meminst icount 411
+0338 8098 st r4, r0, -8 // icount 412
+033a 0800 nop // to align meminst icount 413
+033c 9974 stu r3, r1, -12 // icount 414
+033e 0800 nop // to align meminst icount 415
+0340 88de ld r6, r0, -2 // icount 416
+0342 0800 nop // to align meminst icount 417
+0344 894a ld r2, r1, 10 // icount 418
+0346 0800 nop // to align meminst icount 419
+0348 88ce ld r6, r0, 14 // icount 420
+034a 0800 nop // to align meminst icount 421
+034c 80c6 st r6, r0, 6 // icount 422
+034e 0800 nop // to align meminst icount 423
+0350 8056 st r2, r0, -10 // icount 424
+0352 0800 nop // to align meminst icount 425
+0354 81d8 st r6, r1, -8 // icount 426
+0356 0800 nop // to align meminst icount 427
+0358 884e ld r2, r0, 14 // icount 428
+035a 899e ld r4, r1, -2 // icount 429
+035c 45ed addi r7, r5, 13 // icount 430
+035e 0800 nop // to align meminst icount 431
+0360 de2b andn r2, r6, r1 // icount 432
+0362 0800 nop // to align meminst icount 433
+0364 995e stu r2, r1, -2 // icount 434
+0366 0800 nop // to align meminst icount 435
+0368 81d8 st r6, r1, -8 // icount 436
+036a 0800 nop // to align meminst icount 437
+036c 8890 ld r4, r0, -16 // icount 438
+036e 0800 nop // to align meminst icount 439
+0370 8090 st r4, r0, -16 // icount 440
+0372 0800 nop // to align meminst icount 441
+0374 8178 st r3, r1, -8 // icount 442
+0376 0800 nop // to align meminst icount 443
+0378 9958 stu r2, r1, -8 // icount 444
+037a 897e ld r3, r1, -2 // icount 445
+037c 56e4 xori r7, r6, 4 // icount 446
+037e 0800 nop // to align meminst icount 447
+0380 8942 ld r2, r1, 2 // icount 448
+0382 0800 nop // to align meminst icount 449
+0384 81d6 st r6, r1, -10 // icount 450
+0386 0800 nop // to align meminst icount 451
+0388 8862 ld r3, r0, 2 // icount 452
+038a 0800 nop // to align meminst icount 453
+038c 81a2 st r5, r1, 2 // icount 454
+038e 0800 nop // to align meminst icount 455
+0390 89d0 ld r6, r1, -16 // icount 456
+0392 0800 nop // to align meminst icount 457
+0394 9884 stu r4, r0, 4 // icount 458
+0396 0800 nop // to align meminst icount 459
+0398 98d4 stu r6, r0, -12 // icount 460
+039a 0800 nop // to align meminst icount 461
+039c 99da stu r6, r1, -6 // icount 462
+039e 0800 nop // to align meminst icount 463
+03a0 8874 ld r3, r0, -12 // icount 464
+03a2 0800 nop // to align meminst icount 465
+03a4 89da ld r6, r1, -6 // icount 466
+03a6 0800 nop // to align meminst icount 467
+03a8 8946 ld r2, r1, 6 // icount 468
+03aa 0800 nop // to align meminst icount 469
+03ac 99ce stu r6, r1, 14 // icount 470
+03ae 89d0 ld r6, r1, -16 // icount 471
+03b0 d99f andn r7, r1, r4 // icount 472
+03b2 0800 nop // to align meminst icount 473
+03b4 995c stu r2, r1, -4 // icount 474
+03b6 0800 nop // to align meminst icount 475
+03b8 88d4 ld r6, r0, -12 // icount 476
+03ba 0800 nop // to align meminst icount 477
+03bc 89ce ld r6, r1, 14 // icount 478
+03be 0800 nop // to align meminst icount 479
+03c0 896e ld r3, r1, 14 // icount 480
+03c2 0800 nop // to align meminst icount 481
+03c4 808e st r4, r0, 14 // icount 482
+03c6 0800 nop // to align meminst icount 483
+03c8 89ac ld r5, r1, 12 // icount 484
+03ca 0800 nop // to align meminst icount 485
+03cc 9966 stu r3, r1, 6 // icount 486
+03ce 0800 nop // to align meminst icount 487
+03d0 80d6 st r6, r0, -10 // icount 488
+03d2 0800 nop // to align meminst icount 489
+03d4 898e ld r4, r1, 14 // icount 490
+03d6 0800 nop // to align meminst icount 491
+03d8 8954 ld r2, r1, -12 // icount 492
+03da 0800 nop // to align meminst icount 493
+03dc 889a ld r4, r0, -6 // icount 494
+03de 0800 nop // to align meminst icount 495
+03e0 8984 ld r4, r1, 4 // icount 496
+03e2 0800 nop // to align meminst icount 497
+03e4 89a8 ld r5, r1, 8 // icount 498
+03e6 0800 nop // to align meminst icount 499
+03e8 818c st r4, r1, 12 // icount 500
+03ea 98ac stu r5, r0, 12 // icount 501
+03ec 413c addi r1, r1, -4   // change base addr // icount 502
+03ee 0800 nop // to align meminst icount 503
+03f0 887e ld r3, r0, -2 // icount 504
+03f2 0800 nop // to align meminst icount 505
+03f4 816c st r3, r1, 12 // icount 506
+03f6 0800 nop // to align meminst icount 507
+03f8 8880 ld r4, r0, 0 // icount 508
+03fa 0800 nop // to align meminst icount 509
+03fc 9994 stu r4, r1, -12 // icount 510
+03fe 0800 nop // to align meminst icount 511
+0400 8892 ld r4, r0, -14 // icount 512
+0402 0800 nop // to align meminst icount 513
+0404 989a stu r4, r0, -6 // icount 514
+0406 0800 nop // to align meminst icount 515
+0408 894a ld r2, r1, 10 // icount 516
+040a 0800 nop // to align meminst icount 517
+040c 88b8 ld r5, r0, -8 // icount 518
+040e 0800 nop // to align meminst icount 519
+0410 98ce stu r6, r0, 14 // icount 520
+0412 0800 nop // to align meminst icount 521
+0414 8888 ld r4, r0, 8 // icount 522
+0416 0800 nop // to align meminst icount 523
+0418 8850 ld r2, r0, -16 // icount 524
+041a 0800 nop // to align meminst icount 525
+041c 98da stu r6, r0, -6 // icount 526
+041e 0800 nop // to align meminst icount 527
+0420 81b2 st r5, r1, -14 // icount 528
+0422 0800 nop // to align meminst icount 529
+0424 8886 ld r4, r0, 6 // icount 530
+0426 0800 nop // to align meminst icount 531
+0428 99a6 stu r5, r1, 6 // icount 532
+042a 0800 nop // to align meminst icount 533
+042c 8862 ld r3, r0, 2 // icount 534
+042e 0800 nop // to align meminst icount 535
+0430 895e ld r2, r1, -2 // icount 536
+0432 0800 nop // to align meminst icount 537
+0434 81a0 st r5, r1, 0 // icount 538
+0436 0800 nop // to align meminst icount 539
+0438 986a stu r3, r0, 10 // icount 540
+043a 0800 nop // to align meminst icount 541
+043c 9998 stu r4, r1, -8 // icount 542
+043e 0800 nop // to align meminst icount 543
+0440 989a stu r4, r0, -6 // icount 544
+0442 0800 nop // to align meminst icount 545
+0444 8960 ld r3, r1, 0 // icount 546
+0446 0800 nop // to align meminst icount 547
+0448 80d8 st r6, r0, -8 // icount 548
+044a 0800 nop // to align meminst icount 549
+044c 9946 stu r2, r1, 6 // icount 550
+044e 0800 nop // to align meminst icount 551
+0450 8178 st r3, r1, -8 // icount 552
+0452 0800 nop // to align meminst icount 553
+0454 88bc ld r5, r0, -4 // icount 554
+0456 0800 nop // to align meminst icount 555
+0458 99d4 stu r6, r1, -12 // icount 556
+045a 0800 nop // to align meminst icount 557
+045c 8970 ld r3, r1, -16 // icount 558
+045e 0800 nop // to align meminst icount 559
+0460 8882 ld r4, r0, 2 // icount 560
+0462 0800 nop // to align meminst icount 561
+0464 8998 ld r4, r1, -8 // icount 562
+0466 0800 nop // to align meminst icount 563
+0468 80c6 st r6, r0, 6 // icount 564
+046a 0800 nop // to align meminst icount 565
+046c 816e st r3, r1, 14 // icount 566
+046e 0800 nop // to align meminst icount 567
+0470 88b2 ld r5, r0, -14 // icount 568
+0472 0800 nop // to align meminst icount 569
+0474 81a6 st r5, r1, 6 // icount 570
+0476 0800 nop // to align meminst icount 571
+0478 886e ld r3, r0, 14 // icount 572
+047a 0800 nop // to align meminst icount 573
+047c 81c8 st r6, r1, 8 // icount 574
+047e 0800 nop // to align meminst icount 575
+0480 8946 ld r2, r1, 6 // icount 576
+0482 0800 nop // to align meminst icount 577
+0484 88b8 ld r5, r0, -8 // icount 578
+0486 0800 nop // to align meminst icount 579
+0488 899e ld r4, r1, -2 // icount 580
+048a 0800 nop // to align meminst icount 581
+048c 998a stu r4, r1, 10 // icount 582
+048e 0800 nop // to align meminst icount 583
+0490 8088 st r4, r0, 8 // icount 584
+0492 0800 nop // to align meminst icount 585
+0494 8062 st r3, r0, 2 // icount 586
+0496 0800 nop // to align meminst icount 587
+0498 9888 stu r4, r0, 8 // icount 588
+049a 0800 nop // to align meminst icount 589
+049c 814a st r2, r1, 10 // icount 590
+049e 0800 nop // to align meminst icount 591
+04a0 8184 st r4, r1, 4 // icount 592
+04a2 0800 nop // to align meminst icount 593
+04a4 98d2 stu r6, r0, -14 // icount 594
+04a6 0800 nop // to align meminst icount 595
+04a8 9864 stu r3, r0, 4 // icount 596
+04aa 0800 nop // to align meminst icount 597
+04ac 99c0 stu r6, r1, 0 // icount 598
+04ae 0800 nop // to align meminst icount 599
+04b0 887a ld r3, r0, -6 // icount 600
+04b2 0800 nop // to align meminst icount 601
+04b4 89d0 ld r6, r1, -16 // icount 602
+04b6 0800 nop // to align meminst icount 603
+04b8 88c4 ld r6, r0, 4 // icount 604
+04ba 0800 nop // to align meminst icount 605
+04bc 809e st r4, r0, -2 // icount 606
+04be 0800 nop // to align meminst icount 607
+04c0 89c0 ld r6, r1, 0 // icount 608
+04c2 0800 nop // to align meminst icount 609
+04c4 99b6 stu r5, r1, -10 // icount 610
+04c6 0800 nop // to align meminst icount 611
+04c8 81c8 st r6, r1, 8 // icount 612
+04ca 0800 nop // to align meminst icount 613
+04cc 98ca stu r6, r0, 10 // icount 614
+04ce 0800 nop // to align meminst icount 615
+04d0 9948 stu r2, r1, 8 // icount 616
+04d2 0800 nop // to align meminst icount 617
+04d4 88b2 ld r5, r0, -14 // icount 618
+04d6 0800 nop // to align meminst icount 619
+04d8 8862 ld r3, r0, 2 // icount 620
+04da 0800 nop // to align meminst icount 621
+04dc 81aa st r5, r1, 10 // icount 622
+04de 0800 nop // to align meminst icount 623
+04e0 88d0 ld r6, r0, -16 // icount 624
+04e2 0800 nop // to align meminst icount 625
+04e4 99a8 stu r5, r1, 8 // icount 626
+04e6 0800 nop // to align meminst icount 627
+04e8 88b6 ld r5, r0, -10 // icount 628
+04ea 0800 nop // to align meminst icount 629
+04ec 9960 stu r3, r1, 0 // icount 630
+04ee 0800 nop // to align meminst icount 631
+04f0 98be stu r5, r0, -2 // icount 632
+04f2 0800 nop // to align meminst icount 633
+04f4 8954 ld r2, r1, -12 // icount 634
+04f6 0800 nop // to align meminst icount 635
+04f8 89b2 ld r5, r1, -14 // icount 636
+04fa 0800 nop // to align meminst icount 637
+04fc 9974 stu r3, r1, -12 // icount 638
+04fe 0800 nop // to align meminst icount 639
+0500 8870 ld r3, r0, -16 // icount 640
+0502 0800 nop // to align meminst icount 641
+0504 99d0 stu r6, r1, -16 // icount 642
+0506 0800 nop // to align meminst icount 643
+0508 8994 ld r4, r1, -12 // icount 644
+050a 0800 nop // to align meminst icount 645
+050c 88c6 ld r6, r0, 6 // icount 646
+050e 0800 nop // to align meminst icount 647
+0510 80b2 st r5, r0, -14 // icount 648
+0512 0800 nop // to align meminst icount 649
+0514 9970 stu r3, r1, -16 // icount 650
+0516 0800 nop // to align meminst icount 651
+0518 99b8 stu r5, r1, -8 // icount 652
+051a 0800 nop // to align meminst icount 653
+051c 8990 ld r4, r1, -16 // icount 654
+051e 0800 nop // to align meminst icount 655
+0520 8978 ld r3, r1, -8 // icount 656
+0522 0800 nop // to align meminst icount 657
+0524 88be ld r5, r0, -2 // icount 658
+0526 0800 nop // to align meminst icount 659
+0528 988e stu r4, r0, 14 // icount 660
+052a 0800 nop // to align meminst icount 661
+052c 98bc stu r5, r0, -4 // icount 662
+052e 0800 nop // to align meminst icount 663
+0530 80a2 st r5, r0, 2 // icount 664
+0532 0800 nop // to align meminst icount 665
+0534 806a st r3, r0, 10 // icount 666
+0536 0800 nop // to align meminst icount 667
+0538 88a8 ld r5, r0, 8 // icount 668
+053a 0800 nop // to align meminst icount 669
+053c 8068 st r3, r0, 8 // icount 670
+053e 0800 nop // to align meminst icount 671
+0540 89dc ld r6, r1, -4 // icount 672
+0542 0800 nop // to align meminst icount 673
+0544 815c st r2, r1, -4 // icount 674
+0546 0800 nop // to align meminst icount 675
+0548 999a stu r4, r1, -6 // icount 676
+054a 0800 nop // to align meminst icount 677
+054c 89ba ld r5, r1, -6 // icount 678
+054e 0800 nop // to align meminst icount 679
+0550 8166 st r3, r1, 6 // icount 680
+0552 0800 nop // to align meminst icount 681
+0554 9872 stu r3, r0, -14 // icount 682
+0556 0800 nop // to align meminst icount 683
+0558 88ac ld r5, r0, 12 // icount 684
+055a 0800 nop // to align meminst icount 685
+055c 884c ld r2, r0, 12 // icount 686
+055e 0800 nop // to align meminst icount 687
+0560 88de ld r6, r0, -2 // icount 688
+0562 0800 nop // to align meminst icount 689
+0564 8950 ld r2, r1, -16 // icount 690
+0566 0800 nop // to align meminst icount 691
+0568 884c ld r2, r0, 12 // icount 692
+056a 89bc ld r5, r1, -4 // icount 693
+056c bc84 srli r4, r4, 4 // icount 694
+056e 0800 nop // to align meminst icount 695
+0570 8878 ld r3, r0, -8 // icount 696
+0572 0800 nop // to align meminst icount 697
+0574 89a4 ld r5, r1, 4 // icount 698
+0576 0800 nop // to align meminst icount 699
+0578 89ba ld r5, r1, -6 // icount 700
+057a 0800 nop // to align meminst icount 701
+057c 884c ld r2, r0, 12 // icount 702
+057e 0800 nop // to align meminst icount 703
+0580 98be stu r5, r0, -2 // icount 704
+0582 0800 nop // to align meminst icount 705
+0584 8090 st r4, r0, -16 // icount 706
+0586 0800 nop // to align meminst icount 707
+0588 8886 ld r4, r0, 6 // icount 708
+058a 0800 nop // to align meminst icount 709
+058c 885a ld r2, r0, -6 // icount 710
+058e 0800 nop // to align meminst icount 711
+0590 9978 stu r3, r1, -8 // icount 712
+0592 0800 nop // to align meminst icount 713
+0594 986c stu r3, r0, 12 // icount 714
+0596 0800 nop // to align meminst icount 715
+0598 89a0 ld r5, r1, 0 // icount 716
+059a 0800 nop // to align meminst icount 717
+059c 887a ld r3, r0, -6 // icount 718
+059e 0800 nop // to align meminst icount 719
+05a0 9898 stu r4, r0, -8 // icount 720
+05a2 0800 nop // to align meminst icount 721
+05a4 99c8 stu r6, r1, 8 // icount 722
+05a6 0800 nop // to align meminst icount 723
+05a8 81b4 st r5, r1, -12 // icount 724
+05aa 0800 nop // to align meminst icount 725
+05ac 8054 st r2, r0, -12 // icount 726
+05ae 0800 nop // to align meminst icount 727
+05b0 88cc ld r6, r0, 12 // icount 728
+05b2 0800 nop // to align meminst icount 729
+05b4 817e st r3, r1, -2 // icount 730
+05b6 0800 nop // to align meminst icount 731
+05b8 8086 st r4, r0, 6 // icount 732
+05ba 0800 nop // to align meminst icount 733
+05bc 89b8 ld r5, r1, -8 // icount 734
+05be 0800 nop // to align meminst icount 735
+05c0 89b8 ld r5, r1, -8 // icount 736
+05c2 0800 nop // to align meminst icount 737
+05c4 995e stu r2, r1, -2 // icount 738
+05c6 8966 ld r3, r1, 6 // icount 739
+05c8 5fe1 andni r7, r7, 1 // icount 740
+05ca 0800 nop // to align meminst icount 741
+05cc 87e2 st r7, r7, 2 // icount 742
+05ce 0800 nop // to align meminst icount 743
+05d0 8966 ld r3, r1, 6 // icount 744
+05d2 0800 nop // to align meminst icount 745
+05d4 885e ld r2, r0, -2 // icount 746
+05d6 0800 nop // to align meminst icount 747
+05d8 9876 stu r3, r0, -10 // icount 748
+05da 0800 nop // to align meminst icount 749
+05dc 8062 st r3, r0, 2 // icount 750
+05de 0800 nop // to align meminst icount 751
+05e0 8950 ld r2, r1, -16 // icount 752
+05e2 0800 nop // to align meminst icount 753
+05e4 8982 ld r4, r1, 2 // icount 754
+05e6 0800 nop // to align meminst icount 755
+05e8 999c stu r4, r1, -4 // icount 756
+05ea 0800 nop // to align meminst icount 757
+05ec 89b0 ld r5, r1, -16 // icount 758
+05ee 0800 nop // to align meminst icount 759
+05f0 8974 ld r3, r1, -12 // icount 760
+05f2 0800 nop // to align meminst icount 761
+05f4 88c2 ld r6, r0, 2 // icount 762
+05f6 0800 nop // to align meminst icount 763
+05f8 88c4 ld r6, r0, 4 // icount 764
+05fa 0800 nop // to align meminst icount 765
+05fc 98a6 stu r5, r0, 6 // icount 766
+05fe 0800 nop // to align meminst icount 767
+0600 886e ld r3, r0, 14 // icount 768
+0602 0800 nop // to align meminst icount 769
+0604 80b6 st r5, r0, -10 // icount 770
+0606 0800 nop // to align meminst icount 771
+0608 80b8 st r5, r0, -8 // icount 772
+060a 0800 nop // to align meminst icount 773
+060c 89c4 ld r6, r1, 4 // icount 774
+060e 0800 nop // to align meminst icount 775
+0610 89ba ld r5, r1, -6 // icount 776
+0612 0800 nop // to align meminst icount 777
+0614 887a ld r3, r0, -6 // icount 778
+0616 0800 nop // to align meminst icount 779
+0618 8882 ld r4, r0, 2 // icount 780
+061a 0800 nop // to align meminst icount 781
+061c 88c0 ld r6, r0, 0 // icount 782
+061e 0800 nop // to align meminst icount 783
+0620 8948 ld r2, r1, 8 // icount 784
+0622 0800 nop // to align meminst icount 785
+0624 895e ld r2, r1, -2 // icount 786
+0626 0800 nop // to align meminst icount 787
+0628 99b0 stu r5, r1, -16 // icount 788
+062a 0800 nop // to align meminst icount 789
+062c 81a6 st r5, r1, 6 // icount 790
+062e 0800 nop // to align meminst icount 791
+0630 8882 ld r4, r0, 2 // icount 792
+0632 0800 nop // to align meminst icount 793
+0634 8978 ld r3, r1, -8 // icount 794
+0636 0800 nop // to align meminst icount 795
+0638 986e stu r3, r0, 14 // icount 796
+063a 0800 nop // to align meminst icount 797
+063c 80aa st r5, r0, 10 // icount 798
+063e 0800 nop // to align meminst icount 799
+0640 81a6 st r5, r1, 6 // icount 800
+0642 0800 nop // to align meminst icount 801
+0644 887c ld r3, r0, -4 // icount 802
+0646 0800 nop // to align meminst icount 803
+0648 816a st r3, r1, 10 // icount 804
+064a 0800 nop // to align meminst icount 805
+064c 8160 st r3, r1, 0 // icount 806
+064e 0800 nop // to align meminst icount 807
+0650 9860 stu r3, r0, 0 // icount 808
+0652 0800 nop // to align meminst icount 809
+0654 8858 ld r2, r0, -8 // icount 810
+0656 0800 nop // to align meminst icount 811
+0658 89d6 ld r6, r1, -10 // icount 812
+065a 0800 nop // to align meminst icount 813
+065c 8898 ld r4, r0, -8 // icount 814
+065e 0800 nop // to align meminst icount 815
+0660 89aa ld r5, r1, 10 // icount 816
+0662 0800 nop // to align meminst icount 817
+0664 8954 ld r2, r1, -12 // icount 818
+0666 0800 nop // to align meminst icount 819
+0668 89c0 ld r6, r1, 0 // icount 820
+066a 0800 nop // to align meminst icount 821
+066c 99a8 stu r5, r1, 8 // icount 822
+066e 0800 nop // to align meminst icount 823
+0670 805e st r2, r0, -2 // icount 824
+0672 0800 nop // to align meminst icount 825
+0674 8994 ld r4, r1, -12 // icount 826
+0676 0800 nop // to align meminst icount 827
+0678 80b4 st r5, r0, -12 // icount 828
+067a 0800 nop // to align meminst icount 829
+067c 8988 ld r4, r1, 8 // icount 830
+067e 0800 nop // to align meminst icount 831
+0680 9856 stu r2, r0, -10 // icount 832
+0682 0800 nop // to align meminst icount 833
+0684 8190 st r4, r1, -16 // icount 834
+0686 0800 nop // to align meminst icount 835
+0688 8940 ld r2, r1, 0 // icount 836
+068a 0800 nop // to align meminst icount 837
+068c 80ce st r6, r0, 14 // icount 838
+068e 0800 nop // to align meminst icount 839
+0690 88a4 ld r5, r0, 4 // icount 840
+0692 0800 nop // to align meminst icount 841
+0694 9962 stu r3, r1, 2 // icount 842
+0696 0800 nop // to align meminst icount 843
+0698 99d4 stu r6, r1, -12 // icount 844
+069a 0800 nop // to align meminst icount 845
+069c 9866 stu r3, r0, 6 // icount 846
+069e 0800 nop // to align meminst icount 847
+06a0 896c ld r3, r1, 12 // icount 848
+06a2 0800 nop // to align meminst icount 849
+06a4 89ce ld r6, r1, 14 // icount 850
+06a6 81aa st r5, r1, 10 // icount 851
+06a8 c200 lbi r2, 0 // icount 852
+06aa c700 lbi r7, 0 // icount 853
+06ac 0800 nop // to align branch icount 854
+06ae 6614 beqz r6, 20 // icount 855
+06b0 fe50 sco r4, r6, r2 // icount 856
+06b2 aeef slli r7, r6, 15 // icount 857
+06b4 5c81 andni r4, r4, 1 // icount 858
+06b6 8c4a ld r2, r4, 10 // icount 859
+06b8 deab andn r2, r6, r5 // icount 860
+06ba c304 lbi r3, 4 // icount 861
+06bc fbbc sco r7, r3, r5 // icount 862
+06be 950a slbi r5, 10 // icount 863
+06c0 f254 sle r5, r2, r2 // icount 864
+06c2 44ac addi r5, r4, 12 // icount 865
+06c4 5921 andni r1, r1, 1 // icount 866
+06c6 89e8 ld r7, r1, 8 // icount 867
+06c8 da8e xor r3, r2, r4 // icount 868
+06ca fdec sco r3, r5, r7 // icount 869
+06cc dfac add r3, r7, r5 // icount 870
+06ce 4e83 subi r4, r6, 3 // icount 871
+06d0 c20b lbi r2, 11 // icount 872
+06d2 b2a5 rori r5, r2, 5 // icount 873
+06d4 baac srli r5, r2, 12 // icount 874
+06d6 bb8f srli r4, r3, 15 // icount 875
+06d8 5ce2 andni r7, r4, 2 // icount 876
+06da 0800 nop // to align meminst icount 877
+06dc ddaf andn r3, r5, r5 // icount 878
+06de 0800 nop // to align meminst icount 879
+06e0 81a8 st r5, r1, 8 // icount 880
+06e2 0800 nop // to align meminst icount 881
+06e4 886a ld r3, r0, 10 // icount 882
+06e6 0800 nop // to align meminst icount 883
+06e8 89c2 ld r6, r1, 2 // icount 884
+06ea 898c ld r4, r1, 12 // icount 885
+06ec 4122 addi r1, r1, 2   // change base addr // icount 886
+06ee 0800 nop // to align meminst icount 887
+06f0 818a st r4, r1, 10 // icount 888
+06f2 0800 nop // to align meminst icount 889
+06f4 8898 ld r4, r0, -8 // icount 890
+06f6 0800 nop // to align meminst icount 891
+06f8 8192 st r4, r1, -14 // icount 892
+06fa 0800 nop // to align meminst icount 893
+06fc 89de ld r6, r1, -2 // icount 894
+06fe 0800 nop // to align meminst icount 895
+0700 819e st r4, r1, -2 // icount 896
+0702 0800 nop // to align meminst icount 897
+0704 985e stu r2, r0, -2 // icount 898
+0706 0800 nop // to align meminst icount 899
+0708 89ba ld r5, r1, -6 // icount 900
+070a 0800 nop // to align meminst icount 901
+070c 9874 stu r3, r0, -12 // icount 902
+070e 0800 nop // to align meminst icount 903
+0710 9996 stu r4, r1, -10 // icount 904
+0712 0800 nop // to align meminst icount 905
+0714 8940 ld r2, r1, 0 // icount 906
+0716 0800 nop // to align meminst icount 907
+0718 99d2 stu r6, r1, -14 // icount 908
+071a 0800 nop // to align meminst icount 909
+071c 81aa st r5, r1, 10 // icount 910
+071e 0800 nop // to align meminst icount 911
+0720 81a8 st r5, r1, 8 // icount 912
+0722 0800 nop // to align meminst icount 913
+0724 894c ld r2, r1, 12 // icount 914
+0726 0800 nop // to align meminst icount 915
+0728 8146 st r2, r1, 6 // icount 916
+072a 0800 nop // to align meminst icount 917
+072c 8858 ld r2, r0, -8 // icount 918
+072e 0800 nop // to align meminst icount 919
+0730 986c stu r3, r0, 12 // icount 920
+0732 0800 nop // to align meminst icount 921
+0734 88a2 ld r5, r0, 2 // icount 922
+0736 0800 nop // to align meminst icount 923
+0738 815c st r2, r1, -4 // icount 924
+073a 0800 nop // to align meminst icount 925
+073c 89be ld r5, r1, -2 // icount 926
+073e 0800 nop // to align meminst icount 927
+0740 99be stu r5, r1, -2 // icount 928
+0742 0800 nop // to align meminst icount 929
+0744 8968 ld r3, r1, 8 // icount 930
+0746 0800 nop // to align meminst icount 931
+0748 896a ld r3, r1, 10 // icount 932
+074a 0800 nop // to align meminst icount 933
+074c 98b0 stu r5, r0, -16 // icount 934
+074e 0800 nop // to align meminst icount 935
+0750 9898 stu r4, r0, -8 // icount 936
+0752 0800 nop // to align meminst icount 937
+0754 80a0 st r5, r0, 0 // icount 938
+0756 0800 nop // to align meminst icount 939
+0758 808a st r4, r0, 10 // icount 940
+075a 0800 nop // to align meminst icount 941
+075c 8960 ld r3, r1, 0 // icount 942
+075e 0800 nop // to align meminst icount 943
+0760 9990 stu r4, r1, -16 // icount 944
+0762 0800 nop // to align meminst icount 945
+0764 887a ld r3, r0, -6 // icount 946
+0766 0800 nop // to align meminst icount 947
+0768 8070 st r3, r0, -16 // icount 948
+076a 0800 nop // to align meminst icount 949
+076c 8996 ld r4, r1, -10 // icount 950
+076e 0800 nop // to align meminst icount 951
+0770 88cc ld r6, r0, 12 // icount 952
+0772 0800 nop // to align meminst icount 953
+0774 8852 ld r2, r0, -14 // icount 954
+0776 0800 nop // to align meminst icount 955
+0778 8066 st r3, r0, 6 // icount 956
+077a 0800 nop // to align meminst icount 957
+077c 8960 ld r3, r1, 0 // icount 958
+077e 0800 nop // to align meminst icount 959
+0780 884a ld r2, r0, 10 // icount 960
+0782 0800 nop // to align meminst icount 961
+0784 81ba st r5, r1, -6 // icount 962
+0786 0800 nop // to align meminst icount 963
+0788 8960 ld r3, r1, 0 // icount 964
+078a 0800 nop // to align meminst icount 965
+078c 98d4 stu r6, r0, -12 // icount 966
+078e 0800 nop // to align meminst icount 967
+0790 89b2 ld r5, r1, -14 // icount 968
+0792 0800 nop // to align meminst icount 969
+0794 8994 ld r4, r1, -12 // icount 970
+0796 0800 nop // to align meminst icount 971
+0798 814e st r2, r1, 14 // icount 972
+079a 0800 nop // to align meminst icount 973
+079c 889c ld r4, r0, -4 // icount 974
+079e 0800 nop // to align meminst icount 975
+07a0 80c4 st r6, r0, 4 // icount 976
+07a2 0800 nop // to align meminst icount 977
+07a4 8998 ld r4, r1, -8 // icount 978
+07a6 0800 nop // to align meminst icount 979
+07a8 806c st r3, r0, 12 // icount 980
+07aa 0800 nop // to align meminst icount 981
+07ac 88a2 ld r5, r0, 2 // icount 982
+07ae 0800 nop // to align meminst icount 983
+07b0 808e st r4, r0, 14 // icount 984
+07b2 0800 nop // to align meminst icount 985
+07b4 8860 ld r3, r0, 0 // icount 986
+07b6 0800 nop // to align meminst icount 987
+07b8 985e stu r2, r0, -2 // icount 988
+07ba 0800 nop // to align meminst icount 989
+07bc 885a ld r2, r0, -6 // icount 990
+07be 0800 nop // to align meminst icount 991
+07c0 886c ld r3, r0, 12 // icount 992
+07c2 0800 nop // to align meminst icount 993
+07c4 8848 ld r2, r0, 8 // icount 994
+07c6 0800 nop // to align meminst icount 995
+07c8 899e ld r4, r1, -2 // icount 996
+07ca 0800 nop // to align meminst icount 997
+07cc 889c ld r4, r0, -4 // icount 998
+07ce 0800 nop // to align meminst icount 999
+07d0 99a6 stu r5, r1, 6 // icount 1000
+07d2 0800 nop // to align meminst icount 1001
+07d4 98ba stu r5, r0, -6 // icount 1002
+07d6 0800 nop // to align meminst icount 1003
+07d8 894c ld r2, r1, 12 // icount 1004
+07da 0800 nop // to align meminst icount 1005
+07dc 9968 stu r3, r1, 8 // icount 1006
+07de 0800 nop // to align meminst icount 1007
+07e0 8940 ld r2, r1, 0 // icount 1008
+07e2 0800 nop // to align meminst icount 1009
+07e4 986c stu r3, r0, 12 // icount 1010
+07e6 0800 nop // to align meminst icount 1011
+07e8 9944 stu r2, r1, 4 // icount 1012
+07ea 0800 nop // to align meminst icount 1013
+07ec 886a ld r3, r0, 10 // icount 1014
+07ee 0800 nop // to align meminst icount 1015
+07f0 88ce ld r6, r0, 14 // icount 1016
+07f2 0800 nop // to align meminst icount 1017
+07f4 988c stu r4, r0, 12 // icount 1018
+07f6 0800 nop // to align meminst icount 1019
+07f8 98ce stu r6, r0, 14 // icount 1020
+07fa 0800 nop // to align meminst icount 1021
+07fc 88ca ld r6, r0, 10 // icount 1022
+07fe 0800 nop // to align meminst icount 1023
+0800 8198 st r4, r1, -8 // icount 1024
+0802 0800 nop // to align meminst icount 1025
+0804 9962 stu r3, r1, 2 // icount 1026
+0806 0800 nop // to align meminst icount 1027
+0808 98c6 stu r6, r0, 6 // icount 1028
+080a 0800 nop // to align meminst icount 1029
+080c 8970 ld r3, r1, -16 // icount 1030
+080e 0800 nop // to align meminst icount 1031
+0810 88da ld r6, r0, -6 // icount 1032
+0812 0800 nop // to align meminst icount 1033
+0814 88c8 ld r6, r0, 8 // icount 1034
+0816 0800 nop // to align meminst icount 1035
+0818 896c ld r3, r1, 12 // icount 1036
+081a 0800 nop // to align meminst icount 1037
+081c 896a ld r3, r1, 10 // icount 1038
+081e 0800 nop // to align meminst icount 1039
+0820 99c6 stu r6, r1, 6 // icount 1040
+0822 0800 nop // to align meminst icount 1041
+0824 8846 ld r2, r0, 6 // icount 1042
+0826 0800 nop // to align meminst icount 1043
+0828 8942 ld r2, r1, 2 // icount 1044
+082a 0800 nop // to align meminst icount 1045
+082c 80c4 st r6, r0, 4 // icount 1046
+082e 0800 nop // to align meminst icount 1047
+0830 8066 st r3, r0, 6 // icount 1048
+0832 0800 nop // to align meminst icount 1049
+0834 886a ld r3, r0, 10 // icount 1050
+0836 0800 nop // to align meminst icount 1051
+0838 998c stu r4, r1, 12 // icount 1052
+083a 0800 nop // to align meminst icount 1053
+083c 8162 st r3, r1, 2 // icount 1054
+083e 0800 nop // to align meminst icount 1055
+0840 8070 st r3, r0, -16 // icount 1056
+0842 0800 nop // to align meminst icount 1057
+0844 889e ld r4, r0, -2 // icount 1058
+0846 0800 nop // to align meminst icount 1059
+0848 88d8 ld r6, r0, -8 // icount 1060
+084a 0800 nop // to align meminst icount 1061
+084c 8892 ld r4, r0, -14 // icount 1062
+084e 0800 nop // to align meminst icount 1063
+0850 884a ld r2, r0, 10 // icount 1064
+0852 0800 nop // to align meminst icount 1065
+0854 9968 stu r3, r1, 8 // icount 1066
+0856 0800 nop // to align meminst icount 1067
+0858 8854 ld r2, r0, -12 // icount 1068
+085a 0800 nop // to align meminst icount 1069
+085c 81a6 st r5, r1, 6 // icount 1070
+085e 0800 nop // to align meminst icount 1071
+0860 8888 ld r4, r0, 8 // icount 1072
+0862 886c ld r3, r0, 12 // icount 1073
+0864 b5e3 rori r7, r5, 3 // icount 1074
+0866 0800 nop // to align meminst icount 1075
+0868 8976 ld r3, r1, -10 // icount 1076
+086a 0800 nop // to align meminst icount 1077
+086c 884a ld r2, r0, 10 // icount 1078
+086e 0800 nop // to align meminst icount 1079
+0870 99d2 stu r6, r1, -14 // icount 1080
+0872 0800 nop // to align meminst icount 1081
+0874 986a stu r3, r0, 10 // icount 1082
+0876 0800 nop // to align meminst icount 1083
+0878 8096 st r4, r0, -10 // icount 1084
+087a 0800 nop // to align meminst icount 1085
+087c 98cc stu r6, r0, 12 // icount 1086
+087e 0800 nop // to align meminst icount 1087
+0880 8142 st r2, r1, 2 // icount 1088
+0882 0800 nop // to align meminst icount 1089
+0884 81da st r6, r1, -6 // icount 1090
+0886 0800 nop // to align meminst icount 1091
+0888 81dc st r6, r1, -4 // icount 1092
+088a 0800 nop // to align meminst icount 1093
+088c 88ce ld r6, r0, 14 // icount 1094
+088e 0800 nop // to align meminst icount 1095
+0890 995a stu r2, r1, -6 // icount 1096
+0892 0800 nop // to align meminst icount 1097
+0894 80b4 st r5, r0, -12 // icount 1098
+0896 80cc st r6, r0, 12 // icount 1099
+0898 c200 lbi r2, 0 // icount 1100
+089a c700 lbi r7, 0 // icount 1101
+089c 0800 nop // to align branch icount 1102
+089e 7d14 bgez r5, 20 // icount 1103
+08a0 eb68 slt r2, r3, r3 // icount 1104
+08a2 ebb4 slt r5, r3, r5 // icount 1105
+08a4 b6a6 rori r5, r6, 6 // icount 1106
+08a6 d3ce ror r3, r3, r6 // icount 1107
+08a8 c708 lbi r7, 8 // icount 1108
+08aa f730 sle r4, r7, r1 // icount 1109
+08ac d9ae xor r3, r1, r5 // icount 1110
+08ae 4cad subi r5, r4, 13 // icount 1111
+08b0 a588 roli r4, r5, 8 // icount 1112
+08b2 4a8e subi r4, r2, 14 // icount 1113
+08b4 d253 srl r4, r2, r2 // icount 1114
+08b6 ddfb andn r6, r5, r7 // icount 1115
+08b8 eb2c slt r3, r3, r1 // icount 1116
+08ba ad4c slli r2, r5, 12 // icount 1117
+08bc b28a rori r4, r2, 10 // icount 1118
+08be da09 sub r2, r2, r0 // icount 1119
+08c0 e44c seq r3, r4, r2 // icount 1120
+08c2 f5d0 sle r4, r5, r6 // icount 1121
+08c4 dd99 sub r6, r5, r4 // icount 1122
+08c6 d11c rol r7, r1, r0 // icount 1123
+08c8 4002 addi r0, r0, 2   // change base addr // icount 1124
+08ca 0800 nop // to align meminst icount 1125
+08cc 896a ld r3, r1, 10 // icount 1126
+08ce 0800 nop // to align meminst icount 1127
+08d0 88c0 ld r6, r0, 0 // icount 1128
+08d2 0800 nop // to align meminst icount 1129
+08d4 987e stu r3, r0, -2 // icount 1130
+08d6 989e stu r4, r0, -2 // icount 1131
+08d8 d2ec rol r3, r2, r7 // icount 1132
+08da 0800 nop // to align meminst icount 1133
+08dc 8886 ld r4, r0, 6 // icount 1134
+08de 80d4 st r6, r0, -12 // icount 1135
+08e0 c500 lbi r5, 0 // icount 1136
+08e2 c500 lbi r5, 0 // icount 1137
+08e4 0800 nop // to align branch icount 1138
+08e6 6518 beqz r5, 24 // icount 1139
+08e8 5ec1 andni r6, r6, 1 // icount 1140
+08ea 866a st r3, r6, 10 // icount 1141
+08ec ec1c slt r7, r4, r0 // icount 1142
+08ee de55 sub r5, r6, r2 // icount 1143
+08f0 dd09 sub r2, r5, r0 // icount 1144
+08f2 d094 rol r5, r0, r4 // icount 1145
+08f4 b94f srli r2, r1, 15 // icount 1146
+08f6 e790 seq r4, r7, r4 // icount 1147
+08f8 5a41 andni r2, r2, 1 // icount 1148
+08fa 9ae4 stu r7, r2, 4 // icount 1149
+08fc ac69 slli r3, r4, 9 // icount 1150
+08fe d7d3 srl r4, r7, r6 // icount 1151
+0900 5da1 andni r5, r5, 1 // icount 1152
+0902 85c4 st r6, r5, 4 // icount 1153
+0904 408f addi r4, r0, 15 // icount 1154
+0906 d750 rol r4, r7, r2 // icount 1155
+0908 5da1 andni r5, r5, 1 // icount 1156
+090a 9d4a stu r2, r5, 10 // icount 1157
+090c de90 add r4, r6, r4 // icount 1158
+090e a8ad slli r5, r0, 13 // icount 1159
+0910 5fe1 andni r7, r7, 1 // icount 1160
+0912 8fac ld r5, r7, 12 // icount 1161
+0914 fa38 sco r6, r2, r1 // icount 1162
+0916 f628 sle r2, r6, r1 // icount 1163
+0918 eed0 slt r4, r6, r6 // icount 1164
+091a bfa1 srli r5, r7, 1 // icount 1165
+091c e408 seq r2, r4, r0 // icount 1166
+091e a3e8 roli r7, r3, 8 // icount 1167
+0920 e394 seq r5, r3, r4 // icount 1168
+0922 0800 nop // to align meminst icount 1169
+0924 896e ld r3, r1, 14 // icount 1170
+0926 0800 nop // to align meminst icount 1171
+0928 80a4 st r5, r0, 4 // icount 1172
+092a 0800 nop // to align meminst icount 1173
+092c 805e st r2, r0, -2 // icount 1174
+092e 0800 nop // to align meminst icount 1175
+0930 88cc ld r6, r0, 12 // icount 1176
+0932 0800 nop // to align meminst icount 1177
+0934 8850 ld r2, r0, -16 // icount 1178
+0936 0800 nop // to align meminst icount 1179
+0938 8070 st r3, r0, -16 // icount 1180
+093a 0800 nop // to align meminst icount 1181
+093c 81c0 st r6, r1, 0 // icount 1182
+093e 0800 nop // to align meminst icount 1183
+0940 897c ld r3, r1, -4 // icount 1184
+0942 0800 nop // to align meminst icount 1185
+0944 88c8 ld r6, r0, 8 // icount 1186
+0946 0800 nop // to align meminst icount 1187
+0948 8156 st r2, r1, -10 // icount 1188
+094a 0800 nop // to align meminst icount 1189
+094c 889e ld r4, r0, -2 // icount 1190
+094e 0800 nop // to align meminst icount 1191
+0950 98ca stu r6, r0, 10 // icount 1192
+0952 0800 nop // to align meminst icount 1193
+0954 999e stu r4, r1, -2 // icount 1194
+0956 0800 nop // to align meminst icount 1195
+0958 80bc st r5, r0, -4 // icount 1196
+095a 0800 nop // to align meminst icount 1197
+095c 9992 stu r4, r1, -14 // icount 1198
+095e 0800 nop // to align meminst icount 1199
+0960 8186 st r4, r1, 6 // icount 1200
+0962 0800 nop // to align meminst icount 1201
+0964 9944 stu r2, r1, 4 // icount 1202
+0966 0800 nop // to align meminst icount 1203
+0968 9898 stu r4, r0, -8 // icount 1204
+096a 0800 nop // to align meminst icount 1205
+096c 8156 st r2, r1, -10 // icount 1206
+096e 0800 nop // to align meminst icount 1207
+0970 8848 ld r2, r0, 8 // icount 1208
+0972 0800 nop // to align meminst icount 1209
+0974 9860 stu r3, r0, 0 // icount 1210
+0976 0800 nop // to align meminst icount 1211
+0978 8956 ld r2, r1, -10 // icount 1212
+097a 0800 nop // to align meminst icount 1213
+097c 89c0 ld r6, r1, 0 // icount 1214
+097e 0800 nop // to align meminst icount 1215
+0980 80d4 st r6, r0, -12 // icount 1216
+0982 0800 nop // to align meminst icount 1217
+0984 89ba ld r5, r1, -6 // icount 1218
+0986 0800 nop // to align meminst icount 1219
+0988 899a ld r4, r1, -6 // icount 1220
+098a 0800 nop // to align meminst icount 1221
+098c 89b8 ld r5, r1, -8 // icount 1222
+098e 0800 nop // to align meminst icount 1223
+0990 8190 st r4, r1, -16 // icount 1224
+0992 0800 nop // to align meminst icount 1225
+0994 81a0 st r5, r1, 0 // icount 1226
+0996 0800 nop // to align meminst icount 1227
+0998 80da st r6, r0, -6 // icount 1228
+099a 0800 nop // to align meminst icount 1229
+099c 98c6 stu r6, r0, 6 // icount 1230
+099e 0800 nop // to align meminst icount 1231
+09a0 80d6 st r6, r0, -10 // icount 1232
+09a2 0800 nop // to align meminst icount 1233
+09a4 9982 stu r4, r1, 2 // icount 1234
+09a6 0800 nop // to align meminst icount 1235
+09a8 8948 ld r2, r1, 8 // icount 1236
+09aa 0800 nop // to align meminst icount 1237
+09ac 8194 st r4, r1, -12 // icount 1238
+09ae 0800 nop // to align meminst icount 1239
+09b0 89b2 ld r5, r1, -14 // icount 1240
+09b2 0800 nop // to align meminst icount 1241
+09b4 888c ld r4, r0, 12 // icount 1242
+09b6 0800 nop // to align meminst icount 1243
+09b8 9996 stu r4, r1, -10 // icount 1244
+09ba 0800 nop // to align meminst icount 1245
+09bc 98d2 stu r6, r0, -14 // icount 1246
+09be 0800 nop // to align meminst icount 1247
+09c0 8876 ld r3, r0, -10 // icount 1248
+09c2 0800 nop // to align meminst icount 1249
+09c4 9996 stu r4, r1, -10 // icount 1250
+09c6 0800 nop // to align meminst icount 1251
+09c8 88c8 ld r6, r0, 8 // icount 1252
+09ca 0800 nop // to align meminst icount 1253
+09cc 8998 ld r4, r1, -8 // icount 1254
+09ce 0800 nop // to align meminst icount 1255
+09d0 8150 st r2, r1, -16 // icount 1256
+09d2 0800 nop // to align meminst icount 1257
+09d4 8176 st r3, r1, -10 // icount 1258
+09d6 0800 nop // to align meminst icount 1259
+09d8 80c4 st r6, r0, 4 // icount 1260
+09da 0800 nop // to align meminst icount 1261
+09dc 8958 ld r2, r1, -8 // icount 1262
+09de 0800 nop // to align meminst icount 1263
+09e0 89d8 ld r6, r1, -8 // icount 1264
+09e2 0800 nop // to align meminst icount 1265
+09e4 898c ld r4, r1, 12 // icount 1266
+09e6 0800 nop // to align meminst icount 1267
+09e8 81ce st r6, r1, 14 // icount 1268
+09ea 0800 nop // to align meminst icount 1269
+09ec 88ce ld r6, r0, 14 // icount 1270
+09ee 0800 nop // to align meminst icount 1271
+09f0 81a0 st r5, r1, 0 // icount 1272
+09f2 0800 nop // to align meminst icount 1273
+09f4 8852 ld r2, r0, -14 // icount 1274
+09f6 0800 nop // to align meminst icount 1275
+09f8 989a stu r4, r0, -6 // icount 1276
+09fa 0800 nop // to align meminst icount 1277
+09fc 888e ld r4, r0, 14 // icount 1278
+09fe 0800 nop // to align meminst icount 1279
+0a00 9954 stu r2, r1, -12 // icount 1280
+0a02 0800 nop // to align meminst icount 1281
+0a04 89ca ld r6, r1, 10 // icount 1282
+0a06 0800 nop // to align meminst icount 1283
+0a08 886c ld r3, r0, 12 // icount 1284
+0a0a 0800 nop // to align meminst icount 1285
+0a0c 8882 ld r4, r0, 2 // icount 1286
+0a0e 0800 nop // to align meminst icount 1287
+0a10 8170 st r3, r1, -16 // icount 1288
+0a12 0800 nop // to align meminst icount 1289
+0a14 99d2 stu r6, r1, -14 // icount 1290
+0a16 0800 nop // to align meminst icount 1291
+0a18 89a4 ld r5, r1, 4 // icount 1292
+0a1a 0800 nop // to align meminst icount 1293
+0a1c 805c st r2, r0, -4 // icount 1294
+0a1e 0800 nop // to align meminst icount 1295
+0a20 818a st r4, r1, 10 // icount 1296
+0a22 0800 nop // to align meminst icount 1297
+0a24 89d8 ld r6, r1, -8 // icount 1298
+0a26 0800 nop // to align meminst icount 1299
+0a28 89de ld r6, r1, -2 // icount 1300
+0a2a 0800 nop // to align meminst icount 1301
+0a2c 89a2 ld r5, r1, 2 // icount 1302
+0a2e 0800 nop // to align meminst icount 1303
+0a30 89b8 ld r5, r1, -8 // icount 1304
+0a32 0800 nop // to align meminst icount 1305
+0a34 8846 ld r2, r0, 6 // icount 1306
+0a36 0800 nop // to align meminst icount 1307
+0a38 888e ld r4, r0, 14 // icount 1308
+0a3a 0800 nop // to align meminst icount 1309
+0a3c 8884 ld r4, r0, 4 // icount 1310
+0a3e 0800 nop // to align meminst icount 1311
+0a40 886e ld r3, r0, 14 // icount 1312
+0a42 0800 nop // to align meminst icount 1313
+0a44 88de ld r6, r0, -2 // icount 1314
+0a46 0800 nop // to align meminst icount 1315
+0a48 8956 ld r2, r1, -10 // icount 1316
+0a4a 0800 nop // to align meminst icount 1317
+0a4c 8862 ld r3, r0, 2 // icount 1318
+0a4e 0800 nop // to align meminst icount 1319
+0a50 99a0 stu r5, r1, 0 // icount 1320
+0a52 0800 nop // to align meminst icount 1321
+0a54 8186 st r4, r1, 6 // icount 1322
+0a56 0800 nop // to align meminst icount 1323
+0a58 897c ld r3, r1, -4 // icount 1324
+0a5a 0800 nop // to align meminst icount 1325
+0a5c 8096 st r4, r0, -10 // icount 1326
+0a5e 0800 nop // to align meminst icount 1327
+0a60 8156 st r2, r1, -10 // icount 1328
+0a62 0800 nop // to align meminst icount 1329
+0a64 81d4 st r6, r1, -12 // icount 1330
+0a66 0800 nop // to align meminst icount 1331
+0a68 984e stu r2, r0, 14 // icount 1332
+0a6a 80ae st r5, r0, 14 // icount 1333
+0a6c c400 lbi r4, 0 // icount 1334
+0a6e c600 lbi r6, 0 // icount 1335
+0a70 0800 nop // to align branch icount 1336
+0a72 6e08 bnez r6, 8 // icount 1337
+0a74 d970 add r4, r1, r3 // icount 1338
+0a76 bf87 srli r4, r7, 7 // icount 1339
+0a78 d991 sub r4, r1, r4 // icount 1340
+0a7a 5266 xori r3, r2, 6 // icount 1341
+0a7c dd77 andn r5, r5, r3 // icount 1342
+0a7e b5c1 rori r6, r5, 1 // icount 1343
+0a80 d674 rol r5, r6, r3 // icount 1344
+0a82 0800 nop // to align meminst icount 1345
+0a84 d5f0 rol r4, r5, r7 // icount 1346
+0a86 0800 nop // to align meminst icount 1347
+0a88 81aa st r5, r1, 10 // icount 1348
+0a8a 9858 stu r2, r0, -8 // icount 1349
+0a8c c700 lbi r7, 0 // icount 1350
+0a8e c200 lbi r2, 0 // icount 1351
+0a90 0800 nop // to align branch icount 1352
+0a92 691c bnez r1, 28 // icount 1353
+0a94 de70 add r4, r6, r3 // icount 1354
+0a96 0800 nop // to align meminst icount 1355
+0a98 5fe1 andni r7, r7, 1 // icount 1356
+0a9a 9fe0 stu r7, r7, 0 // icount 1357
+0a9c 53c6 xori r6, r3, 6 // icount 1358
+0a9e 9609 slbi r6, 9 // icount 1359
+0aa0 4288 addi r4, r2, 8 // icount 1360
+0aa2 4c49 subi r2, r4, 9 // icount 1361
+0aa4 f994 sco r5, r1, r4 // icount 1362
+0aa6 52a9 xori r5, r2, 9 // icount 1363
+0aa8 d079 sll r6, r0, r3 // icount 1364
+0aaa d878 add r6, r0, r3 // icount 1365
+0aac a0c4 roli r6, r0, 4 // icount 1366
+0aae 4feb subi r7, r7, 11 // icount 1367
+0ab0 f6b8 sle r6, r6, r5 // icount 1368
+0ab2 0800 nop // to align meminst icount 1369
+0ab4 5fe1 andni r7, r7, 1 // icount 1370
+0ab6 9fae stu r5, r7, 14 // icount 1371
+0ab8 deaf andn r3, r6, r5 // icount 1372
+0aba dbf4 add r5, r3, r7 // icount 1373
+0abc b1ee rori r7, r1, 14 // icount 1374
+0abe a4c9 roli r6, r4, 9 // icount 1375
+0ac0 d7fe ror r7, r7, r7 // icount 1376
+0ac2 f430 sle r4, r4, r1 // icount 1377
+0ac4 db0a xor r2, r3, r0 // icount 1378
+0ac6 d3f9 sll r6, r3, r7 // icount 1379
+0ac8 4ce1 subi r7, r4, 1 // icount 1380
+0aca de15 sub r5, r6, r0 // icount 1381
+0acc ea68 slt r2, r2, r3 // icount 1382
+0ace 4742 addi r2, r7, 2 // icount 1383
+0ad0 db0e xor r3, r3, r0 // icount 1384
+0ad2 0800 nop // to align meminst icount 1385
+0ad4 f934 sco r5, r1, r1 // icount 1386
+0ad6 0800 nop // to align meminst icount 1387
+0ad8 899a ld r4, r1, -6 // icount 1388
+0ada 0800 nop // to align meminst icount 1389
+0adc 89ca ld r6, r1, 10 // icount 1390
+0ade 0800 nop // to align meminst icount 1391
+0ae0 8992 ld r4, r1, -14 // icount 1392
+0ae2 0800 nop // to align meminst icount 1393
+0ae4 8166 st r3, r1, 6 // icount 1394
+0ae6 0800 nop // to align meminst icount 1395
+0ae8 987c stu r3, r0, -4 // icount 1396
+0aea 0800 nop // to align meminst icount 1397
+0aec 80ae st r5, r0, 14 // icount 1398
+0aee 0800 nop // to align meminst icount 1399
+0af0 984a stu r2, r0, 10 // icount 1400
+0af2 0800 nop // to align meminst icount 1401
+0af4 8946 ld r2, r1, 6 // icount 1402
+0af6 0800 nop // to align meminst icount 1403
+0af8 8998 ld r4, r1, -8 // icount 1404
+0afa 0800 nop // to align meminst icount 1405
+0afc 88aa ld r5, r0, 10 // icount 1406
+0afe 0800 nop // to align meminst icount 1407
+0b00 88de ld r6, r0, -2 // icount 1408
+0b02 0800 nop // to align meminst icount 1409
+0b04 9884 stu r4, r0, 4 // icount 1410
+0b06 0800 nop // to align meminst icount 1411
+0b08 987a stu r3, r0, -6 // icount 1412
+0b0a 0800 nop // to align meminst icount 1413
+0b0c 89a2 ld r5, r1, 2 // icount 1414
+0b0e 0800 nop // to align meminst icount 1415
+0b10 9954 stu r2, r1, -12 // icount 1416
+0b12 0800 nop // to align meminst icount 1417
+0b14 9974 stu r3, r1, -12 // icount 1418
+0b16 0800 nop // to align meminst icount 1419
+0b18 988a stu r4, r0, 10 // icount 1420
+0b1a 0800 nop // to align meminst icount 1421
+0b1c 98b8 stu r5, r0, -8 // icount 1422
+0b1e 0800 nop // to align meminst icount 1423
+0b20 99cc stu r6, r1, 12 // icount 1424
+0b22 0800 nop // to align meminst icount 1425
+0b24 98ca stu r6, r0, 10 // icount 1426
+0b26 0800 nop // to align meminst icount 1427
+0b28 98c6 stu r6, r0, 6 // icount 1428
+0b2a 0800 nop // to align meminst icount 1429
+0b2c 88b8 ld r5, r0, -8 // icount 1430
+0b2e 0800 nop // to align meminst icount 1431
+0b30 99da stu r6, r1, -6 // icount 1432
+0b32 0800 nop // to align meminst icount 1433
+0b34 988a stu r4, r0, 10 // icount 1434
+0b36 0800 nop // to align meminst icount 1435
+0b38 896c ld r3, r1, 12 // icount 1436
+0b3a 0800 nop // to align meminst icount 1437
+0b3c 98ce stu r6, r0, 14 // icount 1438
+0b3e 0800 nop // to align meminst icount 1439
+0b40 88b0 ld r5, r0, -16 // icount 1440
+0b42 0800 nop // to align meminst icount 1441
+0b44 815a st r2, r1, -6 // icount 1442
+0b46 0800 nop // to align meminst icount 1443
+0b48 994c stu r2, r1, 12 // icount 1444
+0b4a 0800 nop // to align meminst icount 1445
+0b4c 89dc ld r6, r1, -4 // icount 1446
+0b4e 0800 nop // to align meminst icount 1447
+0b50 88d4 ld r6, r0, -12 // icount 1448
+0b52 0800 nop // to align meminst icount 1449
+0b54 8160 st r3, r1, 0 // icount 1450
+0b56 0800 nop // to align meminst icount 1451
+0b58 986a stu r3, r0, 10 // icount 1452
+0b5a 0800 nop // to align meminst icount 1453
+0b5c 8940 ld r2, r1, 0 // icount 1454
+0b5e 0800 nop // to align meminst icount 1455
+0b60 8992 ld r4, r1, -14 // icount 1456
+0b62 0800 nop // to align meminst icount 1457
+0b64 89da ld r6, r1, -6 // icount 1458
+0b66 0800 nop // to align meminst icount 1459
+0b68 8944 ld r2, r1, 4 // icount 1460
+0b6a 0800 nop // to align meminst icount 1461
+0b6c 8858 ld r2, r0, -8 // icount 1462
+0b6e 0800 nop // to align meminst icount 1463
+0b70 89b4 ld r5, r1, -12 // icount 1464
+0b72 0800 nop // to align meminst icount 1465
+0b74 88aa ld r5, r0, 10 // icount 1466
+0b76 0800 nop // to align meminst icount 1467
+0b78 8860 ld r3, r0, 0 // icount 1468
+0b7a 0800 nop // to align meminst icount 1469
+0b7c 9952 stu r2, r1, -14 // icount 1470
+0b7e 0800 nop // to align meminst icount 1471
+0b80 98cc stu r6, r0, 12 // icount 1472
+0b82 0800 nop // to align meminst icount 1473
+0b84 989e stu r4, r0, -2 // icount 1474
+0b86 0800 nop // to align meminst icount 1475
+0b88 8844 ld r2, r0, 4 // icount 1476
+0b8a 0800 nop // to align meminst icount 1477
+0b8c 8844 ld r2, r0, 4 // icount 1478
+0b8e 0800 nop // to align meminst icount 1479
+0b90 98a0 stu r5, r0, 0 // icount 1480
+0b92 0800 nop // to align meminst icount 1481
+0b94 897e ld r3, r1, -2 // icount 1482
+0b96 0800 nop // to align meminst icount 1483
+0b98 9942 stu r2, r1, 2 // icount 1484
+0b9a 0800 nop // to align meminst icount 1485
+0b9c 988e stu r4, r0, 14 // icount 1486
+0b9e 0800 nop // to align meminst icount 1487
+0ba0 98c8 stu r6, r0, 8 // icount 1488
+0ba2 81cc st r6, r1, 12 // icount 1489
+0ba4 c200 lbi r2, 0 // icount 1490
+0ba6 c600 lbi r6, 0 // icount 1491
+0ba8 0800 nop // to align branch icount 1492
+0baa 741c bltz r4, 28 // icount 1493
+0bac 5a41 andni r2, r2, 1 // icount 1494
+0bae 82c8 st r6, r2, 8 // icount 1495
+0bb0 568d xori r4, r6, 13 // icount 1496
+0bb2 49e6 subi r7, r1, 6 // icount 1497
+0bb4 e8ac slt r3, r0, r5 // icount 1498
+0bb6 d9ab andn r2, r1, r5 // icount 1499
+0bb8 ee98 slt r6, r6, r4 // icount 1500
+0bba b84c srli r2, r0, 12 // icount 1501
+0bbc 5f8c andni r4, r7, 12 // icount 1502
+0bbe ec90 slt r4, r4, r4 // icount 1503
+0bc0 d12a ror r2, r1, r1 // icount 1504
+0bc2 ead8 slt r6, r2, r6 // icount 1505
+0bc4 c30f lbi r3, 15 // icount 1506
+0bc6 d87e xor r7, r0, r3 // icount 1507
+0bc8 5ec1 andni r6, r6, 1 // icount 1508
+0bca 8eec ld r7, r6, 12 // icount 1509
+0bcc b0c9 rori r6, r0, 9 // icount 1510
+0bce b748 rori r2, r7, 8 // icount 1511
+0bd0 d7f5 sll r5, r7, r7 // icount 1512
+0bd2 d76a ror r2, r7, r3 // icount 1513
+0bd4 5b61 andni r3, r3, 1 // icount 1514
+0bd6 9b8a stu r4, r3, 10 // icount 1515
+0bd8 48cd subi r6, r0, 13 // icount 1516
+0bda e828 slt r2, r0, r1 // icount 1517
+0bdc 5801 andni r0, r0, 1 // icount 1518
+0bde 886e ld r3, r0, 14 // icount 1519
+0be0 5d45 andni r2, r5, 5 // icount 1520
+0be2 d55f srl r7, r5, r2 // icount 1521
+0be4 d8ca xor r2, r0, r6 // icount 1522
+0be6 a845 slli r2, r0, 5 // icount 1523
+0be8 fa4c sco r3, r2, r2 // icount 1524
+0bea 0800 nop // to align meminst icount 1525
+0bec d330 rol r4, r3, r1 // icount 1526
+0bee 0800 nop // to align meminst icount 1527
+0bf0 99a0 stu r5, r1, 0 // icount 1528
+0bf2 0800 nop // to align meminst icount 1529
+0bf4 88c8 ld r6, r0, 8 // icount 1530
+0bf6 0800 nop // to align meminst icount 1531
+0bf8 8954 ld r2, r1, -12 // icount 1532
+0bfa 0800 nop // to align meminst icount 1533
+0bfc 994e stu r2, r1, 14 // icount 1534
+0bfe 0800 nop // to align meminst icount 1535
+0c00 814a st r2, r1, 10 // icount 1536
+0c02 0800 nop // to align meminst icount 1537
+0c04 9940 stu r2, r1, 0 // icount 1538
+0c06 0800 nop // to align meminst icount 1539
+0c08 88c4 ld r6, r0, 4 // icount 1540
+0c0a 0800 nop // to align meminst icount 1541
+0c0c 989a stu r4, r0, -6 // icount 1542
+0c0e 0800 nop // to align meminst icount 1543
+0c10 8856 ld r2, r0, -10 // icount 1544
+0c12 0800 nop // to align meminst icount 1545
+0c14 986c stu r3, r0, 12 // icount 1546
+0c16 0800 nop // to align meminst icount 1547
+0c18 8070 st r3, r0, -16 // icount 1548
+0c1a 0800 nop // to align meminst icount 1549
+0c1c 8998 ld r4, r1, -8 // icount 1550
+0c1e 0800 nop // to align meminst icount 1551
+0c20 989e stu r4, r0, -2 // icount 1552
+0c22 8072 st r3, r0, -14 // icount 1553
+0c24 de7d sub r7, r6, r3 // icount 1554
+0c26 0800 nop // to align meminst icount 1555
+0c28 81b6 st r5, r1, -10 // icount 1556
+0c2a 0800 nop // to align meminst icount 1557
+0c2c 81b6 st r5, r1, -10 // icount 1558
+0c2e 0800 nop // to align meminst icount 1559
+0c30 8852 ld r2, r0, -14 // icount 1560
+0c32 0800 nop // to align meminst icount 1561
+0c34 8182 st r4, r1, 2 // icount 1562
+0c36 0800 nop // to align meminst icount 1563
+0c38 88bc ld r5, r0, -4 // icount 1564
+0c3a 0800 nop // to align meminst icount 1565
+0c3c 899e ld r4, r1, -2 // icount 1566
+0c3e 0800 nop // to align meminst icount 1567
+0c40 9996 stu r4, r1, -10 // icount 1568
+0c42 0800 nop // to align meminst icount 1569
+0c44 81c0 st r6, r1, 0 // icount 1570
+0c46 0800 nop // to align meminst icount 1571
+0c48 8976 ld r3, r1, -10 // icount 1572
+0c4a 0800 nop // to align meminst icount 1573
+0c4c 80ae st r5, r0, 14 // icount 1574
+0c4e 0800 nop // to align meminst icount 1575
+0c50 8886 ld r4, r0, 6 // icount 1576
+0c52 0800 nop // to align meminst icount 1577
+0c54 8852 ld r2, r0, -14 // icount 1578
+0c56 0800 nop // to align meminst icount 1579
+0c58 8062 st r3, r0, 2 // icount 1580
+0c5a 0800 nop // to align meminst icount 1581
+0c5c 8884 ld r4, r0, 4 // icount 1582
+0c5e 0800 nop // to align meminst icount 1583
+0c60 8944 ld r2, r1, 4 // icount 1584
+0c62 0800 nop // to align meminst icount 1585
+0c64 80a2 st r5, r0, 2 // icount 1586
+0c66 0800 nop // to align meminst icount 1587
+0c68 8990 ld r4, r1, -16 // icount 1588
+0c6a 0800 nop // to align meminst icount 1589
+0c6c 808a st r4, r0, 10 // icount 1590
+0c6e 0800 nop // to align meminst icount 1591
+0c70 885a ld r2, r0, -6 // icount 1592
+0c72 0800 nop // to align meminst icount 1593
+0c74 995a stu r2, r1, -6 // icount 1594
+0c76 0800 nop // to align meminst icount 1595
+0c78 899a ld r4, r1, -6 // icount 1596
+0c7a 0800 nop // to align meminst icount 1597
+0c7c 88c6 ld r6, r0, 6 // icount 1598
+0c7e 0800 nop // to align meminst icount 1599
+0c80 88c4 ld r6, r0, 4 // icount 1600
+0c82 0800 nop // to align meminst icount 1601
+0c84 81de st r6, r1, -2 // icount 1602
+0c86 0800 nop // to align meminst icount 1603
+0c88 995e stu r2, r1, -2 // icount 1604
+0c8a 0800 nop // to align meminst icount 1605
+0c8c 984a stu r2, r0, 10 // icount 1606
+0c8e 0800 nop // to align meminst icount 1607
+0c90 8072 st r3, r0, -14 // icount 1608
+0c92 818a st r4, r1, 10 // icount 1609
+0c94 4134 addi r1, r1, -12   // change base addr // icount 1610
+0c96 0800 nop // to align meminst icount 1611
+0c98 9950 stu r2, r1, -16 // icount 1612
+0c9a 0800 nop // to align meminst icount 1613
+0c9c 99c0 stu r6, r1, 0 // icount 1614
+0c9e 0800 nop // to align meminst icount 1615
+0ca0 89a6 ld r5, r1, 6 // icount 1616
+0ca2 0800 nop // to align meminst icount 1617
+0ca4 999c stu r4, r1, -4 // icount 1618
+0ca6 0800 nop // to align meminst icount 1619
+0ca8 8864 ld r3, r0, 4 // icount 1620
+0caa 0800 nop // to align meminst icount 1621
+0cac 89a8 ld r5, r1, 8 // icount 1622
+0cae 0800 nop // to align meminst icount 1623
+0cb0 89cc ld r6, r1, 12 // icount 1624
+0cb2 0800 nop // to align meminst icount 1625
+0cb4 8882 ld r4, r0, 2 // icount 1626
+0cb6 0800 nop // to align meminst icount 1627
+0cb8 896e ld r3, r1, 14 // icount 1628
+0cba 0800 nop // to align meminst icount 1629
+0cbc 9958 stu r2, r1, -8 // icount 1630
+0cbe 0800 nop // to align meminst icount 1631
+0cc0 8976 ld r3, r1, -10 // icount 1632
+0cc2 0800 nop // to align meminst icount 1633
+0cc4 98c2 stu r6, r0, 2 // icount 1634
+0cc6 0800 nop // to align meminst icount 1635
+0cc8 8176 st r3, r1, -10 // icount 1636
+0cca 0800 nop // to align meminst icount 1637
+0ccc 81a8 st r5, r1, 8 // icount 1638
+0cce 0800 nop // to align meminst icount 1639
+0cd0 884e ld r2, r0, 14 // icount 1640
+0cd2 0800 nop // to align meminst icount 1641
+0cd4 99cc stu r6, r1, 12 // icount 1642
+0cd6 0800 nop // to align meminst icount 1643
+0cd8 88b8 ld r5, r0, -8 // icount 1644
+0cda 0800 nop // to align meminst icount 1645
+0cdc 9994 stu r4, r1, -12 // icount 1646
+0cde 0800 nop // to align meminst icount 1647
+0ce0 885c ld r2, r0, -4 // icount 1648
+0ce2 0800 nop // to align meminst icount 1649
+0ce4 889a ld r4, r0, -6 // icount 1650
+0ce6 0800 nop // to align meminst icount 1651
+0ce8 995a stu r2, r1, -6 // icount 1652
+0cea 0800 nop // to align meminst icount 1653
+0cec 89c0 ld r6, r1, 0 // icount 1654
+0cee 0800 nop // to align meminst icount 1655
+0cf0 89d2 ld r6, r1, -14 // icount 1656
+0cf2 0800 nop // to align meminst icount 1657
+0cf4 99de stu r6, r1, -2 // icount 1658
+0cf6 0800 nop // to align meminst icount 1659
+0cf8 9996 stu r4, r1, -10 // icount 1660
+0cfa 0800 nop // to align meminst icount 1661
+0cfc 888c ld r4, r0, 12 // icount 1662
+0cfe 0800 nop // to align meminst icount 1663
+0d00 89a8 ld r5, r1, 8 // icount 1664
+0d02 0800 nop // to align meminst icount 1665
+0d04 888c ld r4, r0, 12 // icount 1666
+0d06 0800 nop // to align meminst icount 1667
+0d08 9860 stu r3, r0, 0 // icount 1668
+0d0a 0800 nop // to align meminst icount 1669
+0d0c 998a stu r4, r1, 10 // icount 1670
+0d0e 0800 nop // to align meminst icount 1671
+0d10 8852 ld r2, r0, -14 // icount 1672
+0d12 0800 nop // to align meminst icount 1673
+0d14 9854 stu r2, r0, -12 // icount 1674
+0d16 0800 nop // to align meminst icount 1675
+0d18 80b2 st r5, r0, -14 // icount 1676
+0d1a 0800 nop // to align meminst icount 1677
+0d1c 999a stu r4, r1, -6 // icount 1678
+0d1e 0800 nop // to align meminst icount 1679
+0d20 8954 ld r2, r1, -12 // icount 1680
+0d22 0800 nop // to align meminst icount 1681
+0d24 817a st r3, r1, -6 // icount 1682
+0d26 0800 nop // to align meminst icount 1683
+0d28 9880 stu r4, r0, 0 // icount 1684
+0d2a 0800 nop // to align meminst icount 1685
+0d2c 889c ld r4, r0, -4 // icount 1686
+0d2e 0800 nop // to align meminst icount 1687
+0d30 898e ld r4, r1, 14 // icount 1688
+0d32 0800 nop // to align meminst icount 1689
+0d34 89ca ld r6, r1, 10 // icount 1690
+0d36 0800 nop // to align meminst icount 1691
+0d38 9882 stu r4, r0, 2 // icount 1692
+0d3a 0800 nop // to align meminst icount 1693
+0d3c 8848 ld r2, r0, 8 // icount 1694
+0d3e 0800 nop // to align meminst icount 1695
+0d40 814a st r2, r1, 10 // icount 1696
+0d42 0800 nop // to align meminst icount 1697
+0d44 88da ld r6, r0, -6 // icount 1698
+0d46 0800 nop // to align meminst icount 1699
+0d48 89d4 ld r6, r1, -12 // icount 1700
+0d4a 0800 nop // to align meminst icount 1701
+0d4c 89b8 ld r5, r1, -8 // icount 1702
+0d4e 0800 nop // to align meminst icount 1703
+0d50 896a ld r3, r1, 10 // icount 1704
+0d52 89b8 ld r5, r1, -8 // icount 1705
+0d54 c400 lbi r4, 0 // icount 1706
+0d56 c400 lbi r4, 0 // icount 1707
+0d58 0800 nop // to align branch icount 1708
+0d5a 6114 beqz r1, 20 // icount 1709
+0d5c 5b61 andni r3, r3, 1 // icount 1710
+0d5e 9bee stu r7, r3, 14 // icount 1711
+0d60 d358 rol r6, r3, r2 // icount 1712
+0d62 9407 slbi r4, 7 // icount 1713
+0d64 d08e ror r3, r0, r4 // icount 1714
+0d66 ec94 slt r5, r4, r4 // icount 1715
+0d68 df8c add r3, r7, r4 // icount 1716
+0d6a d6ff srl r7, r6, r7 // icount 1717
+0d6c ff74 sco r5, r7, r3 // icount 1718
+0d6e dbf8 add r6, r3, r7 // icount 1719
+0d70 50c5 xori r6, r0, 5 // icount 1720
+0d72 b487 rori r4, r4, 7 // icount 1721
+0d74 4fa5 subi r5, r7, 5 // icount 1722
+0d76 930e slbi r3, 14 // icount 1723
+0d78 df11 sub r4, r7, r0 // icount 1724
+0d7a d79a ror r6, r7, r4 // icount 1725
+0d7c d7b8 rol r6, r7, r5 // icount 1726
+0d7e 4ce5 subi r7, r4, 5 // icount 1727
+0d80 5ced andni r7, r4, 13 // icount 1728
+0d82 508d xori r4, r0, 13 // icount 1729
+0d84 44cb addi r6, r4, 11 // icount 1730
+0d86 0800 nop // to align meminst icount 1731
+0d88 8880 ld r4, r0, 0 // icount 1732
+0d8a 0800 nop // to align meminst icount 1733
+0d8c 8970 ld r3, r1, -16 // icount 1734
+0d8e 0800 nop // to align meminst icount 1735
+0d90 89d6 ld r6, r1, -10 // icount 1736
+0d92 0800 nop // to align meminst icount 1737
+0d94 9852 stu r2, r0, -14 // icount 1738
+0d96 0800 nop // to align meminst icount 1739
+0d98 99d4 stu r6, r1, -12 // icount 1740
+0d9a 0800 nop // to align meminst icount 1741
+0d9c 999e stu r4, r1, -2 // icount 1742
+0d9e 0800 nop // to align meminst icount 1743
+0da0 8888 ld r4, r0, 8 // icount 1744
+0da2 0800 nop // to align meminst icount 1745
+0da4 88a6 ld r5, r0, 6 // icount 1746
+0da6 0800 nop // to align meminst icount 1747
+0da8 8094 st r4, r0, -12 // icount 1748
+0daa 0800 nop // to align meminst icount 1749
+0dac 80be st r5, r0, -2 // icount 1750
+0dae 0800 nop // to align meminst icount 1751
+0db0 9888 stu r4, r0, 8 // icount 1752
+0db2 0800 nop // to align meminst icount 1753
+0db4 8846 ld r2, r0, 6 // icount 1754
+0db6 0800 nop // to align meminst icount 1755
+0db8 886c ld r3, r0, 12 // icount 1756
+0dba 0800 nop // to align meminst icount 1757
+0dbc 99ac stu r5, r1, 12 // icount 1758
+0dbe 0800 nop // to align meminst icount 1759
+0dc0 81a6 st r5, r1, 6 // icount 1760
+0dc2 0800 nop // to align meminst icount 1761
+0dc4 9944 stu r2, r1, 4 // icount 1762
+0dc6 0800 nop // to align meminst icount 1763
+0dc8 89d8 ld r6, r1, -8 // icount 1764
+0dca 0800 nop // to align meminst icount 1765
+0dcc 9956 stu r2, r1, -10 // icount 1766
+0dce 0800 nop // to align meminst icount 1767
+0dd0 88de ld r6, r0, -2 // icount 1768
+0dd2 0800 nop // to align meminst icount 1769
+0dd4 88a8 ld r5, r0, 8 // icount 1770
+0dd6 0800 nop // to align meminst icount 1771
+0dd8 99c4 stu r6, r1, 4 // icount 1772
+0dda 0800 nop // to align meminst icount 1773
+0ddc 8862 ld r3, r0, 2 // icount 1774
+0dde 0800 nop // to align meminst icount 1775
+0de0 80ac st r5, r0, 12 // icount 1776
+0de2 0800 nop // to align meminst icount 1777
+0de4 8890 ld r4, r0, -16 // icount 1778
+0de6 0800 nop // to align meminst icount 1779
+0de8 8960 ld r3, r1, 0 // icount 1780
+0dea 0800 nop // to align meminst icount 1781
+0dec 88a2 ld r5, r0, 2 // icount 1782
+0dee 0800 nop // to align meminst icount 1783
+0df0 8042 st r2, r0, 2 // icount 1784
+0df2 0800 nop // to align meminst icount 1785
+0df4 899e ld r4, r1, -2 // icount 1786
+0df6 0800 nop // to align meminst icount 1787
+0df8 98d8 stu r6, r0, -8 // icount 1788
+0dfa 0800 nop // to align meminst icount 1789
+0dfc 98b8 stu r5, r0, -8 // icount 1790
+0dfe 0800 nop // to align meminst icount 1791
+0e00 81c6 st r6, r1, 6 // icount 1792
+0e02 0800 nop // to align meminst icount 1793
+0e04 886a ld r3, r0, 10 // icount 1794
+0e06 0800 nop // to align meminst icount 1795
+0e08 888c ld r4, r0, 12 // icount 1796
+0e0a 0800 nop // to align meminst icount 1797
+0e0c 994c stu r2, r1, 12 // icount 1798
+0e0e 0800 nop // to align meminst icount 1799
+0e10 9876 stu r3, r0, -10 // icount 1800
+0e12 8052 st r2, r0, -14 // icount 1801
+0e14 d613 srl r4, r6, r0 // icount 1802
+0e16 0800 nop // to align meminst icount 1803
+0e18 8164 st r3, r1, 4 // icount 1804
+0e1a 0800 nop // to align meminst icount 1805
+0e1c 998c stu r4, r1, 12 // icount 1806
+0e1e 0800 nop // to align meminst icount 1807
+0e20 88a0 ld r5, r0, 0 // icount 1808
+0e22 0800 nop // to align meminst icount 1809
+0e24 894c ld r2, r1, 12 // icount 1810
+0e26 0800 nop // to align meminst icount 1811
+0e28 9996 stu r4, r1, -10 // icount 1812
+0e2a 0800 nop // to align meminst icount 1813
+0e2c 8864 ld r3, r0, 4 // icount 1814
+0e2e 0800 nop // to align meminst icount 1815
+0e30 807a st r3, r0, -6 // icount 1816
+0e32 0800 nop // to align meminst icount 1817
+0e34 897e ld r3, r1, -2 // icount 1818
+0e36 0800 nop // to align meminst icount 1819
+0e38 8876 ld r3, r0, -10 // icount 1820
+0e3a 0800 nop // to align meminst icount 1821
+0e3c 885a ld r2, r0, -6 // icount 1822
+0e3e 0800 nop // to align meminst icount 1823
+0e40 8140 st r2, r1, 0 // icount 1824
+0e42 0800 nop // to align meminst icount 1825
+0e44 995a stu r2, r1, -6 // icount 1826
+0e46 0800 nop // to align meminst icount 1827
+0e48 8088 st r4, r0, 8 // icount 1828
+0e4a 0800 nop // to align meminst icount 1829
+0e4c 80dc st r6, r0, -4 // icount 1830
+0e4e 88dc ld r6, r0, -4 // icount 1831
+0e50 a9a8 slli r5, r1, 8 // icount 1832
+0e52 0800 nop // to align meminst icount 1833
+0e54 8976 ld r3, r1, -10 // icount 1834
+0e56 0800 nop // to align meminst icount 1835
+0e58 89dc ld r6, r1, -4 // icount 1836
+0e5a 0800 nop // to align meminst icount 1837
+0e5c 98ae stu r5, r0, 14 // icount 1838
+0e5e 0800 nop // to align meminst icount 1839
+0e60 817c st r3, r1, -4 // icount 1840
+0e62 0800 nop // to align meminst icount 1841
+0e64 89d4 ld r6, r1, -12 // icount 1842
+0e66 0800 nop // to align meminst icount 1843
+0e68 88ba ld r5, r0, -6 // icount 1844
+0e6a 0800 nop // to align meminst icount 1845
+0e6c 81ba st r5, r1, -6 // icount 1846
+0e6e 0800 nop // to align meminst icount 1847
+0e70 89c8 ld r6, r1, 8 // icount 1848
+0e72 0800 nop // to align meminst icount 1849
+0e74 8958 ld r2, r1, -8 // icount 1850
+0e76 0800 nop // to align meminst icount 1851
+0e78 8962 ld r3, r1, 2 // icount 1852
+0e7a 0800 nop // to align meminst icount 1853
+0e7c 88b4 ld r5, r0, -12 // icount 1854
+0e7e 0800 nop // to align meminst icount 1855
+0e80 8990 ld r4, r1, -16 // icount 1856
+0e82 0800 nop // to align meminst icount 1857
+0e84 88d0 ld r6, r0, -16 // icount 1858
+0e86 0800 nop // to align meminst icount 1859
+0e88 99ce stu r6, r1, 14 // icount 1860
+0e8a 0800 nop // to align meminst icount 1861
+0e8c 8992 ld r4, r1, -14 // icount 1862
+0e8e 0800 nop // to align meminst icount 1863
+0e90 8090 st r4, r0, -16 // icount 1864
+0e92 0800 nop // to align meminst icount 1865
+0e94 895e ld r2, r1, -2 // icount 1866
+0e96 0800 nop // to align meminst icount 1867
+0e98 8860 ld r3, r0, 0 // icount 1868
+0e9a 0800 nop // to align meminst icount 1869
+0e9c 886c ld r3, r0, 12 // icount 1870
+0e9e 0800 nop // to align meminst icount 1871
+0ea0 987c stu r3, r0, -4 // icount 1872
+0ea2 0800 nop // to align meminst icount 1873
+0ea4 9990 stu r4, r1, -16 // icount 1874
+0ea6 8144 st r2, r1, 4 // icount 1875
+0ea8 9205 slbi r2, 5 // icount 1876
+0eaa 0800 nop // to align meminst icount 1877
+0eac 8180 st r4, r1, 0 // icount 1878
+0eae 986c stu r3, r0, 12 // icount 1879
+0eb0 d31b srl r6, r3, r0 // icount 1880
+0eb2 c200 lbi r2, 0 // icount 1881
+0eb4 c200 lbi r2, 0 // icount 1882
+0eb6 6320 beqz r3, 32 // icount 1883
+0eb8 d2b2 ror r4, r2, r5 // icount 1884
+0eba 52aa xori r5, r2, 10 // icount 1885
+0ebc d53d sll r7, r5, r1 // icount 1886
+0ebe dff0 add r4, r7, r7 // icount 1887
+0ec0 e49c seq r7, r4, r4 // icount 1888
+0ec2 0800 nop // to align meminst icount 1889
+0ec4 5fe1 andni r7, r7, 1 // icount 1890
+0ec6 8f86 ld r4, r7, 6 // icount 1891
+0ec8 df2d sub r3, r7, r1 // icount 1892
+0eca b588 rori r4, r5, 8 // icount 1893
+0ecc de7f andn r7, r6, r3 // icount 1894
+0ece 0800 nop // to align meminst icount 1895
+0ed0 5fe1 andni r7, r7, 1 // icount 1896
+0ed2 9fa2 stu r5, r7, 2 // icount 1897
+0ed4 c50c lbi r5, 12 // icount 1898
+0ed6 c402 lbi r4, 2 // icount 1899
+0ed8 dfcc add r3, r7, r6 // icount 1900
+0eda d17b srl r6, r1, r3 // icount 1901
+0edc 5fe1 andni r7, r7, 1 // icount 1902
+0ede 8f8a ld r4, r7, 10 // icount 1903
+0ee0 5ec1 andni r6, r6, 1 // icount 1904
+0ee2 86ae st r5, r6, 14 // icount 1905
+0ee4 fd98 sco r6, r5, r4 // icount 1906
+0ee6 a181 roli r4, r1, 1 // icount 1907
+0ee8 f4c8 sle r2, r4, r6 // icount 1908
+0eea fd88 sco r2, r5, r4 // icount 1909
+0eec d27e ror r7, r2, r3 // icount 1910
+0eee b8c8 srli r6, r0, 8 // icount 1911
+0ef0 fbbc sco r7, r3, r5 // icount 1912
+0ef2 d614 rol r5, r6, r0 // icount 1913
+0ef4 dc6f andn r3, r4, r3 // icount 1914
+0ef6 0800 nop // to align meminst icount 1915
+0ef8 5ec1 andni r6, r6, 1 // icount 1916
+0efa 8e8c ld r4, r6, 12 // icount 1917
+0efc d37a ror r6, r3, r3 // icount 1918
+0efe db0b andn r2, r3, r0 // icount 1919
+0f00 c301 lbi r3, 1 // icount 1920
+0f02 c309 lbi r3, 9 // icount 1921
+0f04 e7b8 seq r6, r7, r5 // icount 1922
+0f06 0800 nop // to align meminst icount 1923
+0f08 d09d sll r7, r0, r4 // icount 1924
+0f0a 0800 nop // to align meminst icount 1925
+0f0c 8046 st r2, r0, 6 // icount 1926
+0f0e 0800 nop // to align meminst icount 1927
+0f10 999c stu r4, r1, -4 // icount 1928
+0f12 0800 nop // to align meminst icount 1929
+0f14 81c8 st r6, r1, 8 // icount 1930
+0f16 0800 nop // to align meminst icount 1931
+0f18 8052 st r2, r0, -14 // icount 1932
+0f1a 0800 nop // to align meminst icount 1933
+0f1c 8948 ld r2, r1, 8 // icount 1934
+0f1e 0800 nop // to align meminst icount 1935
+0f20 805c st r2, r0, -4 // icount 1936
+0f22 0800 nop // to align meminst icount 1937
+0f24 80dc st r6, r0, -4 // icount 1938
+0f26 0800 nop // to align meminst icount 1939
+0f28 897c ld r3, r1, -4 // icount 1940
+0f2a 0800 nop // to align meminst icount 1941
+0f2c 8842 ld r2, r0, 2 // icount 1942
+0f2e 80b2 st r5, r0, -14 // icount 1943
+0f30 b9e6 srli r7, r1, 6 // icount 1944
+0f32 0800 nop // to align meminst icount 1945
+0f34 8854 ld r2, r0, -12 // icount 1946
+0f36 0800 nop // to align meminst icount 1947
+0f38 984c stu r2, r0, 12 // icount 1948
+0f3a 0800 nop // to align meminst icount 1949
+0f3c 898c ld r4, r1, 12 // icount 1950
+0f3e 0800 nop // to align meminst icount 1951
+0f40 9878 stu r3, r0, -8 // icount 1952
+0f42 0800 nop // to align meminst icount 1953
+0f44 89ba ld r5, r1, -6 // icount 1954
+0f46 8156 st r2, r1, -10 // icount 1955
+0f48 f4d0 sle r4, r4, r6 // icount 1956
+0f4a 0800 nop // to align meminst icount 1957
+0f4c 89d6 ld r6, r1, -10 // icount 1958
+0f4e 0800 nop // to align meminst icount 1959
+0f50 8892 ld r4, r0, -14 // icount 1960
+0f52 894a ld r2, r1, 10 // icount 1961
+0f54 960b slbi r6, 11 // icount 1962
+0f56 0800 nop // to align meminst icount 1963
+0f58 9844 stu r2, r0, 4 // icount 1964
+0f5a 0800 nop // to align meminst icount 1965
+0f5c 99c8 stu r6, r1, 8 // icount 1966
+0f5e 0800 nop // to align meminst icount 1967
+0f60 89a6 ld r5, r1, 6 // icount 1968
+0f62 0800 nop // to align meminst icount 1969
+0f64 8042 st r2, r0, 2 // icount 1970
+0f66 0800 nop // to align meminst icount 1971
+0f68 815e st r2, r1, -2 // icount 1972
+0f6a 0800 nop // to align meminst icount 1973
+0f6c 88ac ld r5, r0, 12 // icount 1974
+0f6e 0800 nop // to align meminst icount 1975
+0f70 885e ld r2, r0, -2 // icount 1976
+0f72 0800 nop // to align meminst icount 1977
+0f74 984c stu r2, r0, 12 // icount 1978
+0f76 0800 nop // to align meminst icount 1979
+0f78 88c8 ld r6, r0, 8 // icount 1980
+0f7a 0800 nop // to align meminst icount 1981
+0f7c 88de ld r6, r0, -2 // icount 1982
+0f7e 0800 nop // to align meminst icount 1983
+0f80 8090 st r4, r0, -16 // icount 1984
+0f82 0800 nop // to align meminst icount 1985
+0f84 895a ld r2, r1, -6 // icount 1986
+0f86 0800 nop // to align meminst icount 1987
+0f88 8960 ld r3, r1, 0 // icount 1988
+0f8a 0800 nop // to align meminst icount 1989
+0f8c 88d2 ld r6, r0, -14 // icount 1990
+0f8e 0800 nop // to align meminst icount 1991
+0f90 89ae ld r5, r1, 14 // icount 1992
+0f92 0800 nop // to align meminst icount 1993
+0f94 89d8 ld r6, r1, -8 // icount 1994
+0f96 0800 nop // to align meminst icount 1995
+0f98 98cc stu r6, r0, 12 // icount 1996
+0f9a 0800 nop // to align meminst icount 1997
+0f9c 817c st r3, r1, -4 // icount 1998
+0f9e 0800 nop // to align meminst icount 1999
+0fa0 8076 st r3, r0, -10 // icount 2000
+0fa2 0800 nop // to align meminst icount 2001
+0fa4 8972 ld r3, r1, -14 // icount 2002
+0fa6 0800 nop // to align meminst icount 2003
+0fa8 818a st r4, r1, 10 // icount 2004
+0faa 0800 nop // to align meminst icount 2005
+0fac 88cc ld r6, r0, 12 // icount 2006
+0fae 88cc ld r6, r0, 12 // icount 2007
+0fb0 db3f andn r7, r3, r1 // icount 2008
+0fb2 0800 nop // to align meminst icount 2009
+0fb4 9990 stu r4, r1, -16 // icount 2010
+0fb6 0800 nop // to align meminst icount 2011
+0fb8 8882 ld r4, r0, 2 // icount 2012
+0fba 0800 nop // to align meminst icount 2013
+0fbc 8972 ld r3, r1, -14 // icount 2014
+0fbe 0800 nop // to align meminst icount 2015
+0fc0 88b2 ld r5, r0, -14 // icount 2016
+0fc2 0800 nop // to align meminst icount 2017
+0fc4 8850 ld r2, r0, -16 // icount 2018
+0fc6 0800 nop // to align meminst icount 2019
+0fc8 88aa ld r5, r0, 10 // icount 2020
+0fca 0800 nop // to align meminst icount 2021
+0fcc 9946 stu r2, r1, 6 // icount 2022
+0fce 0800 nop // to align meminst icount 2023
+0fd0 98a6 stu r5, r0, 6 // icount 2024
+0fd2 0800 nop // to align meminst icount 2025
+0fd4 89b2 ld r5, r1, -14 // icount 2026
+0fd6 0800 nop // to align meminst icount 2027
+0fd8 9898 stu r4, r0, -8 // icount 2028
+0fda 0800 nop // to align meminst icount 2029
+0fdc 89a4 ld r5, r1, 4 // icount 2030
+0fde 0800 nop // to align meminst icount 2031
+0fe0 8172 st r3, r1, -14 // icount 2032
+0fe2 0800 nop // to align meminst icount 2033
+0fe4 989e stu r4, r0, -2 // icount 2034
+0fe6 0800 nop // to align meminst icount 2035
+0fe8 9940 stu r2, r1, 0 // icount 2036
+0fea 0800 nop // to align meminst icount 2037
+0fec 898e ld r4, r1, 14 // icount 2038
+0fee 0800 nop // to align meminst icount 2039
+0ff0 89d0 ld r6, r1, -16 // icount 2040
+0ff2 0800 nop // to align meminst icount 2041
+0ff4 804e st r2, r0, 14 // icount 2042
+0ff6 0800 nop // to align meminst icount 2043
+0ff8 8844 ld r2, r0, 4 // icount 2044
+0ffa 0800 nop // to align meminst icount 2045
+0ffc 805e st r2, r0, -2 // icount 2046
+0ffe 0800 nop // to align meminst icount 2047
+1000 81a0 st r5, r1, 0 // icount 2048
+1002 0800 nop // to align meminst icount 2049
+1004 994c stu r2, r1, 12 // icount 2050
+1006 0800 nop // to align meminst icount 2051
+1008 88d6 ld r6, r0, -10 // icount 2052
+100a 0800 nop // to align meminst icount 2053
+100c 8982 ld r4, r1, 2 // icount 2054
+100e 0800 nop // to align meminst icount 2055
+1010 81a2 st r5, r1, 2 // icount 2056
+1012 0800 nop // to align meminst icount 2057
+1014 9876 stu r3, r0, -10 // icount 2058
+1016 0800 nop // to align meminst icount 2059
+1018 99b8 stu r5, r1, -8 // icount 2060
+101a 0800 nop // to align meminst icount 2061
+101c 8050 st r2, r0, -16 // icount 2062
+101e 0800 nop // to align meminst icount 2063
+1020 98ac stu r5, r0, 12 // icount 2064
+1022 0800 nop // to align meminst icount 2065
+1024 8088 st r4, r0, 8 // icount 2066
+1026 0800 nop // to align meminst icount 2067
+1028 8986 ld r4, r1, 6 // icount 2068
+102a 0800 nop // to align meminst icount 2069
+102c 8164 st r3, r1, 4 // icount 2070
+102e 0800 nop // to align meminst icount 2071
+1030 8970 ld r3, r1, -16 // icount 2072
+1032 0800 nop // to align meminst icount 2073
+1034 8842 ld r2, r0, 2 // icount 2074
+1036 0800 nop // to align meminst icount 2075
+1038 8882 ld r4, r0, 2 // icount 2076
+103a 0800 nop // to align meminst icount 2077
+103c 98ac stu r5, r0, 12 // icount 2078
+103e 0800 nop // to align meminst icount 2079
+1040 886c ld r3, r0, 12 // icount 2080
+1042 0800 nop // to align meminst icount 2081
+1044 804a st r2, r0, 10 // icount 2082
+1046 0800 nop // to align meminst icount 2083
+1048 8184 st r4, r1, 4 // icount 2084
+104a 0800 nop // to align meminst icount 2085
+104c 8092 st r4, r0, -14 // icount 2086
+104e 8092 st r4, r0, -14 // icount 2087
+1050 d258 rol r6, r2, r2 // icount 2088
+1052 0800 nop // to align meminst icount 2089
+1054 81b4 st r5, r1, -12 // icount 2090
+1056 0800 nop // to align meminst icount 2091
+1058 89ca ld r6, r1, 10 // icount 2092
+105a 0800 nop // to align meminst icount 2093
+105c 8186 st r4, r1, 6 // icount 2094
+105e 0800 nop // to align meminst icount 2095
+1060 8948 ld r2, r1, 8 // icount 2096
+1062 0800 nop // to align meminst icount 2097
+1064 81b6 st r5, r1, -10 // icount 2098
+1066 0800 nop // to align meminst icount 2099
+1068 88ce ld r6, r0, 14 // icount 2100
+106a 0800 nop // to align meminst icount 2101
+106c 80c6 st r6, r0, 6 // icount 2102
+106e 0800 nop // to align meminst icount 2103
+1070 88b2 ld r5, r0, -14 // icount 2104
+1072 0800 nop // to align meminst icount 2105
+1074 8948 ld r2, r1, 8 // icount 2106
+1076 0800 nop // to align meminst icount 2107
+1078 89d0 ld r6, r1, -16 // icount 2108
+107a 0800 nop // to align meminst icount 2109
+107c 8962 ld r3, r1, 2 // icount 2110
+107e 0800 nop // to align meminst icount 2111
+1080 98a2 stu r5, r0, 2 // icount 2112
+1082 0800 nop // to align meminst icount 2113
+1084 8988 ld r4, r1, 8 // icount 2114
+1086 0800 nop // to align meminst icount 2115
+1088 99c8 stu r6, r1, 8 // icount 2116
+108a 0800 nop // to align meminst icount 2117
+108c 99ac stu r5, r1, 12 // icount 2118
+108e 0800 nop // to align meminst icount 2119
+1090 9948 stu r2, r1, 8 // icount 2120
+1092 0800 nop // to align meminst icount 2121
+1094 81da st r6, r1, -6 // icount 2122
+1096 0800 nop // to align meminst icount 2123
+1098 898e ld r4, r1, 14 // icount 2124
+109a 0800 nop // to align meminst icount 2125
+109c 98aa stu r5, r0, 10 // icount 2126
+109e 0800 nop // to align meminst icount 2127
+10a0 8864 ld r3, r0, 4 // icount 2128
+10a2 0800 nop // to align meminst icount 2129
+10a4 88a0 ld r5, r0, 0 // icount 2130
+10a6 0800 nop // to align meminst icount 2131
+10a8 806e st r3, r0, 14 // icount 2132
+10aa 8940 ld r2, r1, 0 // icount 2133
+10ac c600 lbi r6, 0 // icount 2134
+10ae c300 lbi r3, 0 // icount 2135
+10b0 0800 nop // to align branch icount 2136
+10b2 6908 bnez r1, 8 // icount 2137
+10b4 5563 xori r3, r5, 3 // icount 2138
+10b6 da8a xor r2, r2, r4 // icount 2139
+10b8 d6ea ror r2, r6, r7 // icount 2140
+10ba 9408 slbi r4, 8 // icount 2141
+10bc adc2 slli r6, r5, 2 // icount 2142
+10be 4286 addi r4, r2, 6 // icount 2143
+10c0 aa6a slli r3, r2, 10 // icount 2144
+10c2 0800 nop // to align meminst icount 2145
+10c4 d5ee ror r3, r5, r7 // icount 2146
+10c6 0800 nop // to align meminst icount 2147
+10c8 80b4 st r5, r0, -12 // icount 2148
+10ca 0800 nop // to align meminst icount 2149
+10cc 8086 st r4, r0, 6 // icount 2150
+10ce 0800 nop // to align meminst icount 2151
+10d0 887e ld r3, r0, -2 // icount 2152
+10d2 0800 nop // to align meminst icount 2153
+10d4 8154 st r2, r1, -12 // icount 2154
+10d6 0800 nop // to align meminst icount 2155
+10d8 889e ld r4, r0, -2 // icount 2156
+10da 0800 nop // to align meminst icount 2157
+10dc 8098 st r4, r0, -8 // icount 2158
+10de 0800 nop // to align meminst icount 2159
+10e0 884e ld r2, r0, 14 // icount 2160
+10e2 0800 nop // to align meminst icount 2161
+10e4 8974 ld r3, r1, -12 // icount 2162
+10e6 0800 nop // to align meminst icount 2163
+10e8 99ca stu r6, r1, 10 // icount 2164
+10ea 0800 nop // to align meminst icount 2165
+10ec 896e ld r3, r1, 14 // icount 2166
+10ee 0800 nop // to align meminst icount 2167
+10f0 8992 ld r4, r1, -14 // icount 2168
+10f2 0800 nop // to align meminst icount 2169
+10f4 8896 ld r4, r0, -10 // icount 2170
+10f6 0800 nop // to align meminst icount 2171
+10f8 99ac stu r5, r1, 12 // icount 2172
+10fa 0800 nop // to align meminst icount 2173
+10fc 8890 ld r4, r0, -16 // icount 2174
+10fe 0800 nop // to align meminst icount 2175
+1100 99d8 stu r6, r1, -8 // icount 2176
+1102 0800 nop // to align meminst icount 2177
+1104 984c stu r2, r0, 12 // icount 2178
+1106 0800 nop // to align meminst icount 2179
+1108 89de ld r6, r1, -2 // icount 2180
+110a 0800 nop // to align meminst icount 2181
+110c 89cc ld r6, r1, 12 // icount 2182
+110e 0800 nop // to align meminst icount 2183
+1110 88d2 ld r6, r0, -14 // icount 2184
+1112 0800 nop // to align meminst icount 2185
+1114 9880 stu r4, r0, 0 // icount 2186
+1116 0800 nop // to align meminst icount 2187
+1118 884c ld r2, r0, 12 // icount 2188
+111a 0800 nop // to align meminst icount 2189
+111c 89b6 ld r5, r1, -10 // icount 2190
+111e 0800 nop // to align meminst icount 2191
+1120 894e ld r2, r1, 14 // icount 2192
+1122 0800 nop // to align meminst icount 2193
+1124 89d6 ld r6, r1, -10 // icount 2194
+1126 0800 nop // to align meminst icount 2195
+1128 89b6 ld r5, r1, -10 // icount 2196
+112a 0800 nop // to align meminst icount 2197
+112c 8080 st r4, r0, 0 // icount 2198
+112e 0800 nop // to align meminst icount 2199
+1130 89de ld r6, r1, -2 // icount 2200
+1132 0800 nop // to align meminst icount 2201
+1134 9844 stu r2, r0, 4 // icount 2202
+1136 0800 nop // to align meminst icount 2203
+1138 88ba ld r5, r0, -6 // icount 2204
+113a 0800 nop // to align meminst icount 2205
+113c 88a4 ld r5, r0, 4 // icount 2206
+113e 0800 nop // to align meminst icount 2207
+1140 994a stu r2, r1, 10 // icount 2208
+1142 0800 nop // to align meminst icount 2209
+1144 89b6 ld r5, r1, -10 // icount 2210
+1146 0800 nop // to align meminst icount 2211
+1148 80ac st r5, r0, 12 // icount 2212
+114a 0800 nop // to align meminst icount 2213
+114c 8180 st r4, r1, 0 // icount 2214
+114e 0800 nop // to align meminst icount 2215
+1150 88d4 ld r6, r0, -12 // icount 2216
+1152 0800 nop // to align meminst icount 2217
+1154 884e ld r2, r0, 14 // icount 2218
+1156 0800 nop // to align meminst icount 2219
+1158 99c0 stu r6, r1, 0 // icount 2220
+115a 0800 nop // to align meminst icount 2221
+115c 88b2 ld r5, r0, -14 // icount 2222
+115e 8098 st r4, r0, -8 // icount 2223
+1160 c700 lbi r7, 0 // icount 2224
+1162 c200 lbi r2, 0 // icount 2225
+1164 0800 nop // to align branch icount 2226
+1166 681c bnez r0, 28 // icount 2227
+1168 d079 sll r6, r0, r3 // icount 2228
+116a 48ab subi r5, r0, 11 // icount 2229
+116c 5fe1 andni r7, r7, 1 // icount 2230
+116e 9fe6 stu r7, r7, 6 // icount 2231
+1170 eb98 slt r6, r3, r4 // icount 2232
+1172 de72 xor r4, r6, r3 // icount 2233
+1174 ebb8 slt r6, r3, r5 // icount 2234
+1176 59aa andni r5, r1, 10 // icount 2235
+1178 d697 srl r5, r6, r4 // icount 2236
+117a d6da ror r6, r6, r6 // icount 2237
+117c 5aae andni r5, r2, 14 // icount 2238
+117e d8cb andn r2, r0, r6 // icount 2239
+1180 b8ee srli r7, r0, 14 // icount 2240
+1182 4784 addi r4, r7, 4 // icount 2241
+1184 d0eb srl r2, r0, r7 // icount 2242
+1186 de53 andn r4, r6, r2 // icount 2243
+1188 f678 sle r6, r6, r3 // icount 2244
+118a d9df andn r7, r1, r6 // icount 2245
+118c e574 seq r5, r5, r3 // icount 2246
+118e deb7 andn r5, r6, r5 // icount 2247
+1190 dc6b andn r2, r4, r3 // icount 2248
+1192 bacd srli r6, r2, 13 // icount 2249
+1194 d4f9 sll r6, r4, r7 // icount 2250
+1196 d99b andn r6, r1, r4 // icount 2251
+1198 ae8e slli r4, r6, 14 // icount 2252
+119a f014 sle r5, r0, r0 // icount 2253
+119c 5fe1 andni r7, r7, 1 // icount 2254
+119e 9f42 stu r2, r7, 2 // icount 2255
+11a0 54a2 xori r5, r4, 2 // icount 2256
+11a2 a861 slli r3, r0, 1 // icount 2257
+11a4 c200 lbi r2, 0 // icount 2258
+11a6 c500 lbi r5, 0 // icount 2259
+11a8 0800 nop // to align branch icount 2260
+11aa 7810 bgez r0, 16 // icount 2261
+11ac c703 lbi r7, 3 // icount 2262
+11ae ad87 slli r4, r5, 7 // icount 2263
+11b0 48e9 subi r7, r0, 9 // icount 2264
+11b2 da15 sub r5, r2, r0 // icount 2265
+11b4 9702 slbi r7, 2 // icount 2266
+11b6 40eb addi r7, r0, 11 // icount 2267
+11b8 5801 andni r0, r0, 1 // icount 2268
+11ba 98e4 stu r7, r0, 4 // icount 2269
+11bc bdc2 srli r6, r5, 2 // icount 2270
+11be b88a srli r4, r0, 10 // icount 2271
+11c0 c308 lbi r3, 8 // icount 2272
+11c2 d83b andn r6, r0, r1 // icount 2273
+11c4 d0dd sll r7, r0, r6 // icount 2274
+11c6 5dcf andni r6, r5, 15 // icount 2275
+11c8 e054 seq r5, r0, r2 // icount 2276
+11ca d3a8 rol r2, r3, r5 // icount 2277
+11cc de78 add r6, r6, r3 // icount 2278
+11ce 0800 nop // to align meminst icount 2279
+11d0 80c2 st r6, r0, 2 // icount 2280
+11d2 0800 nop // to align meminst icount 2281
+11d4 88cc ld r6, r0, 12 // icount 2282
+11d6 0800 nop // to align meminst icount 2283
+11d8 9994 stu r4, r1, -12 // icount 2284
+11da 0800 nop // to align meminst icount 2285
+11dc 89b4 ld r5, r1, -12 // icount 2286
+11de 0800 nop // to align meminst icount 2287
+11e0 8984 ld r4, r1, 4 // icount 2288
+11e2 0800 nop // to align meminst icount 2289
+11e4 88a4 ld r5, r0, 4 // icount 2290
+11e6 0800 nop // to align meminst icount 2291
+11e8 88ca ld r6, r0, 10 // icount 2292
+11ea 0800 nop // to align meminst icount 2293
+11ec 8058 st r2, r0, -8 // icount 2294
+11ee 0800 nop // to align meminst icount 2295
+11f0 884e ld r2, r0, 14 // icount 2296
+11f2 0800 nop // to align meminst icount 2297
+11f4 8862 ld r3, r0, 2 // icount 2298
+11f6 0800 nop // to align meminst icount 2299
+11f8 89a6 ld r5, r1, 6 // icount 2300
+11fa 0800 nop // to align meminst icount 2301
+11fc 98a8 stu r5, r0, 8 // icount 2302
+11fe 0800 nop // to align meminst icount 2303
+1200 8966 ld r3, r1, 6 // icount 2304
+1202 0800 nop // to align meminst icount 2305
+1204 8896 ld r4, r0, -10 // icount 2306
+1206 0800 nop // to align meminst icount 2307
+1208 8950 ld r2, r1, -16 // icount 2308
+120a 0800 nop // to align meminst icount 2309
+120c 89c4 ld r6, r1, 4 // icount 2310
+120e 0800 nop // to align meminst icount 2311
+1210 88c8 ld r6, r0, 8 // icount 2312
+1212 0800 nop // to align meminst icount 2313
+1214 89c2 ld r6, r1, 2 // icount 2314
+1216 0800 nop // to align meminst icount 2315
+1218 9950 stu r2, r1, -16 // icount 2316
+121a 0800 nop // to align meminst icount 2317
+121c 9944 stu r2, r1, 4 // icount 2318
+121e 9992 stu r4, r1, -14 // icount 2319
+1220 c500 lbi r5, 0 // icount 2320
+1222 c600 lbi r6, 0 // icount 2321
+1224 0800 nop // to align branch icount 2322
+1226 7308 bltz r3, 8 // icount 2323
+1228 d2a8 rol r2, r2, r5 // icount 2324
+122a f5b8 sle r6, r5, r5 // icount 2325
+122c fa10 sco r4, r2, r0 // icount 2326
+122e d949 sub r2, r1, r2 // icount 2327
+1230 e93c slt r7, r1, r1 // icount 2328
+1232 0800 nop // to align meminst icount 2329
+1234 5ec1 andni r6, r6, 1 // icount 2330
+1236 8e8c ld r4, r6, 12 // icount 2331
+1238 f418 sle r6, r4, r0 // icount 2332
+123a 0800 nop // to align meminst icount 2333
+123c d43f srl r7, r4, r1 // icount 2334
+123e 0800 nop // to align meminst icount 2335
+1240 8854 ld r2, r0, -12 // icount 2336
+1242 0800 nop // to align meminst icount 2337
+1244 8972 ld r3, r1, -14 // icount 2338
+1246 0800 nop // to align meminst icount 2339
+1248 89d8 ld r6, r1, -8 // icount 2340
+124a 0800 nop // to align meminst icount 2341
+124c 8962 ld r3, r1, 2 // icount 2342
+124e 0800 nop // to align meminst icount 2343
+1250 88c6 ld r6, r0, 6 // icount 2344
+1252 0800 nop // to align meminst icount 2345
+1254 8940 ld r2, r1, 0 // icount 2346
+1256 0800 nop // to align meminst icount 2347
+1258 88cc ld r6, r0, 12 // icount 2348
+125a 0800 nop // to align meminst icount 2349
+125c 8090 st r4, r0, -16 // icount 2350
+125e 98a2 stu r5, r0, 2 // icount 2351
+1260 4132 addi r1, r1, -14   // change base addr // icount 2352
+1262 0800 nop // to align meminst icount 2353
+1264 81c0 st r6, r1, 0 // icount 2354
+1266 0800 nop // to align meminst icount 2355
+1268 89a8 ld r5, r1, 8 // icount 2356
+126a 0800 nop // to align meminst icount 2357
+126c 8070 st r3, r0, -16 // icount 2358
+126e 0800 nop // to align meminst icount 2359
+1270 898a ld r4, r1, 10 // icount 2360
+1272 0800 nop // to align meminst icount 2361
+1274 816c st r3, r1, 12 // icount 2362
+1276 0800 nop // to align meminst icount 2363
+1278 8870 ld r3, r0, -16 // icount 2364
+127a 0800 nop // to align meminst icount 2365
+127c 89aa ld r5, r1, 10 // icount 2366
+127e 0800 nop // to align meminst icount 2367
+1280 98a4 stu r5, r0, 4 // icount 2368
+1282 0800 nop // to align meminst icount 2369
+1284 88c0 ld r6, r0, 0 // icount 2370
+1286 0800 nop // to align meminst icount 2371
+1288 81d0 st r6, r1, -16 // icount 2372
+128a 0800 nop // to align meminst icount 2373
+128c 88c0 ld r6, r0, 0 // icount 2374
+128e 0800 nop // to align meminst icount 2375
+1290 898a ld r4, r1, 10 // icount 2376
+1292 0800 nop // to align meminst icount 2377
+1294 8998 ld r4, r1, -8 // icount 2378
+1296 0800 nop // to align meminst icount 2379
+1298 89ba ld r5, r1, -6 // icount 2380
+129a 0800 nop // to align meminst icount 2381
+129c 99bc stu r5, r1, -4 // icount 2382
+129e 0800 nop // to align meminst icount 2383
+12a0 9958 stu r2, r1, -8 // icount 2384
+12a2 0800 nop // to align meminst icount 2385
+12a4 885c ld r2, r0, -4 // icount 2386
+12a6 0800 nop // to align meminst icount 2387
+12a8 8072 st r3, r0, -14 // icount 2388
+12aa 0800 nop // to align meminst icount 2389
+12ac 8960 ld r3, r1, 0 // icount 2390
+12ae 0800 nop // to align meminst icount 2391
+12b0 88b8 ld r5, r0, -8 // icount 2392
+12b2 0800 nop // to align meminst icount 2393
+12b4 99b6 stu r5, r1, -10 // icount 2394
+12b6 0800 nop // to align meminst icount 2395
+12b8 88da ld r6, r0, -6 // icount 2396
+12ba 0800 nop // to align meminst icount 2397
+12bc 8868 ld r3, r0, 8 // icount 2398
+12be 0800 nop // to align meminst icount 2399
+12c0 99cc stu r6, r1, 12 // icount 2400
+12c2 0800 nop // to align meminst icount 2401
+12c4 8140 st r2, r1, 0 // icount 2402
+12c6 0800 nop // to align meminst icount 2403
+12c8 88a0 ld r5, r0, 0 // icount 2404
+12ca 0800 nop // to align meminst icount 2405
+12cc 89d4 ld r6, r1, -12 // icount 2406
+12ce 0800 nop // to align meminst icount 2407
+12d0 81aa st r5, r1, 10 // icount 2408
+12d2 0800 nop // to align meminst icount 2409
+12d4 8852 ld r2, r0, -14 // icount 2410
+12d6 0800 nop // to align meminst icount 2411
+12d8 8882 ld r4, r0, 2 // icount 2412
+12da 0800 nop // to align meminst icount 2413
+12dc 995a stu r2, r1, -6 // icount 2414
+12de 0800 nop // to align meminst icount 2415
+12e0 80de st r6, r0, -2 // icount 2416
+12e2 0800 nop // to align meminst icount 2417
+12e4 88d0 ld r6, r0, -16 // icount 2418
+12e6 8068 st r3, r0, 8 // icount 2419
+12e8 0000 halt // icount 2420

@@ -17,387 +17,411 @@ module mem_system(/*AUTOARG*/
    input        clk;
    input        rst;
    
-   output [15:0] DataOut;
-   output Done;
-   output Stall;
+   output reg [15:0] DataOut;
+   output reg Done;
+   output reg Stall;
    output CacheHit;
    output err;
-   reg CacheHit, Done, Stall;
-
-   //****FOR CACHE-DIRECT (Shyamal, Sanjay)***//
-
-
-   //***FOR STATE LOGIC******//
-
-   wire [4:0] curr_state; 
-   reg [4:0] next_state;
-
-
-   //****INPUTS************//
-
-   wire [2:0] offset;
-   wire [7:0] index; 
-   reg enable;
-   reg comp; 
-   reg write;
-   wire [4:0] tag_in;
-   wire write0, write1;
-   wire [15:0] mem_addr; 
-   wire valid_in; 
-   reg[15:0] cAddr, mem_data_in, cache_data_in;
-   reg[4:0] tag_mem;
-   reg[2:0] offset_mem;
-
-   //****OUTPUTS**************//
-
-   wire cache_err, cache_err1, valid, dirty, hit, valid1, dirty1, hit1, hit0, dirty0, valid0, cache_err0; 
-   wire [4:0] tag_out, tag_out1, tag_out0; 
-   wire [15:0] cache_data_out, cache_data_out1, cache_data_out0; 
-
-   //*****OUTPUTS from four_bank_mem****//
-   wire mem_stall;
-   wire [3:0] busy; 
-   wire mem_err;
-   wire[15:0] mem_data_out;
-
-   //INPUT TO MEM_BANK
-   reg wr, rd; 
-
-   reg victim;
-   wire victimway_in, victimway, access_victim, victim_in;
-   reg inv_victim;
-
-
-   //**************STATES**************//
-
-   localparam IDLE        = 5'h00;
-   localparam COMPRD      = 5'h01;
-   localparam COMPWR      = 5'h02;
-   localparam WRITEBACK0  = 5'h03;
-   localparam WRITEBACK1  = 5'h04;
-   localparam WRITEBACK2  = 5'h05;
-   localparam WRITEBACK3  = 5'h06;
-   localparam MEMREAD0    = 5'h07;
-   localparam MEMREAD1    = 5'h08;
-   localparam MEMREAD2    = 5'h09;
-   localparam MEMREAD3    = 5'h0A;
-   localparam STORECACHE0 = 5'h0B;
-   localparam STORECACHE1 = 5'h0C;
-   localparam STORECACHE2 = 5'h0D;
-   localparam STORECACHE3 = 5'h0E; 
-   localparam STOREDONE   = 5'h0F;
-   localparam ERR         = 5'h10;
-   localparam DONE        = 5'h11;
-   localparam WRITEMEM    = 5'h12;
-   localparam WAITSTATE0  = 5'h13;
-   localparam WAITSTATE1  = 5'h14;
-   localparam WAITSTATE2  = 5'h15;
-   localparam WAITSTATE3  = 5'h16;
-
-
-  //*********************************//
+   
+   reg [3:0] nextState;
+   wire [3:0] currState;
+   dff curr_State[3:0] (.q(currState), .d(nextState), .clk(clk), .rst(rst));
+   
+   wire dirty1, dirty0, valid1, valid0, hit1, hit0, miss, mem_stall, cacheErr1, cacheErr0, memErr, cacheHit, cacheHitTemp;
+   reg comp, cache_write0, cache_write1, mem_wr, mem_rd, enable0, enable1, valid_in, controlErr, retry, victim;
+   wire[15:0] cache_data_out1, mem_data_out, cache_data_out0;
+   wire[4:0] tag_out1, tag_out0;
+   wire[3:0] busy;
+   reg [15:0] cache_data_in, mem_addr, mem_data_in;
+   reg [7:0] index;
+   reg [4:0] tag_in;
+   reg [2:0] offset;
+  
+   assign miss = (enable0 & (~hit0 | ~valid0)) & (enable1 & (~hit1 | ~valid1));
+   assign err = controlErr;
+   assign cacheHit = (hit1 | hit0) & comp & ~retry;
+   assign CacheHit = cacheHitTemp;
+   dff hitdff(.clk(clk), .rst(rst), .q(cacheHitTemp), .d(cacheHit));
+   
+   wire victimIn;
+   wire victimOut;
 
    /* data_mem = 1, inst_mem = 0 *
     * needed for cache parameter */
-   parameter mem_type = 0;
-   cache #(0 + mem_type) c0(// Outputs
+    parameter mem_type = 0;
+    cache #(0 + mem_type) c0(// Outputs
                           .tag_out              (tag_out0),
-                          .data_out             (cache_data_out0),
-                          .hit                  (hit0),
-                          .dirty                (dirty0),
-                          .valid                (valid0),
-                          .err                  (cache_err0),
+                          .data_out            (cache_data_out0),
+                          .hit                    (hit0),
+                          .dirty                  (dirty0),
+                          .valid                  (valid0),
+                          .err                    (cacheErr0),
                           // Inputs
-                          .enable               (enable),
-                          .clk                  (clk),
-                          .rst                  (rst),
-                          .createdump           (createdump),
-                          .tag_in               (tag_in),
-                          .index                (index),
-                          .offset               (offset),
+                          .enable               (enable0),
+                          .clk                    (clk),
+                          .rst                    (rst),
+                          .createdump        (createdump),
+                          .tag_in                (tag_in),
+                          .index                  (index),
+                          .offset                 (offset),
                           .data_in              (cache_data_in),
                           .comp                 (comp),
-                          .write                (write0),
-                          .valid_in             (1'b1));
-
-
+                          .write                  (cache_write0),
+                          .valid_in             (valid_in));
+              
   cache #(2 + mem_type) c1(// Outputs
                           .tag_out              (tag_out1),
-                          .data_out             (cache_data_out1),
-                          .hit                  (hit1),
-                          .dirty                (dirty1),
-                          .valid                (valid1),
-                          .err                  (cache_err1),
+                          .data_out            (cache_data_out1),
+                          .hit                    (hit1),
+                          .dirty                  (dirty1),
+                          .valid                  (valid1),
+                          .err                    (cacheErr1),
                           // Inputs
-                          .enable               (enable),
-                          .clk                  (clk),
-                          .rst                  (rst),
-                          .createdump           (createdump),
-                          .tag_in               (tag_in),
-                          .index                (index),
-                          .offset               (offset),
+                          .enable               (enable1),
+                          .clk                    (clk),
+                          .rst                    (rst),
+                          .createdump        (createdump),
+                          .tag_in                (tag_in),
+                          .index                  (index),
+                          .offset                 (offset),
                           .data_in              (cache_data_in),
                           .comp                 (comp),
-                          .write                (write1),
-                          .valid_in             (1'b1));                       
+                          .write                  (cache_write1),
+                          .valid_in             (valid_in));
 
-
-   four_bank_mem mem(// Outputs
-                     .data_out          (mem_data_out),
-                     .stall             (mem_stall),
-                     .busy              (busy),
-                     .err               (mem_err),
+    four_bank_mem mem(// Outputs
+                     .data_out         (mem_data_out),
+                     .stall               (mem_stall),
+                     .busy                (busy), 
+                     .err                 (memErr),
                      // Inputs
-                     .clk               (clk),
-                     .rst               (rst),
-                     .createdump        (createdump),
-                     .addr              (mem_addr),
+                     .clk                 (clk),
+                     .rst                 (rst),
+                     .createdump     (createdump),
+                     .addr                (mem_addr),
                      .data_in           (mem_data_in),
-                     .wr                (wr),
-                     .rd                (rd));
+                     .wr                  (mem_wr),
+                     .rd                  (mem_rd));
+
+    assign victimIn = (Wr | Rd) ? ~victimOut : victimOut;
+  dff victimway(.q(victimOut), .d(victimIn), .clk(clk), .rst(rst));
+   
+   always@(*)begin case(currState)
+  
+    //IDLE
+    4'h0: begin 
+      retry = 0;
+      enable0 = (~Wr & ~Rd) ? 0 : 1;
+      enable1 = (~Wr & ~Rd) ? 0 : 1;
+      comp = (~Wr & ~Rd) ? 0 : 1;
+      index = (~Wr & ~Rd) ? 0 : Addr[10:3]; 
+      tag_in = (~Wr & ~Rd) ? 0 : Addr[15:11];
+      offset = (~Wr & ~Rd) ? 0 : {Addr[2:1], 1'b0};
+      cache_data_in = Wr ? DataIn : 0; 
+      valid_in = 0;
+      mem_addr = 0; 
+      mem_data_in = 0;
+      mem_wr = 0;
+      mem_rd = 0;
+      DataOut = Rd ? (((hit0 & valid0) | (hit1 & valid1) ) ? (hit0 ? cache_data_out0 : cache_data_out1) : 0) : 0;
+      Done = (((hit0 & valid0) | (hit1 & valid1)) & (Wr | Rd)) ? 1 : 0;
+      Stall = (~Wr & ~Rd) ? 0 : (((hit0 & valid0) | (hit1 & valid1)) ? 0 : 1);
+      //If one is valid, select the other one. If neither is valid, select way zero. If both are valid, use the pseudo-random replacement algorithm specified below.
+      victim = (valid0 & ~valid1) ? 1 : ((~valid0 & valid1) ? 0 : ((~valid0 & ~valid1) ? 0 : (victimOut ? 1 : 0))); 
+      cache_write0 = (Wr & (hit0 & valid0)) ? 1 : 0; 
+      cache_write1 = (Wr & (hit1 & valid1)) ? 1 : 0; 
+      nextState = (~Wr & ~Rd) ? 0 : ((miss & (victim ? ~dirty1 : ~dirty0)) ? 4'h2 : ((miss & (victim ? (valid1 & dirty1) : (valid0 & dirty0)) ? 4'h8 : 4'h0)));
+    end
+    
+    //RETRY
+      4'h1: begin
+        retry = 1;
+      enable0 = ~victim ? 1 : 0;
+      enable1 = victim ? 1 : 0;
+      comp = 1;
+      cache_write0 = (Wr & ~victim) ? 1 : 0;
+      cache_write1 = (Wr & victim) ? 1 : 0;
+      index = (~Wr & ~Rd) ? 0 : Addr[10:3]; 
+      tag_in = (~Wr & ~Rd) ? 0 : Addr[15:11];
+      offset = (~Wr & ~Rd) ? 0 : {Addr[2:1], 1'b0};
+      cache_data_in = Wr ? DataIn : 0; 
+      valid_in = 0;
+      mem_addr = 0; 
+      mem_data_in = 0;
+      mem_wr = 0;
+      mem_rd = 0;
+      DataOut = Rd ? (~victim ? cache_data_out0 : cache_data_out1)  : 0;
+      Done = 0;
+      Stall = 1;
+      nextState = 4'h0;
+      end
+    
+    //MEMORY READ 1 
+    4'h2: begin 
+      retry = 0;
+      enable0 = 0;
+      enable1 = 0;
+      comp = 0;
+      cache_write0 = 0; 
+      cache_write1 = 0;
+      index = 0;
+      tag_in = 0;
+      offset = 0;
+      cache_data_in = 0; 
+      valid_in = 0;
+      mem_addr = {Addr[15:3], 3'b000};
+      mem_data_in = 0; 
+      mem_wr = 0;
+      mem_rd = 1;
+      DataOut = 0; 
+      Done = 0;
+      Stall = 1;
+      nextState = 4'h3; 
+    end
+    
+    //MEMORY READ 2
+    4'h3: begin 
+      retry = 0;
+      enable0 = 0;
+      enable1 = 0;
+      comp = 0;
+      cache_write0 = 0; 
+      cache_write1 = 0;
+      index = 0;
+      tag_in = 0;
+      offset = 0;
+      cache_data_in = 0; 
+      valid_in = 0;
+      mem_addr = {Addr[15:3], 3'b010};
+      mem_data_in = 0; 
+      mem_wr = 0;
+      mem_rd = 1;
+      DataOut = 0; 
+      Done = 0;
+      Stall = 1;
+      nextState = mem_stall ? 4'h3 : 4'h4;
+    end
+  
+    //MEMORY READ 3 and INSTALL CACHE 1
+    4'h4: begin 
+      retry = 0;
+      enable0 = ~victim ? 1 : 0;
+      enable1 = victim ? 1 : 0;
+      comp = 0;
+      cache_write0 = ~victim ? 1 : 0;
+      cache_write1 = victim ? 1 : 0;
+      index = Addr[10:3];
+      tag_in = Addr[15:11];
+      offset = 3'b000;
+      cache_data_in = mem_data_out;
+      valid_in = 0;
+      mem_addr = {Addr[15:3], 3'b100};
+      mem_data_in = 0;
+      mem_wr = 0;
+      mem_rd = 1;
+      DataOut = (Rd & (offset == {Addr[2:1], 1'b0})) ? mem_data_out : 0; 
+      Done = 0;
+      Stall = 1;
+      nextState = mem_stall ? 4'h4 : 4'h5;
+    end 
+    
+    //MEMORY READ 4 and INSTALL CACHE 2
+    4'h5: begin 
+      retry = 0;
+      enable0 = ~victim ? 1 : 0;
+      enable1 = victim ? 1 : 0;
+      comp = 0;
+      cache_write0 = ~victim ? 1 : 0;
+      cache_write1 = victim ? 1 : 0;
+      index = Addr[10:3];
+      tag_in = Addr[15:11];
+      offset = 3'b010;
+      cache_data_in = mem_data_out;
+      valid_in = 0;
+      mem_addr = {Addr[15:3], 3'b110};
+      mem_data_in = 0;
+      mem_wr = 0;
+      mem_rd = 1;
+      DataOut = (Rd & (offset == {Addr[2:1], 1'b0})) ? mem_data_out : DataOut;
+      Done = 0;
+      Stall = 1;
+      nextState = mem_stall ? 4'h5 : 4'h6;
+    end
+
+    //INSTALL CACHE 3 
+    4'h6: begin
+      retry = 0;
+      enable0 = ~victim ? 1 : 0;
+      enable1 = victim ? 1 : 0;
+      comp = 0;
+      cache_write0 = ~victim ? 1 : 0;
+      cache_write1 = victim ? 1 : 0;
+      index = Addr[10:3]; 
+      tag_in = Addr[15:11];
+      offset = 3'b100;
+      cache_data_in = mem_data_out;
+      valid_in = 0;
+      mem_addr = 0; 
+      mem_data_in = 0;
+      mem_wr = 0;
+      mem_rd = 0;
+      DataOut = (Rd & (offset == {Addr[2:1], 1'b0})) ? mem_data_out : DataOut;
+      Done = 0;
+      Stall = 1;
+      nextState = mem_stall ? 4'h6 : 4'h7; 
+    end 
+
+    //INSTALL CACHE 4 
+    4'h7: begin
+      retry = 0;
+      enable0 = ~victim ? 1 : 0;
+      enable1 = victim ? 1 : 0;
+      comp = 0;
+      cache_write0 = ~victim ? 1 : 0;
+      cache_write1 = victim ? 1 : 0;
+      index = Addr[10:3]; 
+      tag_in = Addr[15:11];
+      offset = 3'b110;
+      cache_data_in = mem_data_out;
+      valid_in = 1;
+      mem_addr = 0; 
+      mem_data_in = 0;
+      mem_wr = 0;
+      mem_rd = 0;
+      DataOut = (Rd & (offset == {Addr[2:1], 1'b0})) ? mem_data_out : DataOut;
+      Done = 0;
+      Stall = 1;
+      nextState = 4'h1; //retry and get a hit
+    end 
+    
+    
+    //PRE-MEMORY WRITEBACK/ACCESS READ 1 
+    4'h8: begin
+      retry = 0;
+      enable0 = ~victim ? 1 : 0;
+      enable1 = victim ? 1 : 0;
+      comp = 0;
+      cache_write0 = 0; 
+      cache_write1 = 0; 
+      index = Addr[10:3]; 
+      tag_in = 0; 
+      offset = 3'b000;
+      cache_data_in = 0; 
+      valid_in = 0;
+      mem_addr = {(~victim ? tag_out0 : tag_out1), Addr[10:3], 3'b000};
+      mem_data_in = ~victim ? cache_data_out0 : cache_data_out1;
+      mem_wr = 1;
+      mem_rd = 0;
+      DataOut = 0; 
+      Done = 0;
+      Stall = 1;
+      nextState = 4'h9;
+    end
+    
+    //PRE-MEMORY WRITEBACK/ACCESS READ 2 (and WRITE 1)
+    4'h9: begin
+      retry = 0;
+      enable0 = ~victim ? 1 : 0;
+      enable1 = victim ? 1 : 0;
+      comp = 0;
+      cache_write0 = 0; 
+      cache_write1 = 0; 
+      index = Addr[10:3]; 
+      tag_in = 0; 
+      offset = 3'b010;
+      cache_data_in = 0; 
+      valid_in = 0;
+      mem_addr = {(~victim ? tag_out0 : tag_out1), Addr[10:3], 3'b010};
+      mem_data_in = ~victim ? cache_data_out0 : cache_data_out1;
+      mem_wr = 1;
+      mem_rd = 0;
+      DataOut = 0; 
+      Done = 0;
+      Stall = 1;
+      nextState = mem_stall ? 4'h9 : 4'hA;
+    end
+
+    //PRE-MEMORY WRITEBACK/ACCESS READ 3 (and WRITE 1 and 2)
+    4'hA: begin
+      retry = 0;
+      enable0 = ~victim ? 1 : 0;
+      enable1 = victim ? 1 : 0;
+      comp = 0;
+      cache_write0 = 0; 
+      cache_write1 = 0; 
+      index = Addr[10:3]; 
+      tag_in = 0; 
+      offset = 3'b100;
+      cache_data_in = 0; 
+      valid_in = 0;
+      mem_addr = {(~victim ? tag_out0 : tag_out1), Addr[10:3], 3'b100};
+      mem_data_in = ~victim ? cache_data_out0 : cache_data_out1;
+      mem_wr = 1;
+      mem_rd = 0;
+      DataOut = 0; 
+      Done = 0;
+      Stall = 1;
+      nextState = mem_stall ? 4'hA : 4'hB;
+    end 
+
+    //PRE-MEMORY WRITEBACK/ACCESS READ 4 (and WRITE 1, 2, 3)
+    4'hB: begin
+      retry = 0;
+      enable0 = ~victim ? 1 : 0;
+      enable1 = victim ? 1 : 0;
+      comp = 0;
+      cache_write0 = 0; 
+      cache_write1 = 0; 
+      index = Addr[10:3]; 
+      tag_in = 0; 
+      offset = 3'b110;
+      cache_data_in = 0; 
+      valid_in = 0;
+      mem_addr = {(~victim ? tag_out0 : tag_out1), Addr[10:3], 3'b110};
+      mem_data_in =  ~victim ? cache_data_out0 : cache_data_out1;
+      mem_wr = 1;
+      mem_rd = 0;
+      DataOut = 0; 
+      Done = 0;
+      Stall = 1;
+      nextState = mem_stall ? 4'hB : 4'h2;
+    end
+    
+    //ERROR
+    4'hC: begin
+      Done = 1;
+      Stall = 0;
+      controlErr = 1;
+      nextState = 4'h0;
+    end
+    
+    default: begin
+      retry = 0;
+      enable0 = 1;
+      enable1 = 1;
+      comp = 1;
+      index = (~Wr & ~Rd) ? 0 : Addr[10:3]; 
+      tag_in = (~Wr & ~Rd) ? 0 : Addr[15:11];
+      offset = (~Wr & ~Rd) ? 0 : {Addr[2:1], 1'b0};
+      cache_data_in = Wr ? DataIn : 0; 
+      valid_in = 0;
+      mem_addr = 0;
+      mem_data_in = 0;
+      mem_wr = 0;
+      mem_rd = 0;
+      DataOut = Rd ? (((hit0 & valid0) | (hit1 & valid1) ) ? (hit0 ? cache_data_out0 : cache_data_out1) : 0) : 0;
+      Done = ((hit0 & valid0) | (hit1 & valid1)) ? 1 : 0;
+      Stall = (~Wr & ~Rd) ? 0 : (((hit0 & valid0) | (hit1 & valid1)) ? 0 : 1);
+      victim = ((~Wr & ~Rd) | ((hit0 & valid0) | (hit1 & valid1))) ? 0 : ((valid0 & ~valid1) ? 1 : ((~valid0 & valid1) ? 0 : ((~valid0 & ~valid1) ? 0 : (victimOut ? 1 : 0)))); 
+      cache_write0 = (Wr & (hit0 & valid0 & ~victim)) ? 1 : 0; 
+      cache_write1 = (Wr & (hit1 & valid1 & victim)) ? 1 : 0; 
+      nextState = (~Wr & ~Rd) ? 0 : ((miss & (victim ? ~dirty1 : ~dirty0)) ? 4'h2 : ((miss & (victim ? (valid1 & dirty1) : (valid0 & dirty0)) ? 4'h8 : 4'h0)));
+    end
+  
+  endcase
+  end
 
    
-   // your code here
-   wire[15:0] access_data_sel, comp_data_sel;
-   wire[4:0] access_tag_sel, comp_tag_sel;
-   wire hit_sel0, access_dirty_sel, comp_dirty_sel;
-
-   assign hit_sel0 = (hit0 & valid0);
-   assign access_data_sel = access_victim ? cache_data_out1 : cache_data_out0;
-   assign comp_data_sel = victim ? cache_data_out1 : cache_data_out0;
-   assign access_tag_sel = access_victim ? tag_out1 : tag_out0;
-   assign comp_tag_sel = victim ? tag_out1 : tag_out0;
-   assign access_dirty_sel = access_victim ? dirty1 : dirty0;
-   assign comp_dirty_sel = victim ? dirty1 : dirty0;
-
-   //*** for 2 way***//
-   assign cache_err = cache_err0 | cache_err1;
-   assign valid = valid0 | valid1;
-   assign hit = ((hit0 & valid0) | (hit1 & valid1));
-   assign DataOut = hit ? (hit_sel0 ? cache_data_out0 : cache_data_out1) :
-       (comp ? comp_data_sel : access_data_sel);
-   assign tag_out = hit ? (hit_sel0 ? tag_out0 : tag_out1) :
-       (comp ? comp_tag_sel : access_tag_sel);
-   assign write0 = (hit0 & valid0) ? write : comp ? 1'b0 : access_victim ? 1'b0 : write; 
-   assign write1 = (hit1 & valid1) ? write : comp ? 1'b0 : ~access_victim ? 1'b0 : write;
-
-   assign dirty =  hit ? (hit_sel0 ? dirty0 : dirty1) :
-       (comp ? comp_dirty_sel : access_dirty_sel);
-
-   assign victimway_in = inv_victim ? ~victimway : victimway;
-   assign victim_in = comp ? victim : access_victim; 
-
-   assign mem_addr = {tag_mem, cAddr[10:3], offset_mem};
-   assign tag_in = cAddr[15:11];
-   assign index = cAddr[10:3];
-   assign offset = cAddr[2:0];
-   assign err = mem_err | cache_err;
-
-  dff dffmod0 (.q(victimway), .d(victimway_in), .clk(clk), .rst(rst));
-  dff dffmod1 [4:0] (.q(curr_state), .d(next_state), .clk(clk), .rst(rst));
-  dff dffmod2 (.q(access_victim), .d(victim_in), .clk(clk), .rst(rst));
-
-   always@(*)begin 
-   comp = 1'b0;
-   enable = 1'b0;
-   CacheHit = 1'b0;
-   write = 1'b0;
-   offset_mem = 3'b000;
-   cAddr = Addr;
-   tag_mem = Addr[15:11];
-   cache_data_in = DataIn;
-   mem_data_in = DataOut;
-   inv_victim = 1'b0;
-   wr = 1'b0;
-   rd = 1'b0;
-   Done = 1'b0;
-   Stall = 1'b1;
-   //victim = (hit0 & ~hit1) ? 1'b0 : (~hit0 & hit1) ? 1'b1 : (~hit0 & ~hit1 & valid0 & ~valid1) ? 1'b1 : (~hit0 & ~hit1 & valid0 & valid1) ? victimway : 1'b0;
-
-   victim = ((~hit0 & hit1) | (valid0 & ~valid1)) ? 1'b1 : (hit0 & ~hit1) ? 1'b0 : (valid0 & valid1) ? victimway : 1'b0;
-
-    case(curr_state)
-
-      IDLE: begin
-        enable = 1'b1;
-        Stall = 1'b0;
-        next_state = (~Rd & ~Wr) ? IDLE : (Rd & ~ Wr) ? COMPRD : (~Rd & Wr) ? COMPWR : ERR;
-      end
-
-      COMPRD: begin
-      enable = 1'b1;
-      comp = 1'b1;
-      next_state = (hit & valid) ? DONE : (~dirty & (~hit | ~valid)) ? MEMREAD0 : (dirty) ? WRITEBACK0 : ERR;
-      end
-
-      COMPWR: begin
-      enable = 1'b1;
-      comp = 1'b1;
-      write = 1'b1;
-      next_state = (hit & valid) ? DONE : (~dirty & (~hit | ~valid)) ? MEMREAD0 : WRITEBACK0;
-      end
-
-      WRITEBACK0: begin
-      enable = 1'b1;
-      comp = 1'b0;
-      wr = 1'b1; 
-      cAddr = {Addr[15:3], 3'b000};
-      tag_mem = tag_out;
-      next_state = (mem_stall) ? WRITEBACK0 : WRITEBACK1;
-      end
-
-      WRITEBACK1: begin
-      enable = 1'b1;
-      comp = 1'b0;
-      write = 1'b0;
-      wr = 1'b1;
-      offset_mem = 3'b010;
-      tag_mem = tag_out;
-      cAddr = {Addr[15:3], 3'b010};
-      next_state = (mem_stall) ? WRITEBACK1: WRITEBACK2;
-      end
-
-      WRITEBACK2: begin
-      enable = 1'b1;
-      comp = 1'b0;
-      write = 1'b0;
-      wr = 1'b1;
-      offset_mem = 3'b100;
-      tag_mem = tag_out;
-      cAddr = {Addr[15:3], 3'b100};
-      next_state = (mem_stall) ? WRITEBACK2: WRITEBACK3;
-      end
-
-
-      WRITEBACK3: begin
-      enable = 1'b1;
-      comp = 1'b0;
-      write = 1'b0;
-      wr = 1'b1; 
-      offset_mem = 3'b110;
-      tag_mem = tag_out;
-      cAddr = {Addr[15:3], 3'b110};
-      next_state = (mem_stall) ? WRITEBACK3: MEMREAD0;
-      end
-
-      MEMREAD0: begin
-      rd = 1'b1; 
-      next_state = (mem_stall) ? MEMREAD0: WAITSTATE0;
-      end
-
-      WAITSTATE0: begin
-      rd = 1'b1;
-      next_state = STORECACHE0;
-      end
-
-
-      MEMREAD1: begin
-      rd = 1'b1;
-      offset_mem = 3'b010;
-
-      next_state = (mem_stall) ? MEMREAD1: WAITSTATE1;
-      end
-
-      WAITSTATE1: begin
-      rd = 1'b1;
-      next_state = STORECACHE1;
-      end
-
-      MEMREAD2: begin
-
-      rd = 1'b1;
-      offset_mem = 3'b100;
-      next_state = (mem_stall) ? MEMREAD2: WAITSTATE2;
-      end
-
-      WAITSTATE2: begin
-      rd = 1'b1;
-      next_state = STORECACHE2;
-      end
-
-      MEMREAD3: begin
-
-      rd = 1'b1;
-      offset_mem = 3'b110;
-      next_state = (mem_stall) ? MEMREAD3: WAITSTATE3;
-      end
-
-      WAITSTATE3: begin
-      rd = 1'b1;
-      next_state = STORECACHE3;
-      end
-
-
-      STORECACHE0: begin
-      enable = 1'b1;
-      write = 1'b1;
-      cAddr = {Addr[15:3], 3'b000};
-      cache_data_in = mem_data_out;
-      next_state = MEMREAD1;
-      end
-
-
-      STORECACHE1: begin
-      enable = 1'b1;
-      write = 1'b1;
-      cAddr = {Addr[15:3], 3'b010};
-      offset_mem = 3'b010;
-      cache_data_in = mem_data_out;
-      next_state = MEMREAD2;
-      end
-
-
-      STORECACHE2: begin
-      enable = 1'b1;
-      write = 1'b1;
-      cAddr = {Addr[15:3], 3'b100};
-      offset_mem = 3'b100;
-      cache_data_in = mem_data_out;
-      next_state = MEMREAD3; 
-      end
-
-      STORECACHE3: begin
-      enable = 1'b1;
-      write = 1'b1;
-      cAddr = {Addr[15:3], 3'b110};
-      offset_mem = 3'b110;
-      cache_data_in = mem_data_out;
-      next_state = (Wr & ~Rd) ? WRITEMEM : STOREDONE;
-      end
-
-      WRITEMEM: begin
-        enable = 1'b1;
-        comp = 1'b1;
-        write = 1'b1;
-        next_state = STOREDONE;
-      end
-
-      STOREDONE: begin
-        enable = 1'b1;
-        Done = 1'b1;
-        Stall = 1'b0;
-        inv_victim = 1'b1;
-        next_state = (Wr & ~Rd) ? COMPWR : (Rd & ~Wr) ? COMPRD : IDLE;
-      end
-
-      ERR: begin
-        next_state = (Rd & Wr) ? ERR : IDLE;
-      end
-
-      DONE: begin
-        enable = 1'b1;
-        Done = 1'b1;
-        CacheHit = 1'b1;
-        Stall = 1'b0;
-        inv_victim = 1'b1;
-        next_state = (Wr & ~Rd) ? COMPWR : (Rd & ~Wr) ? COMPRD : IDLE;
-      end
-
-      default: begin
-      end
-    endcase
-   end
-
 endmodule // mem_system
 
 // DUMMY LINE FOR REV CONTROL :9:

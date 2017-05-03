@@ -1,6 +1,6 @@
 # vsim -c proc_hier_pbench -lib __work -voptargs="+acc" -wlf dump.wlf -do "log -howmany -rec /* ; run -all" 
-# Start time: 17:52:34 on May 03,2017
-# ** Note: (vsim-3812) Design is being optimized...
+# Start time: 18:57:10 on May 03,2017
+# ** Note: (vsim-8009) Loading existing optimized design _opt
 # //  Questa Sim
 # //  Version 10.4c linux Jul 19 2015
 # //
@@ -78,24 +78,27 @@
 # Loading work.mux4_1_3(fast)
 # Loading work.EXMEMmod(fast)
 # Loading work.memory(fast)
+# Loading work.mem_system(fast)
+# Loading work.cache(fast)
+# Loading work.memc(fast)
+# Loading work.memc(fast__1)
+# Loading work.memc(fast__2)
+# Loading work.memv(fast)
+# Loading work.cache(fast__1)
+# Loading work.four_bank_mem(fast)
+# Loading work.final_memory(fast)
 # Loading work.MEMWBmod(fast)
 # Loading work.writeback(fast)
 # Loading work.mux8_1(fast)
 # Loading work.xor2(fast)
 # ** Warning: (vsim-PLI-3691) stallmem.v(86): Expected a system task, not a system function '$value$plusargs'.
 #    Time: 0 ns  Iteration: 0  Instance: /proc_hier_pbench/DUT/p0/fetch0/icachestall File: stallmem.v
-# ** Warning: (vsim-PLI-3691) stallmem.v(86): Expected a system task, not a system function '$value$plusargs'.
-#    Time: 0 ns  Iteration: 0  Instance: /proc_hier_pbench/DUT/p0/memory0/icachestall File: stallmem.v
 # log -howmany -rec /* 
-# 40317
+# 41817
 #  run -all
-# Using seed           0
-# rand_pat=12153524 00010010000101010011010100100100
 # Using seed           0
 # rand_pat=12153524 00010010000101010011010100100100
 # Hello world...simulation starting
 # See verilogsim.log and verilogsim.ptrace for output
 # ** Note: $finish    : proc_hier_pbench.v(115)
-#    Time: 1505 ns  Iteration: 0  Instance: /proc_hier_pbench
-# End time: 17:52:36 on May 03,2017, Elapsed time: 0:00:02
-# Errors: 0, Warnings: 2
+#    Time: 777905 ns  Iteration: 0  Instance: /proc_hier_pbench

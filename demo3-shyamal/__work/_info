@@ -9,15 +9,15 @@ z2
 cModel Technology
 Z0 d/u/s/h/shyamal/private/WISC-SP13/demo3-shyamal
 T_opt
-!s110 1493851954
-V1jU1B^lT:25[fPkVB0L1k1
+!s110 1493855820
+VF6D5AbO<n0^Jn<6P@>mTC1
 04 16 4 work proc_hier_pbench fast 0
-=1-c81f6645a81f-590a5f32-26239-5fe
+=1-c81f6645a81f-590a6e4c-52f37-3571
 o-quiet -auto_acc_if_foreign -work __work +acc
 n@_opt
 OE;O;10.4c;61
 valu
-Z1 !s110 1493851953
+Z1 !s110 1493855819
 !i10b 1
 !s100 95TYU5DJ8EUBa@hbfgQ[41
 IDg6k:Yk]j4a_Zcne2@ZB40
@@ -31,7 +31,7 @@ Z4 OE;L;10.4c;61
 r1
 !s85 0
 31
-Z5 !s108 1493851952.000000
+Z5 !s108 1493855819.000000
 Z6 !s107 zero_out.v|ZeroExtend8_16.v|ZeroExtend5_16.v|ZeroExtend11_16.v|xor3.v|xor2.v|xor16.v|writeback.v|stallmem.v|SignExtend8_16.v|SignExtend5_16.v|SignExtend11_16.v|shifter.v|shifter8.v|shifter4.v|shifter2.v|shifter1.v|right_shift.v|right_rotate.v|rf.v|rf_bypass.v|reg16.v|quadmux8_1.v|quadmux4_1.v|quadmux2_1.v|proc.v|proc_hier.v|proc_hier_pbench.v|or5.v|or4.v|or3.v|or2.v|or16.v|not1.v|nand2.v|mux8_1.v|mux8_1_16.v|mux4_1.v|mux4_1_3.v|mux4_1_16.v|mux2_1.v|mux2_1_3.v|mux2_1_16.v|MEMWBmod.v|memv.v|mem_system.v|mem_system_ref.v|mem_system_randbench.v|mem_system_hier.v|memory.v|memory2c.v|memory2c_align.v|memc.v|master_ctrl.v|left_shift.v|left_rotate.v|jump_ctrl.v|inv16.v|IFIDmod.v|IDEXmod.v|hazard_detection.v|four_bank_mem.v|final_memory.v|fetch.v|EXMEMmod.v|execute.v|dff.v|dff3.v|dff1.v|dff16.v|decode.v|dec3_8.v|clkrst.v|cla4.v|cla16.v|cache.v|branch_ctrl.v|bit_rotate.v|and5.v|and4.v|and3.v|and2.v|and16.v|alu.v|
 Z7 !s90 +define+RANDSEED=3|-work|__work|alu.v|and16.v|and2.v|and3.v|and4.v|and5.v|bit_rotate.v|branch_ctrl.v|cache.v|cla16.v|cla4.v|clkrst.v|dec3_8.v|decode.v|dff16.v|dff1.v|dff3.v|dff.v|execute.v|EXMEMmod.v|fetch.v|final_memory.v|four_bank_mem.v|hazard_detection.v|IDEXmod.v|IFIDmod.v|inv16.v|jump_ctrl.v|left_rotate.v|left_shift.v|master_ctrl.v|memc.v|memory2c_align.v|memory2c.v|memory.v|mem_system_hier.v|mem_system_randbench.v|mem_system_ref.v|mem_system.v|memv.v|MEMWBmod.v|mux2_1_16.v|mux2_1_3.v|mux2_1.v|mux4_1_16.v|mux4_1_3.v|mux4_1.v|mux8_1_16.v|mux8_1.v|nand2.v|not1.v|or16.v|or2.v|or3.v|or4.v|or5.v|proc_hier_pbench.v|proc_hier.v|proc.v|quadmux2_1.v|quadmux4_1.v|quadmux8_1.v|reg16.v|rf_bypass.v|rf.v|right_rotate.v|right_shift.v|shifter1.v|shifter2.v|shifter4.v|shifter8.v|shifter.v|SignExtend11_16.v|SignExtend5_16.v|SignExtend8_16.v|stallmem.v|writeback.v|xor16.v|xor2.v|xor3.v|ZeroExtend11_16.v|ZeroExtend5_16.v|ZeroExtend8_16.v|zero_out.v|
 !i113 0
@@ -444,7 +444,7 @@ R1
 IW>naMF2nCoUHWWGA8WMJ_0
 R2
 R0
-w1493841417
+w1493855805
 8fetch.v
 Ffetch.v
 L0 2
@@ -673,11 +673,11 @@ R9
 vmem_system
 R1
 !i10b 1
-!s100 WN=MMj>=R_oS90oan?RI<2
-IN8`YSS6Oj3lMWX^>`mPZV1
+!s100 Wd4a8j;IlHJ^_FYL_ka[`1
+Ij7bI63le=4ncHm987XAnE0
 R2
 R0
-R10
+w1493853632
 8mem_system.v
 Fmem_system.v
 L0 5
@@ -778,11 +778,11 @@ R9
 vmemory
 R1
 !i10b 1
-!s100 l>VzUUiUHUB:IlgK`f?>h1
-ICo8FF8COf>_7S?8LFhl?F1
+!s100 2c]^?T?J8@4@EJ]IgY1EZ3
+IT2B]Da?SVi:N@b7M`imN02
 R2
 R0
-w1493844043
+w1493855812
 8memory.v
 Fmemory.v
 L0 2

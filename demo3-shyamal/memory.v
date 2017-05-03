@@ -16,7 +16,7 @@ module memory(aluResult, readData, writeData, memRead, memWrite, clk, rst, dump,
     /*memory2c_align memmod(.data_out(readData), .data_in(writeData), .addr(aluResult), .enable(memReadorWrite), .wr(memWrite), .createdump(dump), .clk(clk), .rst(rst), .err(mem_err)); */
 
 
-    stallmem icachestall(.DataOut(readData), 
+    /*stallmem icachestall(.DataOut(readData), 
     		  .Done(done), 
     		  .Stall(stall_from_mem), 
     		  .CacheHit(cache_hit), 
@@ -27,9 +27,9 @@ module memory(aluResult, readData, writeData, memRead, memWrite, clk, rst, dump,
     		  .Wr(memReadorWrite & memWrite ), 
     		  .createdump(dump), 
     		  .clk(clk), 
-    		  .rst(rst));
+    		  .rst(rst));*/
 
-	/*mem_system datamem( 
+	mem_system datamem( 
 							//Outputs 
 							.DataOut(readData), 
 							.Done(done), 
@@ -44,6 +44,6 @@ module memory(aluResult, readData, writeData, memRead, memWrite, clk, rst, dump,
 							.createdump(dump), 
 							.clk(clk), 
 							.rst(rst)
-							);*/
+							);
 
 endmodule

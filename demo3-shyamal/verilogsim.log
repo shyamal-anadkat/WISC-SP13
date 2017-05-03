@@ -1,0 +1,19 @@
+SIMLOG:: Cycle           4 PC: 00000000 I: 00000000 R: 0   0 00000000 M: 0 0 00000000 00000000
+SIMLOG:: Cycle           5 PC: 00000002 I: 00000800 R: 0   0 00000000 M: 0 0 0000xxxx 00000000
+SIMLOG:: Cycle           6 PC: 00000002 I: 00000800 R: 0   0 0000xxxx M: 0 0 0000xxxx 00000000
+SIMLOG:: Cycle           7 PC: 00000002 I: 00000800 R: 0   x 0000xxxx M: 0 0 0000xxxx 00000000
+SIMLOG:: Cycle           8 PC: 00000002 I: 00000800 R: 0   0 0000xxxx M: 0 0 0000xxxx 00000000
+SIMLOG:: Processor halted
+
+SIMLOG:: sim_cycles           8
+
+SIMLOG:: inst_count           1
+
+SIMLOG:: dcachehit_count           0
+
+SIMLOG:: icachehit_count           0
+
+SIMLOG:: dcachereq_count           0
+
+SIMLOG:: icachereq_count           0
+

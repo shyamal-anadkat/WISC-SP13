@@ -20,14 +20,6 @@ module decode (instr, write_data, clk, rst, err, alu_src, mem_write, mem_to_reg,
     // OLD RF MODULE 
     rf regFile0( .read1data(A), .read2data(B), .err(err2), .clk(clk), .rst(rst), .read1regsel(instr[10:8]), .read2regsel(instr[7:5]), .writeregsel(reg_wr_sel), .writedata(write_data), .write(reg_write_in));
 
-    // RF BYPASS MODULE ADDED FOR DEMO 2
-    //rf_bypass rfbypassmod (
-           // Outputs
-      //     .read1data(A), .read2data(B), .err(err2),
-           // Inputs
-      //     .clk(clk), .rst(rst), .read1regsel(instr[10:8]), .read2regsel(instr[7:5]), .writeregsel(reg_wr_sel), .writedata(write_data), .write(reg_write)
-      //     );
-
     // Extend to 16 bits
     SignExtend8_16 se8(.in(instr[7:0]), .out(se7_0));
     SignExtend11_16 se11(.in(instr[10:0]), .out(se10_0));

@@ -36,7 +36,9 @@ module proc (/*AUTOARG*/
    wire done_fetch, cache_hit_fetch, stall_fetch;
    wire done_mem, cache_hit_mem, stall_mem, err_fetch;
 
-   wire cache_hit_datamem, stall_datamem, done_datamem, err_datamem; 
+   wire cache_hit_datamem, stall_datamem, done_datamem, err_datamem;
+   wire IFIDWriteEn_hazard;
+   wire PCWriteEn_hazard;
 
    wire memory_halt_out;
    wire memwb_halt_out;
@@ -61,13 +63,25 @@ module proc (/*AUTOARG*/
    //************************ DECODE********************************************//
    decode decode0(.instr(instr_out), .write_data(write_data), .clk(clk), .rst(rst), .err(err1), .alu_src(alu_src), .mem_write(mem_write), .mem_to_reg(mem_to_reg), .reg_wr_sel(reg_wr_selMEMWB), .invA(invA), .invB(invB), .Cin(Cin), .A(A), .B(B), .se4_0(se4_0), .ze4_0(ze4_0), .se7_0(se7_0), .ze7_0(ze7_0), .se10_0(se10_0), .dump(dump), .reg_dst(reg_dst), .reg_write_out(reg_write), .hasAB(hasAB_in), .reg_write_in(reg_writeMEMWB));
 
+   //assign IFIDWriteEn_hazard = (stall_datamem == 1'b1) ? 1'b0 : IFIDWriteEn;
+   //assign PCWriteEn_hazard = (stall_datamem == 1'b1) ? 1'b0 : PCWriteEn;
+
    //************************* HAZARD DETECTION ********************************//
-    hazard_detection hd(.instr(instr_out), .idexWR(reg_wr_sel), .exmemWR(reg_wr_selEXMEM),
-		     .memwbWR(reg_wr_selMEMWB), .ifidRD1(instr_out[10:8]),
-		     .ifidRD2(instr_out[7:5]), .idexRegWR(reg_writeIDEX),
-                     .exmemRegWR(reg_writeEXMEM), .memwbRegWR(reg_writeMEMWB),
-		     .IFIDwriteEn(IFIDWriteEn), .PCwriteEn(PCWriteEn), .hasAB(hasAB_in),
-                     .memReadEXMEM(mem_to_regEXMEM), .memWriteEXMEM(mem_writeEXMEM),
+    hazard_detection hd(
+         .instr(instr_out), 
+         .idexWR(reg_wr_sel), 
+         .exmemWR(reg_wr_selEXMEM),
+		     .memwbWR(reg_wr_selMEMWB), 
+         .ifidRD1(instr_out[10:8]),
+		     .ifidRD2(instr_out[7:5]), 
+         .idexRegWR(reg_writeIDEX),
+         .exmemRegWR(reg_writeEXMEM), 
+         .memwbRegWR(reg_writeMEMWB),
+		     .IFIDwriteEn(IFIDWriteEn), 
+         .PCwriteEn(PCWriteEn), 
+         .hasAB(hasAB_in),
+         .memReadEXMEM(mem_to_regEXMEM), 
+         .memWriteEXMEM(mem_writeEXMEM),
 		     .stall(stall));
 
   //************************ IDEX LATCH*****************************************//

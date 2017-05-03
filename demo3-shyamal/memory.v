@@ -6,7 +6,7 @@ module memory(aluResult, readData, writeData, memRead, memWrite, clk, rst, dump,
     output [15:0] readData;
     output halt;
     output done, stall_from_mem, cache_hit, mem_err; 
-    
+
     wire memReadorWrite;
 
     assign memReadorWrite = (memWrite | memRead);
@@ -28,5 +28,22 @@ module memory(aluResult, readData, writeData, memRead, memWrite, clk, rst, dump,
     		  .createdump(dump), 
     		  .clk(clk), 
     		  .rst(rst));
+
+	/*mem_system datamem( 
+							//Outputs 
+							.DataOut(readData), 
+							.Done(done), 
+							.Stall(stall_from_mem), 
+							.CacheHit(cache_hit), 
+							.err(mem_err),
+							// Inputs
+    		  				.Addr(aluResult), 
+    		  				.DataIn(writeData), 
+    		  				.Rd(memReadorWrite & !memWrite), 
+    		  				.Wr(memReadorWrite & memWrite ), 
+							.createdump(dump), 
+							.clk(clk), 
+							.rst(rst)
+							);*/
 
 endmodule

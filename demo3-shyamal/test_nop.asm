@@ -1,8 +1,3 @@
-add r4, r1, r4
-nop
-nop
-nop
-nop
-nop
-nop
+andni r0, r0, 1
+stu r2, r0, 8
 halt

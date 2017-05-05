@@ -1,0 +1,69 @@
+          // pipeTest - a final program for the first pipeline demo
+          //
+          // CS/ECE 552, Spring 2007
+          // Pratap Ramamurthy  19 April 2006
+          //
+          
+0000 c005 lbi r0, 5
+0002 401b addi r0, r0, -5         // r0 = 0x0000
+0004 6004 beqz r0, .go1           // taken
+0006 0000 halt                    // doesn't execute
+0008 0000 halt
+000a      .go1:
+000a c1ff lbi r1, -1              // r1 = 0xffff
+000c e908 slt r2, r1, r0          // r2 = 0x0001
+000e 6a04 bnez r2, .go2           // taken
+0010 8000 st r0, r0, 0            // doesn't execute
+0012 0000 halt                    // doesn't execute
+0014      .go2:
+0014 c300 lbi r3, U.Data1
+0016 9356 slbi r3, L.Data1        // r3 = .Data1 = 0x0056
+0018 c400 lbi r4, U.Data2
+001a 945a slbi r4, L.Data2        // r4 = .Data2 = 0x005a
+001c 8380 st r4, r3, 0            // .Data1 = .Data2 = 0x005a
+001e c555 lbi r5, 0x55            // r5 = 0x0055
+0020 ada9 slli r5, r5, 9          // r5 = 0xaa00
+0022 84a0 st r5, r4, 0            // .Data2 = 0xaa00
+0024 437f addi r3, r3, -1         // r3 = .Data1-1 = 0x0055
+0026 8bc1 ld r6, r3, 1            // r6 = (.Data1) = .Data2 = 0x005a
+0028 8ee0 ld r7, r6, 0            // r7 = (.Data2) = 0xaa00
+002a 9ee2 stu r7, r6, 2           // .Data2+1 = 0xaa00, r6 = .Data2+2
+002c 46c2 addi r6, r6, 2          // r6 = .Data2+2 = 0x005c
+002e 9ee2 stu r7, r6, 2           // .Data2+3 = 0xaa00, r6 = .Data2+2
+0030 c000 lbi r0, 0               // r0 = 0
+0032 3014 jal .go3                // r7 = .RetAddr1 = 0x0034
+0034      .RetAddr1:
+0034 0000 halt
+0036      .go4:
+0036 3f04 jalr r7,4               // jump to.go5
+0038 0000 halt
+003a 0000 halt
+003c 0000 halt
+003e 0000 halt
+0040 0000 halt
+0042 0000 halt
+0044 0000 halt
+0046 0000 halt
+0048      .go3:
+0048 3f02 jalr r7, 2              // jump to .go4; r7 = .RetAddr2 = 0x0034
+004a      .RetAddr2:
+004a 80e0 st r7, r0, 0            // doesn't execute
+004c 0000 halt                    // doesn't execute
+004e      .go5:
+004e 0000 halt                    // MADE IT
+0050 9ee2 stu r7, r6,2            // doesn't execute (CHECK LOC 0 NOT TRASHED)
+0052 0000 halt
+0054 0000 halt
+0056      .Data1:
+0056 0000 halt                    // .Data2 = 0x005a
+0058 0000 halt
+005a      .Data2:
+005a 0000 halt                    // 0xaa00
+005c 0000 halt                    // 0xaa00
+005e 0000 halt
+0060 0000 halt                    // 0xaa00
+0062 0000 halt
+0064 0000 halt
+0066 0000 halt
+0068 0000 halt
+006a 0000 halt

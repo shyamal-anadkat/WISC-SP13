@@ -33,8 +33,11 @@ module proc (/*AUTOARG*/
 
    wire[15:0] pc_branch_sel;
    wire br_stall_cond, br_condMEMWB;
+
+   wire cache_hit_fetch, stall_fetch, mem_err_fetch, done_fetch; 
+
    //************************ FETCH*********************************************//
-   fetch fetch0(.clk(clk), .rst(rst), .dump(1'b0), .pc_branch(pc_branch_out), .branch_cond(br_stall_cond), .nextPC(pc_plus_2), .instr(instr), .isNop(stall), .currPC(pcCurrent), .PCWriteEn(PCWriteEn), .branch_cond_EXMEM(branch_cond_out), .pc_jal(pc_branchMEMWB), .jal_en(JALenMEMWB), .br_stall(br_stall_cond));
+   fetch fetch0(.clk(clk), .rst(rst), .dump(1'b0), .pc_branch(pc_branch_out), .branch_cond(br_stall_cond), .nextPC(pc_plus_2), .instr(instr), .isNop(stall), .currPC(pcCurrent), .PCWriteEn(PCWriteEn), .branch_cond_EXMEM(branch_cond_out), .pc_jal(pc_branchMEMWB), .jal_en(JALenMEMWB), .br_stall(br_stall_cond), .done(done_fetch), .cache_hit(cache_hit_fetch), .stall_from_mem(stall_fetch), .mem_err(mem_err_fetch));
 
    
    //************************ IFID LATCH*****************************************//

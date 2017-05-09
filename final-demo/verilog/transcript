@@ -1,5 +1,5 @@
 # vsim -c proc_hier_pbench -lib __work -voptargs="+acc" -wlf dump.wlf -do "log -howmany -rec /* ; run -all" 
-# Start time: 03:34:14 on May 09,2017
+# Start time: 13:23:33 on May 09,2017
 # ** Note: (vsim-8009) Loading existing optimized design _opt
 # //  Questa Sim
 # //  Version 10.4c linux Jul 19 2015
@@ -94,11 +94,11 @@
 # Loading work.mux8_1(fast)
 # Loading work.xor2(fast)
 # log -howmany -rec /* 
-# 46426
+# 46427
 #  run -all
 # Hello world...simulation starting
 # See verilogsim.log and verilogsim.ptrace for output
 # ** Note: $finish    : proc_hier_pbench.v(115)
-#    Time: 2105 ns  Iteration: 0  Instance: /proc_hier_pbench
-# End time: 03:34:14 on May 09,2017, Elapsed time: 0:00:00
+#    Time: 544905 ns  Iteration: 0  Instance: /proc_hier_pbench
+# End time: 13:23:34 on May 09,2017, Elapsed time: 0:00:01
 # Errors: 0, Warnings: 0

@@ -1,8 +1,502 @@
-INST:    1100 0001 0001 1000 lbi r1, 24
-ARCH:    REG: 1 VALUE: 0x0018  
-VERILOG: REG: 1 VALUE: 0x0018
-INST:    0101 0001 0100 0111 xori r2, r1, 7
-ARCH:    REG: 2 VALUE: 0x001f  
-VERILOG: REG: 2 VALUE: 0x001f
+INST:    1100 0000 0000 0000 lbi r0, 0
+ARCH:    REG: 0 VALUE: 0x0000  
+VERILOG: REG: 0 VALUE: 0x0000
+INST:    1100 0001 0000 0001 lbi r1, 1
+ARCH:    REG: 1 VALUE: 0x0001  
+VERILOG: REG: 1 VALUE: 0x0001
+INST:    1100 0010 1111 1111 lbi r2, -1
+ARCH:    REG: 2 VALUE: 0xffff  
+VERILOG: REG: 2 VALUE: 0xffff
+INST:    1100 0100 0000 1010 lbi r4, 10
+ARCH:    REG: 4 VALUE: 0x000a  
+VERILOG: REG: 4 VALUE: 0x000a
+INST:    0010 0000 0100 0000 j .rlabel_0
+INST:    0011 0000 1110 1000 jal .rlabel_1
+ARCH:    REG: 7 VALUE: 0x004c  
+VERILOG: REG: 7 VALUE: 0x004c
+INST:    0110 1001 0000 0000 bnez r1, .rlabel_2
+INST:    0011 0000 1011 1000 jal .rlabel_3
+ARCH:    REG: 7 VALUE: 0x0138  
+VERILOG: REG: 7 VALUE: 0x0138
+INST:    0010 0000 1011 1010 j .rlabel_4
+INST:    0111 1011 0001 1100 bgez r3, .rlabel_5
+INST:    0010 0000 1110 1110 j .rlabel_6
+INST:    0111 1011 0000 0010 bgez r3, .rlabel_7
+INST:    0110 0000 0001 1110 beqz r0, .rlabel_8
+INST:    0111 1011 0001 1100 bgez r3, .rlabel_9
+INST:    0110 0000 0000 0100 beqz r0, .rlabel_10
+INST:    0111 0010 0001 0100 bltz r2, .rlabel_11
+INST:    0011 0000 0011 1010 jal .rlabel_12
+ARCH:    REG: 7 VALUE: 0x041a  
+VERILOG: REG: 7 VALUE: 0x041a
+INST:    0111 1011 0001 0100 bgez r3, .rlabel_13
+INST:    0010 0000 0100 0100 j .rlabel_14
+INST:    0111 1011 0000 1010 bgez r3, .rlabel_15
+INST:    0010 0000 0010 1000 j .rlabel_16
+INST:    0111 1011 0001 1010 bgez r3, .rlabel_17
+INST:    0110 1001 0001 1000 bnez r1, .rlabel_18
+INST:    0110 0000 0001 0010 beqz r0, .rlabel_19
+INST:    0010 0000 1110 1010 j .rlabel_20
+INST:    0010 0000 0000 0000 j .rlabel_21
+INST:    0111 0010 0001 1010 bltz r2, .rlabel_22
+INST:    0111 1011 0000 1100 bgez r3, .rlabel_23
+INST:    0110 1001 0000 0110 bnez r1, .rlabel_24
+INST:    0110 1001 0001 0110 bnez r1, .rlabel_25
+INST:    0010 0000 1110 0010 j .rlabel_26
+INST:    0010 0000 1100 0010 j .rlabel_27
+INST:    0011 0000 0111 0100 jal .rlabel_28
+ARCH:    REG: 7 VALUE: 0x0812  
+VERILOG: REG: 7 VALUE: 0x0812
+INST:    0010 0000 0111 0110 j .rlabel_29
+INST:    0110 1001 0000 0010 bnez r1, .rlabel_30
+INST:    0111 1011 0001 1110 bgez r3, .rlabel_31
+INST:    0111 1011 0001 0010 bgez r3, .rlabel_32
+INST:    0111 1011 0001 0000 bgez r3, .rlabel_33
+INST:    0111 1011 0001 0000 bgez r3, .rlabel_34
+INST:    0010 0000 1011 1100 j .rlabel_35
+INST:    0011 0000 1100 1100 jal .rlabel_36
+ARCH:    REG: 7 VALUE: 0x0a1a  
+VERILOG: REG: 7 VALUE: 0x0a1a
+INST:    0110 0000 0000 1000 beqz r0, .rlabel_37
+INST:    0110 1001 0001 0000 bnez r1, .rlabel_38
+INST:    0010 0000 0100 1010 j .rlabel_39
+INST:    0110 1001 0001 1010 bnez r1, .rlabel_40
+INST:    0011 0000 1110 0100 jal .rlabel_41
+ARCH:    REG: 7 VALUE: 0x0b6c  
+VERILOG: REG: 7 VALUE: 0x0b6c
+INST:    0110 1001 0000 1010 bnez r1, .rlabel_42
+INST:    0110 0000 0000 0000 beqz r0, .rlabel_43
+INST:    0111 0010 0001 1000 bltz r2, .rlabel_44
+INST:    0010 0000 0100 1000 j .rlabel_45
+INST:    0111 1011 0001 0010 bgez r3, .rlabel_46
+INST:    0110 1001 0001 0110 bnez r1, .rlabel_47
+INST:    0110 1001 0001 1000 bnez r1, .rlabel_48
+INST:    0010 0000 0010 0100 j .rlabel_49
+INST:    0111 1011 0001 1010 bgez r3, .rlabel_50
+INST:    0111 0010 0000 0000 bltz r2, .rlabel_51
+INST:    0110 1001 0001 1110 bnez r1, .rlabel_52
+INST:    0110 0000 0001 1100 beqz r0, .rlabel_53
+INST:    0010 0000 1001 0010 j .rlabel_54
+INST:    0011 0000 0111 1110 jal .rlabel_55
+ARCH:    REG: 7 VALUE: 0x0e20  
+VERILOG: REG: 7 VALUE: 0x0e20
+INST:    0111 0010 0001 1010 bltz r2, .rlabel_56
+INST:    0111 1011 0000 1010 bgez r3, .rlabel_57
+INST:    0010 0000 1100 0010 j .rlabel_58
+INST:    0110 0000 0001 1100 beqz r0, .rlabel_59
+INST:    0111 0010 0001 1000 bltz r2, .rlabel_60
+INST:    0011 0000 1010 1110 jal .rlabel_61
+ARCH:    REG: 7 VALUE: 0x0fc4  
+VERILOG: REG: 7 VALUE: 0x0fc4
+INST:    0110 1001 0000 0010 bnez r1, .rlabel_62
+INST:    0011 0000 1001 0110 jal .rlabel_63
+ARCH:    REG: 7 VALUE: 0x1078  
+VERILOG: REG: 7 VALUE: 0x1078
+INST:    0110 1001 0000 0000 bnez r1, .rlabel_64
+INST:    0111 0010 0000 0110 bltz r2, .rlabel_65
+INST:    0010 0000 1110 1100 j .rlabel_66
+INST:    0010 0000 1100 0010 j .rlabel_67
+INST:    0110 0000 0001 0110 beqz r0, .rlabel_68
+INST:    0010 0000 1100 0100 j .rlabel_69
+INST:    0010 0000 0101 1000 j .rlabel_70
+INST:    0110 0000 0001 1110 beqz r0, .rlabel_71
+INST:    0010 0000 1101 0010 j .rlabel_72
+INST:    0111 0010 0001 0010 bltz r2, .rlabel_73
+INST:    0110 1001 0000 0110 bnez r1, .rlabel_74
+INST:    0110 1001 0001 0010 bnez r1, .rlabel_75
+INST:    0010 0000 0111 0100 j .rlabel_76
+INST:    0111 1011 0000 1000 bgez r3, .rlabel_77
+INST:    0010 0000 0010 1000 j .rlabel_78
+INST:    0011 0000 0000 0100 jal .rlabel_79
+ARCH:    REG: 7 VALUE: 0x15d2  
+VERILOG: REG: 7 VALUE: 0x15d2
+INST:    0010 0000 1000 1100 j .rlabel_80
+INST:    0010 0000 0010 1000 j .rlabel_81
+INST:    0010 0000 0111 0100 j .rlabel_82
+INST:    0111 0010 0001 1100 bltz r2, .rlabel_83
+INST:    0111 0010 0001 0000 bltz r2, .rlabel_84
+INST:    0010 0000 1000 1010 j .rlabel_85
+INST:    0011 0000 1000 1100 jal .rlabel_86
+ARCH:    REG: 7 VALUE: 0x17c2  
+VERILOG: REG: 7 VALUE: 0x17c2
+INST:    0110 1001 0000 1110 bnez r1, .rlabel_87
+INST:    0011 0000 0101 1100 jal .rlabel_88
+ARCH:    REG: 7 VALUE: 0x1860  
+VERILOG: REG: 7 VALUE: 0x1860
+INST:    0111 1011 0000 0100 bgez r3, .rlabel_89
+INST:    0110 1001 0001 1010 bnez r1, .rlabel_90
+INST:    0111 1011 0000 0010 bgez r3, .rlabel_91
+INST:    0110 0000 0000 0100 beqz r0, .rlabel_92
+INST:    0111 0010 0001 0110 bltz r2, .rlabel_93
+INST:    0010 0000 0110 0000 j .rlabel_94
+INST:    0110 0000 0000 0010 beqz r0, .rlabel_95
+INST:    0010 0000 0011 0010 j .rlabel_96
+INST:    0010 0000 0011 0000 j .rlabel_97
+INST:    0111 1011 0001 1000 bgez r3, .rlabel_98
+INST:    0110 0000 0000 1010 beqz r0, .rlabel_99
+INST:    0111 1011 0000 1110 bgez r3, .rlabel_100
+INST:    0111 1011 0000 0010 bgez r3, .rlabel_101
+INST:    0111 1011 0000 0110 bgez r3, .rlabel_102
+INST:    0111 0010 0000 1000 bltz r2, .rlabel_103
+INST:    0010 0000 1101 1100 j .rlabel_104
+INST:    0110 0000 0001 1010 beqz r0, .rlabel_105
+INST:    0111 1011 0001 0000 bgez r3, .rlabel_106
+INST:    0111 1011 0001 0000 bgez r3, .rlabel_107
+INST:    0111 0010 0001 0110 bltz r2, .rlabel_108
+INST:    0111 0010 0001 1100 bltz r2, .rlabel_109
+INST:    0110 1001 0001 0100 bnez r1, .rlabel_110
+INST:    0111 0010 0001 1110 bltz r2, .rlabel_111
+INST:    0010 0000 1011 0100 j .rlabel_112
+INST:    0011 0000 0110 0100 jal .rlabel_113
+ARCH:    REG: 7 VALUE: 0x1c5a  
+VERILOG: REG: 7 VALUE: 0x1c5a
+INST:    0110 0000 0001 0000 beqz r0, .rlabel_114
+INST:    0010 0000 1001 0010 j .rlabel_115
+INST:    0110 0000 0001 0110 beqz r0, .rlabel_116
+INST:    0110 1001 0000 0100 bnez r1, .rlabel_117
+INST:    0011 0000 0011 0010 jal .rlabel_118
+ARCH:    REG: 7 VALUE: 0x1d84  
+VERILOG: REG: 7 VALUE: 0x1d84
+INST:    0010 0000 0100 0000 j .rlabel_119
+INST:    0111 1011 0000 1100 bgez r3, .rlabel_120
+INST:    0110 0000 0001 0110 beqz r0, .rlabel_121
+INST:    0010 0000 1101 0100 j .rlabel_122
+INST:    0010 0000 1010 1000 j .rlabel_123
+INST:    0111 1011 0000 0100 bgez r3, .rlabel_124
+INST:    0011 0000 0110 1000 jal .rlabel_125
+ARCH:    REG: 7 VALUE: 0x1fa6  
+VERILOG: REG: 7 VALUE: 0x1fa6
+INST:    0011 0000 1111 0100 jal .rlabel_126
+ARCH:    REG: 7 VALUE: 0x2010  
+VERILOG: REG: 7 VALUE: 0x2010
+INST:    0111 1011 0001 0110 bgez r3, .rlabel_127
+INST:    0110 1001 0000 0100 bnez r1, .rlabel_128
+INST:    0010 0000 0001 1110 j .rlabel_129
+INST:    0010 0000 1010 0110 j .rlabel_130
+INST:    0011 0000 0001 1000 jal .rlabel_131
+ARCH:    REG: 7 VALUE: 0x21ec  
+VERILOG: REG: 7 VALUE: 0x21ec
+INST:    0111 0010 0001 1010 bltz r2, .rlabel_132
+INST:    0111 1011 0000 1110 bgez r3, .rlabel_133
+INST:    0010 0000 1100 1110 j .rlabel_134
+INST:    0010 0000 0100 0000 j .rlabel_135
+INST:    0111 1011 0000 0110 bgez r3, .rlabel_136
+INST:    0110 0000 0001 0100 beqz r0, .rlabel_137
+INST:    0110 1001 0000 1110 bnez r1, .rlabel_138
+INST:    0010 0000 0100 0110 j .rlabel_139
+INST:    0011 0000 0000 0110 jal .rlabel_140
+ARCH:    REG: 7 VALUE: 0x23ba  
+VERILOG: REG: 7 VALUE: 0x23ba
+INST:    0111 1011 0001 1100 bgez r3, .rlabel_141
+INST:    0111 0010 0000 0010 bltz r2, .rlabel_142
+INST:    0111 1011 0000 0000 bgez r3, .rlabel_143
+INST:    0110 0000 0001 1110 beqz r0, .rlabel_144
+INST:    0110 1001 0001 0010 bnez r1, .rlabel_145
+INST:    0111 0010 0001 1010 bltz r2, .rlabel_146
+INST:    0010 0000 1001 0110 j .rlabel_147
+INST:    0010 0000 0111 0100 j .rlabel_148
+INST:    0110 0000 0001 0100 beqz r0, .rlabel_149
+INST:    0111 1011 0001 1000 bgez r3, .rlabel_150
+INST:    0111 0010 0000 0010 bltz r2, .rlabel_151
+INST:    0010 0000 1101 1110 j .rlabel_152
+INST:    0111 0010 0001 1010 bltz r2, .rlabel_153
+INST:    0111 0010 0001 1100 bltz r2, .rlabel_154
+INST:    0111 1011 0001 0010 bgez r3, .rlabel_155
+INST:    0010 0000 0110 1000 j .rlabel_156
+INST:    0011 0000 0011 0100 jal .rlabel_157
+ARCH:    REG: 7 VALUE: 0x2710  
+VERILOG: REG: 7 VALUE: 0x2710
+INST:    0010 0000 1110 0100 j .rlabel_158
+INST:    0010 0000 0100 1100 j .rlabel_159
+INST:    0110 1001 0000 1010 bnez r1, .rlabel_160
+INST:    0010 0000 1100 0110 j .rlabel_161
+INST:    0010 0000 0001 1010 j .rlabel_162
+INST:    0010 0000 0000 0110 j .rlabel_163
+INST:    0111 0010 0001 1110 bltz r2, .rlabel_164
+INST:    0010 0000 0100 1100 j .rlabel_165
+INST:    0110 0000 0000 0000 beqz r0, .rlabel_166
+INST:    0010 0000 1101 1100 j .rlabel_167
+INST:    0010 0000 0010 1110 j .rlabel_168
+INST:    0010 0000 1101 0100 j .rlabel_169
+INST:    0110 1001 0001 0110 bnez r1, .rlabel_170
+INST:    0011 0000 1001 1110 jal .rlabel_171
+ARCH:    REG: 7 VALUE: 0x2bde  
+VERILOG: REG: 7 VALUE: 0x2bde
+INST:    0110 1001 0001 1010 bnez r1, .rlabel_172
+INST:    0110 0000 0001 1110 beqz r0, .rlabel_173
+INST:    0010 0000 0011 1110 j .rlabel_174
+INST:    0010 0000 1111 0100 j .rlabel_175
+INST:    0010 0000 0100 1010 j .rlabel_176
+INST:    0011 0000 1000 1110 jal .rlabel_177
+ARCH:    REG: 7 VALUE: 0x2e3c  
+VERILOG: REG: 7 VALUE: 0x2e3c
+INST:    0010 0000 0101 1010 j .rlabel_178
+INST:    0110 0000 0001 0010 beqz r0, .rlabel_179
+INST:    0111 1011 0001 1010 bgez r3, .rlabel_180
+INST:    0111 1011 0000 0000 bgez r3, .rlabel_181
+INST:    0011 0000 0001 0000 jal .rlabel_182
+ARCH:    REG: 7 VALUE: 0x2f5a  
+VERILOG: REG: 7 VALUE: 0x2f5a
+INST:    0010 0000 1111 0100 j .rlabel_183
+INST:    0111 0010 0001 1100 bltz r2, .rlabel_184
+INST:    0010 0000 0101 0010 j .rlabel_185
+INST:    0111 0010 0000 0000 bltz r2, .rlabel_186
+INST:    0111 1011 0000 0110 bgez r3, .rlabel_187
+INST:    0010 0000 0011 1100 j .rlabel_188
+INST:    0111 1011 0000 1100 bgez r3, .rlabel_189
+INST:    0010 0000 0101 0100 j .rlabel_190
+INST:    0111 1011 0001 0000 bgez r3, .rlabel_191
+INST:    0111 1011 0000 1010 bgez r3, .rlabel_192
+INST:    0110 0000 0000 1100 beqz r0, .rlabel_193
+INST:    0010 0000 0100 1000 j .rlabel_194
+INST:    0010 0000 1001 0100 j .rlabel_195
+INST:    0110 0000 0001 1110 beqz r0, .rlabel_196
+INST:    0111 1011 0001 1000 bgez r3, .rlabel_197
+INST:    0111 1011 0000 1110 bgez r3, .rlabel_198
+INST:    0110 0000 0000 1010 beqz r0, .rlabel_199
+INST:    0011 0000 0000 0110 jal .rlabel_200
+ARCH:    REG: 7 VALUE: 0x32e2  
+VERILOG: REG: 7 VALUE: 0x32e2
+INST:    0111 1011 0001 1000 bgez r3, .rlabel_201
+INST:    0110 0000 0001 1110 beqz r0, .rlabel_202
+INST:    0110 0000 0001 1100 beqz r0, .rlabel_203
+INST:    0010 0000 1010 0010 j .rlabel_204
+INST:    0010 0000 1101 0010 j .rlabel_205
+INST:    0011 0000 1011 0110 jal .rlabel_206
+ARCH:    REG: 7 VALUE: 0x34ba  
+VERILOG: REG: 7 VALUE: 0x34ba
+INST:    0111 0010 0000 0100 bltz r2, .rlabel_207
+INST:    0111 0010 0000 1000 bltz r2, .rlabel_208
+INST:    0111 0010 0000 1110 bltz r2, .rlabel_209
+INST:    0010 0000 0110 1100 j .rlabel_210
+INST:    0011 0000 0111 0100 jal .rlabel_211
+ARCH:    REG: 7 VALUE: 0x3600  
+VERILOG: REG: 7 VALUE: 0x3600
+INST:    0010 0000 0111 0100 j .rlabel_212
+INST:    0110 1001 0001 1000 bnez r1, .rlabel_213
+INST:    0111 0010 0001 1100 bltz r2, .rlabel_214
+INST:    0110 1001 0000 0110 bnez r1, .rlabel_215
+INST:    0111 1011 0001 0010 bgez r3, .rlabel_216
+INST:    0010 0000 0010 0000 j .rlabel_217
+INST:    0110 1001 0000 0000 bnez r1, .rlabel_218
+INST:    0010 0000 0100 1010 j .rlabel_219
+INST:    0110 0000 0001 0010 beqz r0, .rlabel_220
+INST:    0011 0000 0110 1110 jal .rlabel_221
+ARCH:    REG: 7 VALUE: 0x37c4  
+VERILOG: REG: 7 VALUE: 0x37c4
+INST:    0110 0000 0001 0100 beqz r0, .rlabel_222
+INST:    0010 0000 1101 0100 j .rlabel_223
+INST:    0010 0000 0001 0110 j .rlabel_224
+INST:    0010 0000 1111 0100 j .rlabel_225
+INST:    0011 0000 0010 0100 jal .rlabel_226
+ARCH:    REG: 7 VALUE: 0x3a2e  
+VERILOG: REG: 7 VALUE: 0x3a2e
+INST:    0110 1001 0001 1100 bnez r1, .rlabel_227
+INST:    0010 0000 0011 0100 j .rlabel_228
+INST:    0011 0000 0100 0000 jal .rlabel_229
+ARCH:    REG: 7 VALUE: 0x3aa8  
+VERILOG: REG: 7 VALUE: 0x3aa8
+INST:    0110 0000 0000 1100 beqz r0, .rlabel_230
+INST:    0010 0000 0001 1010 j .rlabel_231
+INST:    0110 1001 0001 0100 bnez r1, .rlabel_232
+INST:    0010 0000 1010 1110 j .rlabel_233
+INST:    0010 0000 0001 1000 j .rlabel_234
+INST:    0011 0000 0011 1110 jal .rlabel_235
+ARCH:    REG: 7 VALUE: 0x3bf4  
+VERILOG: REG: 7 VALUE: 0x3bf4
+INST:    0111 0010 0001 0100 bltz r2, .rlabel_236
+INST:    0111 1011 0001 0100 bgez r3, .rlabel_237
+INST:    0110 0000 0000 1100 beqz r0, .rlabel_238
+INST:    0010 0000 0010 0100 j .rlabel_239
+INST:    0010 0000 0100 1000 j .rlabel_240
+INST:    0010 0000 0111 1100 j .rlabel_241
+INST:    0110 0000 0000 1000 beqz r0, .rlabel_242
+INST:    0010 0000 0110 1100 j .rlabel_243
+INST:    0111 0010 0000 1100 bltz r2, .rlabel_244
+INST:    0111 1011 0001 1110 bgez r3, .rlabel_245
+INST:    0010 0000 1001 0100 j .rlabel_246
+INST:    0011 0000 1111 0000 jal .rlabel_247
+ARCH:    REG: 7 VALUE: 0x3e98  
+VERILOG: REG: 7 VALUE: 0x3e98
+INST:    0110 1001 0000 0110 bnez r1, .rlabel_248
+INST:    0010 0000 1110 1000 j .rlabel_249
+INST:    0111 1011 0001 0000 bgez r3, .rlabel_250
+INST:    0010 0000 1001 0100 j .rlabel_251
+INST:    0111 1011 0000 1110 bgez r3, .rlabel_252
+INST:    0110 0000 0001 1010 beqz r0, .rlabel_253
+INST:    0010 0000 0100 0010 j .rlabel_254
+INST:    0010 0000 1001 1010 j .rlabel_255
+INST:    0110 1001 0001 1110 bnez r1, .rlabel_256
+INST:    0110 1001 0001 0110 bnez r1, .rlabel_257
+INST:    0110 0000 0000 0100 beqz r0, .rlabel_258
+INST:    0110 1001 0000 1010 bnez r1, .rlabel_259
+INST:    0010 0000 0110 0010 j .rlabel_260
+INST:    0010 0000 0011 0110 j .rlabel_261
+INST:    0110 1001 0001 1010 bnez r1, .rlabel_262
+INST:    0010 0000 0101 1010 j .rlabel_263
+INST:    0110 1001 0000 0000 bnez r1, .rlabel_264
+INST:    0111 0010 0000 0100 bltz r2, .rlabel_265
+INST:    0011 0000 0100 0100 jal .rlabel_266
+ARCH:    REG: 7 VALUE: 0x4396  
+VERILOG: REG: 7 VALUE: 0x4396
+INST:    0110 0000 0001 1110 beqz r0, .rlabel_267
+INST:    0110 1001 0001 1110 bnez r1, .rlabel_268
+INST:    0111 1011 0001 1110 bgez r3, .rlabel_269
+INST:    0010 0000 1110 1010 j .rlabel_270
+INST:    0110 0000 0000 1000 beqz r0, .rlabel_271
+INST:    0010 0000 0001 0100 j .rlabel_272
+INST:    0111 1011 0000 1000 bgez r3, .rlabel_273
+INST:    0111 1011 0001 1010 bgez r3, .rlabel_274
+INST:    0010 0000 1011 1000 j .rlabel_275
+INST:    0111 0010 0000 1000 bltz r2, .rlabel_276
+INST:    0111 1011 0000 0100 bgez r3, .rlabel_277
+INST:    0111 1011 0000 0010 bgez r3, .rlabel_278
+INST:    0011 0000 1011 0010 jal .rlabel_279
+ARCH:    REG: 7 VALUE: 0x463c  
+VERILOG: REG: 7 VALUE: 0x463c
+INST:    0010 0000 1100 1010 j .rlabel_280
+INST:    0010 0000 0001 1100 j .rlabel_281
+INST:    0110 1001 0000 1100 bnez r1, .rlabel_282
+INST:    0010 0000 0111 1100 j .rlabel_283
+INST:    0111 1011 0001 0110 bgez r3, .rlabel_284
+INST:    0111 0010 0000 0100 bltz r2, .rlabel_285
+INST:    0110 0000 0000 0010 beqz r0, .rlabel_286
+INST:    0110 1001 0000 1010 bnez r1, .rlabel_287
+INST:    0011 0000 0101 0110 jal .rlabel_288
+ARCH:    REG: 7 VALUE: 0x4894  
+VERILOG: REG: 7 VALUE: 0x4894
+INST:    0010 0000 0010 1000 j .rlabel_289
+INST:    0010 0000 0010 0010 j .rlabel_290
+INST:    0110 1001 0000 1000 bnez r1, .rlabel_291
+INST:    0110 0000 0000 1000 beqz r0, .rlabel_292
+INST:    0011 0000 1011 0100 jal .rlabel_293
+ARCH:    REG: 7 VALUE: 0x494e  
+VERILOG: REG: 7 VALUE: 0x494e
+INST:    0010 0000 1101 0000 j .rlabel_294
+INST:    0111 1011 0001 0010 bgez r3, .rlabel_295
+INST:    0110 0000 0001 0010 beqz r0, .rlabel_296
+INST:    0010 0000 1001 1000 j .rlabel_297
+INST:    0111 1011 0001 1010 bgez r3, .rlabel_298
+INST:    0111 1011 0001 1000 bgez r3, .rlabel_299
+INST:    0111 1011 0000 0000 bgez r3, .rlabel_300
+INST:    0110 0000 0001 0100 beqz r0, .rlabel_301
+INST:    0110 1001 0000 1000 bnez r1, .rlabel_302
+INST:    0110 1001 0000 0100 bnez r1, .rlabel_303
+INST:    0110 0000 0000 0000 beqz r0, .rlabel_304
+INST:    0111 0010 0000 0010 bltz r2, .rlabel_305
+INST:    0111 0010 0000 1010 bltz r2, .rlabel_306
+INST:    0110 0000 0001 0100 beqz r0, .rlabel_307
+INST:    0011 0000 0100 1010 jal .rlabel_308
+ARCH:    REG: 7 VALUE: 0x4c1e  
+VERILOG: REG: 7 VALUE: 0x4c1e
+INST:    0010 0000 0001 1110 j .rlabel_309
+INST:    0111 1011 0001 0110 bgez r3, .rlabel_310
+INST:    0010 0000 0110 1000 j .rlabel_311
+INST:    0010 0000 1110 0000 j .rlabel_312
+INST:    0010 0000 1000 0110 j .rlabel_313
+INST:    0110 0000 0001 0100 beqz r0, .rlabel_314
+INST:    0010 0000 1111 1100 j .rlabel_315
+INST:    0110 0000 0001 1000 beqz r0, .rlabel_316
+INST:    0010 0000 1011 0000 j .rlabel_317
+INST:    0110 0000 0001 1000 beqz r0, .rlabel_318
+INST:    0110 0000 0000 1010 beqz r0, .rlabel_319
+INST:    0111 1011 0000 1000 bgez r3, .rlabel_320
+INST:    0011 0000 1101 1110 jal .rlabel_321
+ARCH:    REG: 7 VALUE: 0x5086  
+VERILOG: REG: 7 VALUE: 0x5086
+INST:    0010 0000 1010 0010 j .rlabel_322
+INST:    0010 0000 0101 0100 j .rlabel_323
+INST:    0111 0010 0001 0010 bltz r2, .rlabel_324
+INST:    0110 0000 0001 1010 beqz r0, .rlabel_325
+INST:    0111 1011 0000 0000 bgez r3, .rlabel_326
+INST:    0111 0010 0000 1010 bltz r2, .rlabel_327
+INST:    0010 0000 0001 0000 j .rlabel_328
+INST:    0110 1001 0001 1010 bnez r1, .rlabel_329
+INST:    0111 1011 0000 0000 bgez r3, .rlabel_330
+INST:    0111 1011 0001 1000 bgez r3, .rlabel_331
+INST:    0010 0000 0010 0000 j .rlabel_332
+INST:    0111 0010 0001 1100 bltz r2, .rlabel_333
+INST:    0111 0010 0000 0000 bltz r2, .rlabel_334
+INST:    0110 0000 0000 1110 beqz r0, .rlabel_335
+INST:    0111 0010 0001 1000 bltz r2, .rlabel_336
+INST:    0010 0000 1111 0000 j .rlabel_337
+INST:    0010 0000 0000 0100 j .rlabel_338
+INST:    0011 0000 1110 1110 jal .rlabel_339
+ARCH:    REG: 7 VALUE: 0x544c  
+VERILOG: REG: 7 VALUE: 0x544c
+INST:    0110 0000 0001 0110 beqz r0, .rlabel_340
+INST:    0110 1001 0001 0100 bnez r1, .rlabel_341
+INST:    0110 1001 0000 1100 bnez r1, .rlabel_342
+INST:    0111 1011 0001 0100 bgez r3, .rlabel_343
+INST:    0110 0000 0000 1100 beqz r0, .rlabel_344
+INST:    0011 0000 1111 0110 jal .rlabel_345
+ARCH:    REG: 7 VALUE: 0x559c  
+VERILOG: REG: 7 VALUE: 0x559c
+INST:    0110 0000 0001 1000 beqz r0, .rlabel_346
+INST:    0110 0000 0001 0100 beqz r0, .rlabel_347
+INST:    0110 1001 0001 1110 bnez r1, .rlabel_348
+INST:    0110 0000 0001 1000 beqz r0, .rlabel_349
+INST:    0110 1001 0000 0110 bnez r1, .rlabel_350
+INST:    0111 0010 0001 0000 bltz r2, .rlabel_351
+INST:    0010 0000 0100 1000 j .rlabel_352
+INST:    0111 1011 0000 1000 bgez r3, .rlabel_353
+INST:    0010 0000 0110 1110 j .rlabel_354
+INST:    0010 0000 1101 0010 j .rlabel_355
+INST:    0010 0000 1000 1010 j .rlabel_356
+INST:    0111 1011 0000 0110 bgez r3, .rlabel_357
+INST:    0111 1011 0001 0000 bgez r3, .rlabel_358
+INST:    0011 0000 0010 1100 jal .rlabel_359
+ARCH:    REG: 7 VALUE: 0x5956  
+VERILOG: REG: 7 VALUE: 0x5956
+INST:    0111 1011 0000 1100 bgez r3, .rlabel_360
+INST:    0110 0000 0001 0110 beqz r0, .rlabel_361
+INST:    0011 0000 0101 1110 jal .rlabel_362
+ARCH:    REG: 7 VALUE: 0x59aa  
+VERILOG: REG: 7 VALUE: 0x59aa
+INST:    0111 0010 0000 1000 bltz r2, .rlabel_363
+INST:    0111 1011 0000 1000 bgez r3, .rlabel_364
+INST:    0010 0000 1000 0000 j .rlabel_365
+INST:    0110 1001 0001 0010 bnez r1, .rlabel_366
+INST:    0010 0000 0011 0010 j .rlabel_367
+INST:    0010 0000 1011 1110 j .rlabel_368
+INST:    0111 1011 0001 1100 bgez r3, .rlabel_369
+INST:    0010 0000 1111 0110 j .rlabel_370
+INST:    0010 0000 0010 1100 j .rlabel_371
+INST:    0011 0000 0100 1100 jal .rlabel_372
+ARCH:    REG: 7 VALUE: 0x5cec  
+VERILOG: REG: 7 VALUE: 0x5cec
+INST:    0111 1011 0000 0010 bgez r3, .rlabel_373
+INST:    0110 1001 0000 0000 bnez r1, .rlabel_374
+INST:    0010 0000 1101 0000 j .rlabel_375
+INST:    0110 0000 0001 1000 beqz r0, .rlabel_376
+INST:    0010 0000 0011 1110 j .rlabel_377
+INST:    0111 1011 0001 0000 bgez r3, .rlabel_378
+INST:    0110 1001 0000 0110 bnez r1, .rlabel_379
+INST:    0010 0000 1110 0110 j .rlabel_380
+INST:    0010 0000 1001 0010 j .rlabel_381
+INST:    0110 0000 0000 0010 beqz r0, .rlabel_382
+INST:    0010 0000 1111 0010 j .rlabel_383
+INST:    0011 0000 1111 0100 jal .rlabel_384
+ARCH:    REG: 7 VALUE: 0x60fa  
+VERILOG: REG: 7 VALUE: 0x60fa
+INST:    0010 0000 1111 1110 j .rlabel_385
+INST:    0110 1001 0001 1100 bnez r1, .rlabel_386
+INST:    0010 0000 1010 0000 j .rlabel_387
+INST:    0110 0000 0001 1110 beqz r0, .rlabel_388
+INST:    0111 1011 0000 0000 bgez r3, .rlabel_389
+INST:    0111 0010 0001 0000 bltz r2, .rlabel_390
+INST:    0111 0010 0000 1100 bltz r2, .rlabel_391
+INST:    0011 0000 1111 1010 jal .rlabel_392
+ARCH:    REG: 7 VALUE: 0x63f2  
+VERILOG: REG: 7 VALUE: 0x63f2
+INST:    0111 0010 0001 0000 bltz r2, .rlabel_393
+INST:    0011 0000 0010 1100 jal .rlabel_394
+ARCH:    REG: 7 VALUE: 0x6500  
+VERILOG: REG: 7 VALUE: 0x6500
+INST:    0111 0010 0001 0000 bltz r2, .rlabel_395
+INST:    0010 0000 0111 0010 j .rlabel_396
+INST:    0010 0000 1101 1110 j .rlabel_397
+INST:    0110 0000 0001 1110 beqz r0, .rlabel_398
+INST:    0010 0000 0101 0010 j .rlabel_399
 INST:    0000 0000 0000 0000 halt
 SUCCESS: No differences

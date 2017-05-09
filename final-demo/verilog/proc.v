@@ -37,7 +37,7 @@ module proc (/*AUTOARG*/
    wire cache_hit_fetch, stall_fetch, mem_err_fetch, done_fetch, isJump; 
 
    //************************ FETCH*********************************************//
-   fetch fetch0(.clk(clk), .rst(rst), .dump(1'b0), .pc_branch(pc_branch_out), .branch_cond(br_stall_cond), .nextPC(pc_plus_2), .instr(instr), .isNop(stall), .currPC(pcCurrent), .PCWriteEn(PCWriteEn & ~stall_for_dmem), .branch_cond_EXMEM(branch_cond_out), .pc_jal(pc_branch_out), .jal_en(jalEXMEM), .br_stall(br_stall_cond), .done(done_fetch), .cache_hit(cache_hit_fetch), .stall_from_mem(stall_fetch), .mem_err(mem_err_fetch), .isJump(isJump));
+   fetch fetch0(.clk(clk), .rst(rst), .dump(1'b0), .pc_branch(pc_branch_out), .branch_cond(br_stall_cond), .nextPC(pc_plus_2), .instr(instr), .isNop(stall), .currPC(pcCurrent), .PCWriteEn(PCWriteEn & ~stall_for_dmem), .branch_cond_EXMEM(branch_cond_out), .pc_jal(pc_branch_out), .jal_en(jalEXMEM), .br_stall(br_stall_cond), .done(done_fetch), .cache_hit(cache_hit_fetch), .stall_from_mem(stall_fetch), .mem_err(mem_err_fetch), .isJump(isJump), .dcache_done(stall_for_dmem));
 
    wire[15:0] instr_dec_dmem, pc_curr_dmem, next_pc_dec_dmem;
 

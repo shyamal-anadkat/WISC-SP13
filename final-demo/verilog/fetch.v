@@ -1,9 +1,9 @@
 //Fetch Instruction module **3/4/2017**
 module fetch(clk, rst, dump, pc_branch, branch_cond, nextPC, instr, isNop,
-	     currPC, PCWriteEn, branch_cond_EXMEM, pc_jal, jal_en, br_stall, done, cache_hit, stall_from_mem, mem_err, isJump);
+	     currPC, PCWriteEn, branch_cond_EXMEM, pc_jal, jal_en, br_stall, done, cache_hit, stall_from_mem, mem_err, isJump, dcache_done);
 
 input[15:0] pc_branch, pc_jal;
-input clk, rst, dump, isNop, jal_en, PCWriteEn, branch_cond, branch_cond_EXMEM, br_stall, isJump;
+input clk, rst, dump, isNop, jal_en, PCWriteEn, branch_cond, branch_cond_EXMEM, br_stall, isJump, dcache_done;
 
 output [15:0] nextPC, currPC;
 output [15:0] instr;
@@ -33,7 +33,7 @@ wire PG_cla, GG_cla, Cout_cla, ofl_out; //NOT USED/DUMMY
 		  .createdump(1'b0),
 		  .clk(clk), 
 		  .rst(rst),
-		  .isBranch(br_stall));
+		  .isBranch(br_stall | dcache_done));
 
     // Handle ERR and STALL here 
 	assign instr = (mem_err) ? 16'b0000000000000000 : (~done) ? 16'b0000100000000000 : instr_mem_system;

@@ -1,4 +1,0 @@
-/u/k/a/karu/courses/cs552/spring2013/handouts/testprograms/public/rand_dcache/ldld_rand_large.asm SUCCESS CPI:4.8 CYCLES:4978 ICOUNT:1035 IHITRATE: 99.8 DHITRATE: 96.8
-/u/k/a/karu/courses/cs552/spring2013/handouts/testprograms/public/rand_dcache/ldld_rand_small.asm SUCCESS CPI:4.8 CYCLES:4978 ICOUNT:1035 IHITRATE: 99.8 DHITRATE: 96.8
-/u/k/a/karu/courses/cs552/spring2013/handouts/testprograms/public/rand_dcache/ldst_rand_large.asm SUCCESS CPI:4.0 CYCLES:5732 ICOUNT:1417 IHITRATE: 99.7 DHITRATE: 91.4
-/u/k/a/karu/courses/cs552/spring2013/handouts/testprograms/public/rand_dcache/ldst_rand_small.asm SUCCESS CPI:3.9 CYCLES:5476 ICOUNT:1417 IHITRATE: 99.7 DHITRATE: 95.0

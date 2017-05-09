@@ -1,8 +1,8 @@
-/u/k/a/karu/courses/cs552/spring2013/handouts/testprograms/public/complex_demo2/alignTest.asm SUCCESS CPI:7.7 CYCLES:54 ICOUNT:7 IHITRATE: 87.5 DHITRATE: 33.3
+/u/k/a/karu/courses/cs552/spring2013/handouts/testprograms/public/complex_demo2/alignTest.asm SUCCESS CPI:9.1 CYCLES:64 ICOUNT:7 IHITRATE: 75.0 DHITRATE: 33.3
 /u/k/a/karu/courses/cs552/spring2013/handouts/testprograms/public/complex_demo2/perf-test-dep-all.asm SUCCESS CPI:5.5 CYCLES:50 ICOUNT:9 IHITRATE: 72.7 DHITRATE: 0
-/u/k/a/karu/courses/cs552/spring2013/handouts/testprograms/public/complex_demo2/perf-test-dep-ld.asm SUCCESS CPI:6.5 CYCLES:52 ICOUNT:8 IHITRATE: 85.7 DHITRATE: 66.7
-/u/k/a/karu/courses/cs552/spring2013/handouts/testprograms/public/complex_demo2/perf-test-dep-ldst.asm SUCCESS CPI:8.6 CYCLES:95 ICOUNT:11 IHITRATE: 90.6 DHITRATE: 33.3
+/u/k/a/karu/courses/cs552/spring2013/handouts/testprograms/public/complex_demo2/perf-test-dep-ld.asm SUCCESS CPI:7.4 CYCLES:59 ICOUNT:8 IHITRATE: 75.0 DHITRATE: 66.7
+/u/k/a/karu/courses/cs552/spring2013/handouts/testprograms/public/complex_demo2/perf-test-dep-ldst.asm SUCCESS CPI:10.0 CYCLES:110 ICOUNT:11 IHITRATE: 78.6 DHITRATE: 33.3
 /u/k/a/karu/courses/cs552/spring2013/handouts/testprograms/public/complex_demo2/perf-test-dep-waw.asm SUCCESS CPI:5.5 CYCLES:50 ICOUNT:9 IHITRATE: 72.7 DHITRATE: 0
 /u/k/a/karu/courses/cs552/spring2013/handouts/testprograms/public/complex_demo2/perf-test-dep-zero.asm SUCCESS CPI:17.2 CYCLES:86 ICOUNT:5 IHITRATE: 75.0 DHITRATE: 0
-/u/k/a/karu/courses/cs552/spring2013/handouts/testprograms/public/complex_demo2/pipeTest.asm SUCCESS CPI:6.5 CYCLES:162 ICOUNT:25 IHITRATE: 78.9 DHITRATE: 50.0
-/u/k/a/karu/courses/cs552/spring2013/handouts/testprograms/public/complex_demo2/stallTest.asm SUCCESS CPI:8.2 CYCLES:632 ICOUNT:77 IHITRATE: 75.8 DHITRATE: 76.5
+/u/k/a/karu/courses/cs552/spring2013/handouts/testprograms/public/complex_demo2/pipeTest.asm SUCCESS CPI:7.7 CYCLES:192 ICOUNT:25 IHITRATE: 72.4 DHITRATE: 50.0
+/u/k/a/karu/courses/cs552/spring2013/handouts/testprograms/public/complex_demo2/stallTest.asm SUCCESS CPI:9.0 CYCLES:693 ICOUNT:77 IHITRATE: 72.9 DHITRATE: 76.5

@@ -1,0 +1,22 @@
+0000 c22f lbi r2, 47
+0002 c120 lbi r1, 32
+0004 814e st r2, r1, 14
+0006 2002 j .label0
+0008 0000 halt
+000a      .label0:
+000a 814e st r2, r1, 14
+000c 2002 j .label1
+000e 0000 halt
+0010      .label1:
+0010 814e st r2, r1, 14
+0012 2002 j .label2
+0014 0000 halt
+0016      .label2:
+0016 814e st r2, r1, 14
+0018 0000 halt
+001a 2002 j .label3
+001c 814e st r2, r1, 14
+001e      .label3:
+001e 814e st r2, r1, 14
+0020 0000 halt
+          

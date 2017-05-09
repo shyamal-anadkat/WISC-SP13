@@ -1,0 +1,29 @@
+8
+
+dir
+4
+file:///scratch/users/karu/svn/cs552-spring2009/trunk/handouts/testprograms/public/scripts
+file:///scratch/users/karu/svn/cs552-spring2009
+
+
+
+2009-02-19T17:01:08.026836Z
+4
+karu
+
+
+svn:special svn:externals svn:needs-lock
+
+run-all.sh
+file
+
+
+
+
+2009-01-08T21:43:49.000000Z
+3c82d1c2b3a23b3030ce1eb7c3ae97a7
+2009-02-19T17:01:08.026836Z
+4
+karu
+has-props
+

@@ -1,222 +1,234 @@
-          // stallTest - try progressive numbers of stalls.
+          // ultimateTest
           //
-          // A test specifically for the pipelined implementation.
+          // The last test to run!
           //
-          // CS/ECE 552, Spring 2006
-          // Andy Phelps  11 April 2006
+          // CS/ECE 552, Spring 2007
+          // Pratap Ramamurthy  25 April 2007
           //
+          // This is a sorting program.  It reads a
+          // list of numbers, sorts them into a
+          // binary tree, and then traverses the
+          // tree to rewrite the list of numbers
+          // in numeric order.
+          //
+          // Conventions:
+          //    r7 - used for return addresses
+          //    r6 - always points to global variables
+          //    r5 - always points to the stack
+          //            Push is stu X,r5,-1
+          //            Pop is ld X,r5,0; addi r5,r5,1
+          //
+          // Tree is built out of nodes that look like:
+          //         0: data value
+          //         1: left pointer (to smaller values)
+          //         2: right pointer (to larger values)
           
-0000 202c j .RealStart
+0000 2018 j .realstart
           
-0002 0000 halt
-0004 0000 halt
-0006 0000 halt
-0008 0000 halt
-000a 0000 halt
-000c      .Data1:
-000c 0000 halt
-000e 0000 halt
-0010      .Data2:
-0010 0000 halt
-0012 0000 halt
-0014      .Data3:
-0014 0000 halt
-0016 0000 halt
-0018      .Data4:
-0018 0000 halt
-001a      .Data5:
-001a 0000 halt
-001c 0000 halt
-001e 0000 halt
-0020 0000 halt
-0022 0000 halt
-0024 0000 halt
-0026 0000 halt
-0028 0000 halt
-002a 0000 halt
-002c 0000 halt
+          // Interrupt entry point:
           
-002e      .RealStart:
+0002 9d1e stu r0, r5, -2         // Save r0 to stack
+0004 9d3e stu r1, r5, -2         // Save r1 to stack
+0006 c000 lbi r0, U.IntCounter
+0008 9018 slbi r0, L.IntCounter  // r0 = address of interrupt cntr
+000a 8820 ld r1, r0, 0
+000c 4122 addi r1,r1,2           // Bump the interrupt counter
+000e 8020 st r1, r0, 0
+0010 8d20 ld r1,r5,0             // Restore r1 from stack
+0012 8d02 ld r0,r5,2             // Restore r0 from stack
+0014 45a4 addi r5,r5,4           // Pop stack
+0016 1800 rti                    // Return from interrupt
           
-002e c003 lbi r0, 3
-0030 0800 nop
-0032 0800 nop
-0034 0800 nop
-0036 0800 nop
-0038 0800 nop
-003a 4001 addi r0, r0, 1     // r0 = 4
+0018      .IntCounter:
           
-003c c106 lbi r1, 6
-003e 0800 nop
-0040 0800 nop
-0042 0800 nop
-0044 0800 nop
-0046 4121 addi r1, r1, 1     // r1 = 7
+0018 0000 data 0                 // this location incremented for each interrupt
           
-0048 c205 lbi r2, 5
-004a 0800 nop
-004c 0800 nop
-004e 0800 nop
-0050 4241 addi r2, r2, 1     // r2 = 6
+001a      .realstart:
           
-0052 c307 lbi r3, 7
-0054 0800 nop
-0056 0800 nop
-0058 4361 addi r3, r3, 1     // r3 = 8
+001a c501 lbi r5, U.Stackbase
+001c 9558 slbi r5, L.Stackbase   // Initialize stack pointer
+001e c600 lbi r6, U.Globals
+0020 96f0 slbi r6, L.Globals     // Initialize pointer to global variables
+0022 c001 lbi r0, U.Heapbase
+0024 9058 slbi r0, L.Heapbase
+0026 8600 st r0, r6, 0           // Initialize heap pointer
           
-005a c409 lbi r4, 9
-005c 0800 nop
-005e 4481 addi r4, r4, 1     // r4 = 10
+0028 c12d lbi r1, 45             // interrupt after every 45 instructions
+          //siic r1              //
+002a 0800 nop                    // The siic is disabled in this version; nop instead
           
-0060 c50b lbi r5, 11
-0062 45a1 addi r5, r5, 1     // r5 = 12
+          /////////////////////////////////////////////////////////
           
-0064 d820 add r0, r0, r1     // r0 = 11
-0066 db48 add r2, r3, r2     // r2 = 14
-0068 dcb0 add r4, r4, r5     // r4 = 22
-006a d840 add r0, r0, r2     // r0 = 25
-006c d89c add r7, r0, r4     // r7 = 47 = 0x002f
+002c c000 lbi r0, U.Numbers
+002e 90b0 slbi r0, L.Numbers
+0030 c100 lbi r1, U.EndNumbers
+0032 91f0 slbi r1, L.EndNumbers
           
-006e c601 lbi r6, 1          // r6 = 1
+0034 8860 ld r3, r0, 0           // get 1st number
+0036 4002 addi r0, r0, 2
+0038 304e jal .NewNode           // make initial node as special case
+003a 8642 st r2, r6, 2           // initialize head-of-tree pointer
+003c      .buildTreeLoop:
+003c 8860 ld r3, r0, 0           // get next number
+003e 4002 addi r0, r0, 2
+0040 8e82 ld r4, r6, 2           // parameter: head of tree
+0042 301e jal .InsertNode
+0044 e02c seq r3, r0, r1         // compare index to end of array
+0046 63f4 beqz r3, .buildTreeLoop
           
-0070 c003 lbi r0, 3
-0072 0800 nop
-0074 0800 nop
-0076 0800 nop
-0078 0800 nop
-007a 0800 nop
-007c de00 add r0, r6, r0     // r0 = 4
+0048 c000 lbi r0, U.Numbers
+004a 90b0 slbi r0, L.Numbers     // store pointer (overwrite array)
+004c 8e82 ld r4, r6, 2           // parameter: head of tree
+004e 3042 jal .Traverse          // first call to recursive traverse routine
           
-007e c106 lbi r1, 6
-0080 0800 nop
-0082 0800 nop
-0084 0800 nop
-0086 0800 nop
-0088 de24 add r1, r6, r1     // r1 = 7
+          // Read through the sorted numbers one last time.
+          // All this does is make sure they're in cache so
+          // they'll be easier to see when we're done.
+0050 c000 lbi r0, U.Numbers
+0052 90b0 slbi r0, L.Numbers
+0054 c100 lbi r1, U.EndNumbers
+0056 91f0 slbi r1, L.EndNumbers
+0058      .readLoop:
+0058 8860 ld r3, r0, 0           // read a number into cache
+005a 4002 addi r0, r0, 2         // bump pointer
+005c e02c seq r3, r0, r1         // compare index to end of array
+005e 63f8 beqz r3, .readLoop
           
-008a c205 lbi r2, 5
-008c 0800 nop
-008e 0800 nop
-0090 0800 nop
-0092 de48 add r2, r6, r2     // r2 = 6
-          
-0094 c307 lbi r3, 7
-0096 0800 nop
-0098 0800 nop
-009a de6c add r3, r6, r3     // r3 = 8
-          
-009c c409 lbi r4, 9
-009e 0800 nop
-00a0 de90 add r4, r6, r4     // r4 = 10
-          
-00a2 c50b lbi r5, 11
-00a4 deb4 add r5, r6, r5     // r5 = 12
-          
-00a6 d900 add r0, r1, r0     // r0 = 11
-00a8 da68 add r2, r2, r3     // r2 = 14
-00aa dd90 add r4, r5, r4     // r4 = 22
-00ac da00 add r0, r2, r0     // r0 = 25
-00ae dc18 add r6, r4, r0     // r6 = 47 = 0x002f
-00b0 defc add r7, r6, r7     // r7 = 94 = 0x005e
-          
-00b2 c00c lbi r0, L.Data1
-00b4 0800 nop
-00b6 0800 nop
-00b8 0800 nop
-00ba 0800 nop
-00bc 80e0 st r7, r0, 0       // .Data1 = 0x005e
-          
-00be c010 lbi r0, L.Data2
-00c0 0800 nop
-00c2 0800 nop
-00c4 0800 nop
-00c6 80e0 st r7, r0, 0       // .Data2 = 0x005e
-          
-00c8 c014 lbi r0, L.Data3
-00ca 0800 nop
-00cc 0800 nop
-00ce 80e0 st r7, r0, 0       // .Data3 = 0x005e
-          
-00d0 c018 lbi r0, L.Data4
-00d2 0800 nop
-00d4 80e0 st r7, r0, 0       // .Data4 = 0x005e
-          
-00d6 c01a lbi r0, L.Data5
-00d8 98c2 stu r6, r0, 2      // .Data5+2 = 0x002f
-00da 0800 nop
-00dc 0800 nop
-00de 0800 nop
-00e0 0800 nop
-00e2 98c2 stu r6, r0, 2      // .Data5+4 = 0x002f
-00e4 0800 nop
-00e6 0800 nop
-00e8 0800 nop
-00ea 98c2 stu r6, r0, 2      // .Data5+6 = 0x002f
-00ec 0800 nop
-00ee 0800 nop
-00f0 98c2 stu r6, r0, 2      // .Data5+8 = 0x002f
-00f2 0800 nop
-00f4 98c2 stu r6, r0, 2      // .Data5+10 = 0x002f
-00f6 98e2 stu r7, r0, 2      // .Data5+12 = 0x005e
-          
-00f8 c00c lbi r0, L.Data1
-00fa 0800 nop
-00fc 0800 nop
-00fe 0800 nop
-0100 8820 ld  r1, r0, 0      // r1 = 0x005e
-0102 0800 nop
-0104 0800 nop
-0106 0800 nop
-0108 41c0 addi r6, r1, 0     // r6 = 0x005e
-          
-010a c10c lbi r1, L.Data1
-010c 0800 nop
-010e 0800 nop
-0110 8940 ld  r2, r1, 0      // r2 = 0x005e
-0112 0800 nop
-0114 0800 nop
-0116 de58 add r6, r6, r2     // r6 = 0x00bc
-          
-0118 c20c lbi r2, L.Data1
-011a 0800 nop
-011c 8a60 ld  r3, r2, 0      // r3 = 0x005e
-011e 0800 nop
-0120 de78 add r6, r6, r3     // r6 = 0x011a
-          
-0122 c30c lbi r3, L.Data1
-0124 8b80 ld  r4, r3, 0      // r4 = 0x005e
-0126 de98 add r6, r6, r4     // r6 = 0x0178
-0128 83de st r6, r3, -2      // .Data1-1 = 0x0178
-          
-012a c300 lbi r3, 0
-012c 6308 beqz r3, .GoHere
-012e 0000 halt
-0130 0000 halt
-0132 0000 halt
-0134 0000 halt
-          
-0136      .GoHere:
-0136 8a60 ld r3, r2, 0       // r3 = 0x005e
-0138 6b08 bnez r3, .GoThere
-013a 0000 halt
-013c 0000 halt
-013e 0000 halt
-0140 0000 halt
-          
-0142      .GoThere:
-0142 c001 lbi r0, U.GoGoGo
-0144 9050 slbi r0, L.GoGoGo
-0146 3800 jalr r0, 0
-0148      .RetAddr:
-0148 0000 halt
-014a 0000 halt
-014c 0000 halt
-014e 0000 halt
-          
-0150      .GoGoGo:
-0150 82fe st r7, r2, -2      // .Data1-2 = .RetAddr (0x00a4)
-0152 0000 halt
-0154 0000 halt
-0156 0000 halt
+0060 0000 halt                   // MADE IT
           
           
+          ///////////////////////////////////////////////////
+          //
+          // Subroutine InsertNode:
+          // Traverses tree to insert new node at correct spot
+          // Called with a value in r3
+          //   "     "   node pointer in r4
+          // Preserves r0, r1
+          // Does not preserve r2, r3, r4
+          
+0062      .InsertNode:
+          
+0062 9dfe stu r7, r5, -2          // push return address
+0064 8c40 ld r2, r4, 0
+0066 ea68 slt r2, r2, r3          // set if this node less than new data
+0068 6a0e bnez r2, .insertRight   // if r2<r3, go insert at right link
+          
+          // insert at left link:
+006a 8c42 ld r2, r4, 2            // get left link
+006c 6a14 bnez r2, .recurse       // if there's a link, follow it
+006e 3018 jal .NewNode            // make new node, address in r2
+0070 8442 st r2, r4, 2            // store its pointer as left link
+          
+0072      .return:
+0072 8de0 ld r7, r5, 0            // restore r7
+0074 45a2 addi r5, r5, 2          // pop stack
+0076 2f00 jr r7, 0                // return
+          
+0078      .insertRight:
+0078 8c44 ld r2, r4, 4            // get right link
+007a 6a06 bnez r2, .recurse       // if there's a link, follow it
+007c 300a jal .NewNode            // make new node, address in r2
+007e 8444 st r2, r4, 4            // store its pointer as right link
+0080 27f0 j .return
+          
+0082      .recurse:
+0082 4280 addi r4, r2, 0          // make link new node pointer
+0084 37dc jal .InsertNode         // recurse
+0086 27ea j .return
+          
+          
+          ///////////////////////////////////////////////////
+          //
+          // Subroutine NewNode:
+          // Called with a value in r3
+          // Allocates a node off the heap
+          // Stores the value into the node
+          // Assumes that the pointers in the
+          // node are already zero
+          // Return address of node in r2
+          // Preserves r0, r1, r3, r4
+          
+0088      .NewNode:
+0088 8e40 ld r2, r6, 0  // heap pointer
+008a 4246 addi r2, r2, 6 // size of node
+008c 8640 st r2, r6, 0
+008e 9a7a stu r3, r2, -6  // store data into offset 0 of node
+0090 2f00 jr r7, 0 // return
+          
+          
+          ///////////////////////////////////////////////////
+          //
+          // Subroutine Traverse:
+          // Called with a node pointer in r4
+          //    "    "   store pointer in r0
+          // Recurses left, stores own data, recurses right
+          // Does not preserve any registers
+          
+0092      .Traverse:
+0092 9dfe stu r7, r5, -2      // push return address
+0094 9d9e stu r4, r5, -2      // push node pointer
+0096 8c82 ld r4, r4, 2        // left link
+0098 6402 beqz r4, .skipLeft  // null link?
+009a 37f6 jal .Traverse       // recurse if non-null
+009c      .skipLeft:
+009c 8d80 ld r4, r5, 0        // restore r4
+009e 8c20 ld r1, r4, 0        // get data
+00a0 8020 st r1, r0, 0        // store data into original array in order
+00a2 4002 addi r0, r0, 2      // bump store pointer
+00a4 8c84 ld r4, r4, 4        // right link
+00a6 6402 beqz r4, .skipRight // null link?
+00a8 37e8 jal .Traverse       // recurse if non-null
+00aa      .skipRight:
+00aa 8de2 ld r7, r5, 2        // restore return address
+00ac 45a4 addi r5, r5, 4      // pop stack
+00ae 2f00 jr r7, 0            // return
+          
+          
+          ///////////////////////////////////////////////////
+          //
+00b0      .Numbers:
+00b0 0044 data 0x44
+00b2 0022 data 0x22
+00b4 0093 data 0x93
+00b6 0020 data 0x20
+00b8 0063 data 0x63
+00ba 0038 data 0x38
+00bc 0018 data 0x18
+00be 0006 data 0x06
+00c0 0090 data 0x90
+00c2 0087 data 0x87
+00c4 0045 data 0x45
+00c6 0084 data 0x84
+00c8 0036 data 0x36
+00ca 0065 data 0x65
+00cc 0010 data 0x10
+00ce 0051 data 0x51
+00d0 0012 data 0x12
+00d2 0002 data 0x02
+00d4 0061 data 0x61
+00d6 0050 data 0x50
+00d8 0024 data 0x24
+00da 0047 data 0x47
+00dc 0086 data 0x86
+00de 0094 data 0x94
+00e0 0008 data 0x08
+00e2 0099 data 0x99
+00e4 0001 data 0x01
+00e6 0038 data 0x38
+00e8 0084 data 0x84
+00ea 0092 data 0x92
+00ec 0032 data 0x32
+00ee 0056 data 0x56
+00f0      .EndNumbers:
+          
+          
+00f0      .Globals:
+00f0 0000 data 0                 // 0: Heap pointer
+00f2 0000 data 0                 // 1: Head of tree
+          
+          // Stack area:
+00f4      zerofill 100           // Stack area; grows toward 0
+0158      .Stackbase:
+          
+0158      .Heapbase:
+0158      zerofill 200           // Heap area; grows toward FFFF

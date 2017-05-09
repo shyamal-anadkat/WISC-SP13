@@ -1,0 +1,34 @@
+// seed 4
+lbi r0, 243 // icount 0
+slbi r0, 155 // icount 1
+lbi r1, 219 // icount 2
+slbi r1, 103 // icount 3
+lbi r2, 136 // icount 4
+slbi r2, 74 // icount 5
+lbi r3, 208 // icount 6
+slbi r3, 2 // icount 7
+lbi r4, 29 // icount 8
+slbi r4, 135 // icount 9
+lbi r5, 121 // icount 10
+slbi r5, 124 // icount 11
+lbi r6, 187 // icount 12
+slbi r6, 204 // icount 13
+lbi r7, 71 // icount 14
+slbi r7, 173 // icount 15
+slbi r5, 3 // icount 16
+slbi r4, 1 // icount 17
+slbi r1, 12 // icount 18
+slbi r6, 10 // icount 19
+slbi r3, 1 // icount 20
+slbi r7, 7 // icount 21
+slbi r5, 15 // icount 22
+slbi r0, 10 // icount 23
+slbi r3, 12 // icount 24
+slbi r5, 5 // icount 25
+slbi r5, 2 // icount 26
+slbi r1, 9 // icount 27
+slbi r0, 5 // icount 28
+slbi r4, 7 // icount 29
+slbi r3, 14 // icount 30
+slbi r3, 6 // icount 31
+halt // icount 32

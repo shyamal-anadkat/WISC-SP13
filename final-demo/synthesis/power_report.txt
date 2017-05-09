@@ -1,0 +1,53 @@
+Loading db file '/u/k/a/karu/courses/cs552/cad/Synopsys_Libraries/libs/gscl45nm.db'
+Information: Propagating switching activity (low effort zero delay simulation). (PWR-6)
+Warning: Design has unannotated primary inputs. (PWR-414)
+Warning: Design has unannotated sequential cell outputs. (PWR-415)
+ 
+****************************************
+Report : power
+        -analysis_effort low
+Design : proc
+Version: L-2016.03-SP4-1
+Date   : Tue May  9 03:04:27 2017
+****************************************
+
+
+Library(s) Used:
+
+    gscl45nm (File: /u/k/a/karu/courses/cs552/cad/Synopsys_Libraries/libs/gscl45nm.db)
+
+
+Operating Conditions: typical   Library: gscl45nm
+Wire Load Model Mode: top
+
+
+Global Operating Voltage = 1.1  
+Power-specific unit information :
+    Voltage Units = 1V
+    Capacitance Units = 1.000000pf
+    Time Units = 1ns
+    Dynamic Power Units = 1mW    (derived from V,C,T units)
+    Leakage Power Units = 1nW
+
+
+  Cell Internal Power  = 184.3761 mW  (100%)
+  Net Switching Power  = 921.1979 uW    (0%)
+                         ---------
+Total Dynamic Power    = 185.2973 mW  (100%)
+
+Cell Leakage Power     =   1.4406 mW
+
+
+                 Internal         Switching           Leakage            Total
+Power Group      Power            Power               Power              Power   (   %    )  Attrs
+--------------------------------------------------------------------------------------------------
+io_pad             0.0000            0.0000            0.0000            0.0000  (   0.00%)
+memory             0.0000            0.0000            0.0000            0.0000  (   0.00%)
+black_box          0.0000            0.0000            0.0000            0.0000  (   0.00%)
+clock_network      0.0000            0.0000            0.0000            0.0000  (   0.00%)
+register         183.6326        4.2855e-02        7.1746e+05          184.3929  (  98.74%)
+sequential     4.4820e-03        1.1270e-03          245.0330        5.8540e-03  (   0.00%)
+combinational      0.7460            0.8772        7.2287e+05            2.3460  (   1.26%)
+--------------------------------------------------------------------------------------------------
+Total            184.3830 mW         0.9212 mW     1.4406e+06 nW       186.7448 mW
+1

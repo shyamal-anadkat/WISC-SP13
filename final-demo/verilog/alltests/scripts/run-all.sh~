@@ -1,0 +1,11 @@
+#!/bin/sh
+
+for a in *.asm; do
+    run-asm.sh $a > /dev/null 2> err
+    echo -n $a" ";
+    grep ERR err > /dev/null; rval=$?;
+    if [ $rval -eq 0 ]; then
+        cat err;
+    fi
+    echo "";
+done

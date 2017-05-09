@@ -1,0 +1,86 @@
+8
+
+dir
+4
+file:///scratch/users/karu/svn/cs552-spring2009/trunk/handouts/testprograms/public
+file:///scratch/users/karu/svn/cs552-spring2009
+
+
+
+2009-02-19T17:01:08.026836Z
+4
+karu
+
+
+svn:special svn:externals svn:needs-lock
+
+rand_icache
+dir
+
+rand_mem
+dir
+
+rand_idcache
+dir
+
+secret
+dir
+
+complex_demofinal
+dir
+
+creatmarkup.sh
+file
+
+
+
+
+2009-01-08T21:43:43.000000Z
+217d38b0da41af45da2337a2f4442a82
+2009-02-19T17:01:08.026836Z
+4
+karu
+has-props
+
+scripts
+dir
+
+simple
+dir
+
+complex_demo1
+dir
+
+rand_final
+dir
+
+complex_demo2
+dir
+
+rand_simple
+dir
+
+complex_demo3
+dir
+
+inst_tests
+dir
+
+temp
+dir
+
+rand_ctrl
+dir
+
+student_tests
+dir
+
+tg
+dir
+
+rand_complex
+dir
+
+rand_dcache
+dir
+
